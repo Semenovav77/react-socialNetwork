@@ -1,5 +1,6 @@
 import React from 'react';
 import bg from './first-bg.jpg';
+import './Profile.css';
 
 const Profile = () => {
     return  (
