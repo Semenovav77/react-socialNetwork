@@ -10,3 +10,11 @@
 
   /*grid-gap: 10px;*/
 }
+
+.app-wrapper-content {
+  grid-area: c;
+}
+
+.app-wrapper-content img{
+  height: 400px;
+}
