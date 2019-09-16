@@ -1,14 +1,14 @@
 import React from 'react';
-import bg from './first-bg.jpg';
-import s from './Profile.module.css';
+/*import s from './Profile.module.css';*/
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./Profileinfo/Profileinfo";
 
-const Profile = () => {
+const Profile = (props) => {
+
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts/>
+            <MyPosts posts={props.posts}/>
         </div>
     )
 }
