@@ -5,7 +5,8 @@ let state = {
         posts: [
             {id: 1, post: "First post", likesCount: 2},
             {id: 2, post: "Second post", likesCount: 22},
-        ]
+        ],
+        newPostText: "textik"
 
     },
     messagesPage: {
@@ -22,12 +23,19 @@ let state = {
         ]
     }
 }
+window.state = state;
 
-export let addPost = (postMessage) => {
+export let addPost = () => {
     let newPost = {
-        id: 5, post: postMessage, likesCount: 0
+        id: 5, post: state.profilePage.newPostText, likesCount: 0
     };
     state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = '';
+    rerenderTree(state);
+}
+
+export let updateNewPostText = (newtext) => {
+    state.profilePage.newPostText = newtext;
     rerenderTree(state);
 }
 
