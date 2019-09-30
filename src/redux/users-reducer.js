@@ -5,10 +5,19 @@ const SET_USERS = 'SET_USERS';
 
 let initialState = {
 
-    users: [
-       {id: 1, photoUrl: "https://cs9.pikabu.ru/post_img/2017/05/12/8/1494592816133830021.jpg", followed: false, fullName: "Anton", status: "Pizdec", location:{city:"Moscow", country:"Russia"}},
-        {id: 2, photoUrl: "https://cs9.pikabu.ru/post_img/2017/05/12/8/1494592816133830021.jpg",followed: true, fullName: "Serg", status: "Nah", location:{city:"Samara", country:"Russia"}},
-        {id: 3, photoUrl: "https://cs9.pikabu.ru/post_img/2017/05/12/8/1494592816133830021.jpg", followed: false, fullName: "Anton", status: "What", location:{city:"Minsk", country:"Belarus"}},
+  users: [
+      /*  {
+            id: 1, photoUrl: "https://cs9.pikabu.ru/post_img/2017/05/12/8/1494592816133830021.jpg",
+            followed: false, fullName: "Anton", status: "Pizdec", location: {city: "Moscow", country: "Russia"}
+        },
+        {
+            id: 2, photoUrl: "https://cs9.pikabu.ru/post_img/2017/05/12/8/1494592816133830021.jpg",
+            followed: true, fullName: "Serg", status: "Nah", location: {city: "Samara", country: "Russia"}
+        },
+        {
+            id: 3, photoUrl: "https://cs9.pikabu.ru/post_img/2017/05/12/8/1494592816133830021.jpg",
+            followed: false, fullName: "Anton", status: "What", location: {city: "Minsk", country: "Belarus"}
+        },*/
     ],
 };
 
@@ -37,7 +46,7 @@ const usersReducer = (state = initialState, action) => {
         case SET_USERS:
             return {
                 ...state,
-                users: [...state.users, action.users]
+                users: [...state.users, ...action.users]
             };
         default:
             return state;
