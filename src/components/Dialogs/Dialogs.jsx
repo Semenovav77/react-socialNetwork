@@ -13,7 +13,7 @@ const Dialogs = (props) => {
         .map(m => <Message message={m.message} key={m.id}/>)
 
     let sendMessage = () => {
-        props.sendMessage();;
+        props.sendMessage();
     }
 
     let onMessageChange = (e) => {
