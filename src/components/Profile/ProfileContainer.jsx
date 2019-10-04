@@ -20,6 +20,10 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
+        {if (!this.props.match.params.userId) {axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+            .then(response => {
+                this.props.setUserProfile(response.data);
+            });}}
         return (
            <Profile {...this.props} profile={this.props.profile}/>
         )
