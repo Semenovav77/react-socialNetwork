@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/Api";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -76,7 +78,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 followingProgress: action.followingProgress
                     ? [...state.followingProgress, action.userId]
-                    : state.followingProgress.filter(id => id!= action.userId)
+                    : state.followingProgress.filter(id => id != action.userId)
             };
         default:
             return state;
@@ -129,5 +131,39 @@ export const setIsFolowingProgress = (followingProgress, userId) => {
     }
 };
 
+export const getUsersThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(setIsFetching(true));
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(setIsFetching(false));
+            dispatch(setUsers(data.items));
+            dispatch(setTotalUsersCount(data.totalCount));
+        });
+    }
+};
+export const followThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(setIsFolowingProgress(true, userId));
+        usersAPI.follow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followUser(userId))
+                }
+                dispatch(setIsFolowingProgress(false, userId));
+            });
+    }
+};
+export const unfollowThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(setIsFolowingProgress(true, userId));
+        usersAPI.unfollow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unfollowUser(userId))
+                }
+                dispatch(setIsFolowingProgress(false, userId));
+            });
+    }
+};
 
 export default usersReducer;

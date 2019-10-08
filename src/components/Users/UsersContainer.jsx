@@ -5,31 +5,21 @@ import {
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
-    setIsFetching, setIsFolowingProgress
+    setIsFetching, setIsFolowingProgress, getUsersThunkCreator,followThunkCreator,unfollowThunkCreator
 } from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
-import {usersAPI} from "../../api/Api";
+
 
 
 class UsersAPI extends React.Component {
     componentDidMount(e) {
-        this.props.setIsFetching(true);
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-            this.props.setIsFetching(false);
-            this.props.setUsers(data.items);
-            this.props.setTotalUsersCount(data.totalCount);
-        });
+       this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.setIsFetching(true);
-        this.props.setCurrentPage(pageNumber);
-        usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
-            this.props.setIsFetching(false);
-            this.props.setUsers(data.items);
-        });
+        this.props.getUsers(pageNumber, this.props.pageSize);
     };
 
     render() {
@@ -40,10 +30,9 @@ class UsersAPI extends React.Component {
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
                    users={this.props.users}
-                   followUser={this.props.followUser}
-                   unfollowUser={this.props.unfollowUser}
-                   setIsFolowingProgress={this.props.setIsFolowingProgress}
-                   followingProgress={this.props.followingProgress}/>
+                   followingProgress={this.props.followingProgress}
+                   followThunkCreator={this.props.followThunkCreator}
+                   unfollowThunkCreator={this.props.unfollowThunkCreator}/>
         </>
     }
 }
@@ -87,11 +76,11 @@ let mapDispatchToProps = (dispatch) => {
 const UsersContainer = connect(mapStateToProps, {
     followUser,
     unfollowUser,
-    setUsers,
     setCurrentPage,
-    setTotalUsersCount,
-    setIsFetching,
-    setIsFolowingProgress
+    setIsFolowingProgress,
+    getUsers: getUsersThunkCreator,
+    followThunkCreator,
+    unfollowThunkCreator
 })(UsersAPI);
 
 export default UsersContainer;

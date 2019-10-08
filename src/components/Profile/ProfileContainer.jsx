@@ -1,10 +1,8 @@
 import React from 'react';
 import Profile from "./Profile";
-import * as axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profile-reducer";
+import {getProfileThunkCreator, setUserProfile} from "../../redux/profile-reducer";
 import {withRouter} from "react-router-dom";
-import Preloader from "../common/preloader/Preloader";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
@@ -12,18 +10,11 @@ class ProfileContainer extends React.Component {
         if (!userId) {
             userId = 2;
         };
-        debugger;
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then(response => {
-                this.props.setUserProfile(response.data);
-            });
+        this.props.getProfileThunkCreator(userId);
     }
 
     render() {
-        {if (!this.props.match.params.userId) {axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
-            .then(response => {
-                this.props.setUserProfile(response.data);
-            });}}
+        {if (!this.props.match.params.userId) this.props.getProfileThunkCreator('2');}
         return (
            <Profile {...this.props} profile={this.props.profile}/>
         )
@@ -37,4 +28,4 @@ let mapStateToProps = (state) => ({
 
 let WithUrlDataContainerComponent = withRouter(ProfileContainer);
 
-export default connect (mapStateToProps, {setUserProfile}) (WithUrlDataContainerComponent);
+export default connect (mapStateToProps, {setUserProfile,getProfileThunkCreator}) (WithUrlDataContainerComponent);
