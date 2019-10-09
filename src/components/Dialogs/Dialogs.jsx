@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogsItem";
 import Message from "./Message/Message";
-import {Redirect} from "react-router-dom";
+
 
 
 const Dialogs = (props) => {
@@ -18,10 +18,12 @@ const Dialogs = (props) => {
     };
 
     let onMessageChange = (e) => {
-        let body = e.target.value;
-        props.updateNewMessageText(body);
+        let value = e.target.value;
+        let name = e.target.name;
+        debugger;
+        props.updateNewMessageText(name,value);
     };
-
+    debugger;
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
@@ -33,6 +35,13 @@ const Dialogs = (props) => {
                 </div>
                 <div>
                     <textarea onChange={onMessageChange}
+                              name='additionalyInfo'
+                              placeholder='Enter your additionalyInfo'
+                              value={state.additionalyInfo}>
+                    </textarea>
+                </div> <div>
+                    <textarea onChange={onMessageChange}
+                              name='newMessageBody'
                               placeholder='Enter your message'
                               value={state.newMessageBody}>
                     </textarea>
