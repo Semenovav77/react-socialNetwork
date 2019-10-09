@@ -23,7 +23,6 @@ const Dialogs = (props) => {
         debugger;
         props.updateNewMessageText(name,value);
     };
-    debugger;
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>

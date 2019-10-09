@@ -20,14 +20,13 @@ let initialState = {
 };
 
 const dialogsReducer = (state = initialState, action) => {
-    debugger;
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
-            if (action.name == "newMessageBody") return {
+            if (action.name === "newMessageBody") return {
                 ...state,
                 newMessageBody: action.body
             };
-            else if (action.name == "additionalyInfo") return {
+            else if (action.name === "additionalyInfo") return {
                 ...state,
                 additionalyInfo: action.body
             };

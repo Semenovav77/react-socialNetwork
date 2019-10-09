@@ -16,7 +16,6 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
-        debugger;
         {if (!this.props.match.params.userId) this.props.getProfileThunkCreator('2');}
         return (
            <Profile {...this.props} profile={this.props.profile}/>
