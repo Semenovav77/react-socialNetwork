@@ -1,35 +1,45 @@
 import React from 'react';
 import s from './Profileinfo.module.css';
+import Profile from "../Profile";
 
 class ProfileStatus extends React.Component {
     state = {
-        editSwitch: false
+        editSwitch: false,
+        status: this.props.status
     };
     changeStatus = () => {
-/*        debugger;
-        console.log(this.state.editSwitch);*/
+        /*        debugger;
+                console.log(this.state.editSwitch);*/
         this.setState({
             editSwitch: true
         });
-/*        console.log(this.state.editSwitch);*/
+        /*        console.log(this.state.editSwitch);*/
     };
     saveStatus = () => {
         this.setState({
             editSwitch: false
         });
+        this.props.updateUserStatusThunkCreator(this.state.status);
     };
+    onStatusChange = (event) => {
+        this.setState({
+            status: event.currentTarget.value
+        });
+    };
+
     render() {
         return (
             <div>
                 {!this.state.editSwitch &&
-                    <div>
-                        <span onDoubleClick={this.changeStatus}>{this.props.status}</span>
-                    </div>
+                <div>
+                    <span onDoubleClick={this.changeStatus}>{this.props.status || '---' }</span>
+                </div>
                 }
                 {this.state.editSwitch &&
-                    <div>
-                        <input autoFocus={true} onBlur={this.saveStatus} value={this.props.status}></input>
-                    </div>
+                <div>
+                    <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.saveStatus}
+                           value={this.state.status}></input>
+                </div>
                 }
             </div>
         )
