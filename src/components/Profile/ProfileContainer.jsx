@@ -41,5 +41,5 @@ export default connect(mapStateToProps, {getProfileThunkCreator}) (WithUrlDataCo
 export default compose(
     connect(mapStateToProps, {getProfileThunkCreator,getUserStatusThunkCreator, updateUserStatusThunkCreator}),
     withRouter,
-    withAuthRedirect
+  /*  withAuthRedirect*/
 )(ProfileContainer);
