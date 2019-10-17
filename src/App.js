@@ -12,23 +12,22 @@ const App = () => {
 
     return (
         <BrowserRouter>
-        <div className='app-wrapper'>
-            <HeaderContainer/>
-            <NavBar/>
-            <div className="app-wrapper-content">
-   {/*             <Route path='/dialogs' component={Dialogs} />
+            <div className='app-wrapper'>
+                <HeaderContainer/>
+                <NavBar/>
+                <div className="app-wrapper-content">
+                    {/*             <Route path='/dialogs' component={Dialogs} />
                 <Route path='/profile' component={Profile} />*/}
 
-                <Route path='/dialogs' render={ () => <DialogsContainer />} />
-                <Route path='/profile/:userId?' render={ () => <ProfileContainer />} />
-                <Route path='/users' render={ () => <UsersContainer />} />
-                <Route path='/login' render={ () => <Login />} />
+                    <Route path='/dialogs' render={() => <DialogsContainer />}/>
+                    <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
+                    <Route path='/users' render={() => <UsersContainer />}/>
+                    <Route path='/login' render={() => <Login />}/>
+                </div>
             </div>
-        </div>
         </BrowserRouter>
     );
 }
-
 
 
 export default App;
