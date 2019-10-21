@@ -2,7 +2,6 @@ import {profileAPI, usersAPI} from "../api/Api";
 import {setIsFetching, setTotalUsersCount, setUsers} from "./users-reducer";
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 let initialState = {
@@ -11,7 +10,6 @@ let initialState = {
         {id: 1, post: "First post", likesCount: 2},
         {id: 2, post: "Second post", likesCount: 22},
     ],
-    newPostText: "textik",
     profile: null,
     status: ''
 
@@ -20,16 +18,11 @@ let initialState = {
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
-            let newPost = state.newPostText;
+            let newPost = action.newPost;
             return {
                 ...state,
                 posts: [...state.posts, {id: 5, post: newPost, likesCount: 0}],
                 newPostText: ''
-            };
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newtext
             };
          case SET_USER_PROFILE:
             return {
@@ -46,16 +39,10 @@ const profileReducer = (state = initialState, action) => {
     }
 };
 
-export const updateNewPostTextActionCreator = (text) => {
+export const addPostActionCreator = (newPost) => {
     return {
-        type: UPDATE_NEW_POST_TEXT,
-        newtext: text
-    }
-};
-
-export const addPostActionCreator = () => {
-    return {
-        type: ADD_POST
+        type: ADD_POST,
+        newPost
     }
 };
 
