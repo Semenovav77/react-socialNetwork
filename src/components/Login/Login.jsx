@@ -5,29 +5,34 @@ import {required} from "../../helpers/validations";
 import {connect} from "react-redux";
 import {loginThunkCreator} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
+import s from './../common/FormValid/FormValid.module.css';
 
 const LoginForm = (props) => {
     debugger;
     return (
-            <form onSubmit={props.handleSubmit}>
-                <div>
-                    <Field placeholder={'Email'} name={'email'}
-                           validate={[required]}
-                           component={Input}/>
-                </div>
-                <div>
-                    <Field placeholder={'Password'} name={'password'}
-                           type={'password'}
-                           validate={[required]}
-                           component={Input}/>
-                </div>
-                <div>
-                    <Field  component={Input} name={'rememberme'} type={'checkbox'} /> rememder me
-                </div>
-                <div>
-                    <button>Login</button>
-                </div>
-            </form>
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field placeholder={'Email'} name={'email'}
+                       validate={[required]}
+                       component={Input}/>
+            </div>
+            <div>
+                <Field placeholder={'Password'} name={'password'}
+                       type={'password'}
+                       validate={[required]}
+                       component={Input}/>
+            </div>
+            <div>
+                <Field component={Input} name={'rememberme'} type={'checkbox'}/> rememder me
+            </div>
+            {props.error && <div className={s.formSummaryError}>
+                {props.error}
+            </div>
+            }
+            <div>
+                <button>Login</button>
+            </div>
+        </form>
     )
 };
 
@@ -39,14 +44,14 @@ const Login = (props) => {
     };
 
     if (props.isAuth) {
-        return <Redirect to={'/profile'} />
+        return <Redirect to={'/profile'}/>
     }
 
     return (
-    <div>
-       <h1>LOGIN</h1>
-        <LoginReduxForm onSubmit={onSubmit}/>
-    </div>)
+        <div>
+            <h1>LOGIN</h1>
+            <LoginReduxForm onSubmit={onSubmit}/>
+        </div>)
 };
 
 const mapStateToProps = (state) => {
@@ -58,4 +63,4 @@ const mapStateToProps = (state) => {
 
 };
 
-export default connect (mapStateToProps, {loginThunkCreator}) (Login);
+export default connect(mapStateToProps, {loginThunkCreator})(Login);
