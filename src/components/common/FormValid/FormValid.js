@@ -1,24 +1,26 @@
 import React from "react";
 import s from "./FormValid.module.css";
 
-export const Textarea = ({input, meta, ...props}) => {
+export const FormValid = ({input, meta, children, ...props}) => {
     return (
         <div className={s.formControl + ' ' + (meta.touched && meta.error ? s.error : '')}>
             <div>
-                <textarea {...input} {...props}/>
+                {children}
             </div>
             {meta.touched && meta.error && <span>{meta.error}</span>}
         </div>
     )
 };
-
-export const Input = ({input, meta, ...props}) => {
+export const Textarea = (props) => {
+    const {input, meta, ...restProps} = props;
     return (
-        <div className={s.formControl + ' ' + (meta.touched && meta.error ? s.error : '')}>
-            <div>
-                <input {...input} {...props}/>
-            </div>
-            {meta.touched && meta.error && <span>{meta.error}</span>}
-        </div>
+       <FormValid {...props}> <textarea {...input} {...restProps}/> </FormValid>
     )
-}
+};
+
+export const Input = (props) => {
+    const {input, meta, ...restProps} = props;
+    return (
+        <FormValid {...props}> <input {...input} {...restProps}/> </FormValid>
+    )
+};

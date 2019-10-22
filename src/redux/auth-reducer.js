@@ -1,4 +1,4 @@
-import {usersAPI} from "../api/Api";
+import {authAPI, usersAPI} from "../api/Api";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -16,20 +16,21 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
+               /* isAuth: action.data.isAuth*/
             };
         default:
             return state;
     }
 };
 
-export const setAuthUserData = (id, email, login) => {
+export const setAuthUserData = (id, email, login, isAuth) => {
     return {
         type: SET_USER_DATA,
         data: {
             id,
             email,
-            login
+            login,
+            isAuth
         }
     }
 };
@@ -40,7 +41,29 @@ export const getAuthMeThunkCreator = () => {
             .then(response => {
                 if (response.data.resultCode === 0) {
                     let {id, login, email} = response.data.data;
-                    dispatch(setAuthUserData(id, email, login))
+                    dispatch(setAuthUserData(id, email, login, true))
+                }
+            });
+    }
+};
+
+export const loginThunkCreator = (email, password, rememberme) => {
+    return (dispatch) => {
+        authAPI.login(email, password, rememberme)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(getAuthMeThunkCreator())
+                }
+            });
+    }
+};
+export const logoutThunkCreator = () => {
+    return (dispatch) => {
+        authAPI.logout()
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setAuthUserData(null, null, null, false));
+                    dispatch(getAuthMeThunkCreator());
                 }
             });
     }

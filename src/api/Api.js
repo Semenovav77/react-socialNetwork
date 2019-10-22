@@ -40,3 +40,12 @@ export const profileAPI = {
         return instance.put(`profile/status`, {status: status})
     }
 };
+
+export const authAPI = {
+    login(email, password, rememberme = false) {
+        return instance.post(`auth/login`, {email, password, rememberme})
+    },
+    logout() {
+        return instance.delete(`auth/login`)
+    }
+};
