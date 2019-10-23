@@ -37,7 +37,7 @@ export const setAuthUserData = (id, email, login, isAuth) => {
 
 export const getAuthMeThunkCreator = () => {
     return (dispatch) => {
-        usersAPI.getAuthMe()
+       return usersAPI.getAuthMe()
             .then(response => {
                 if (response.data.resultCode === 0) {
                     let {id, login, email} = response.data.data;
