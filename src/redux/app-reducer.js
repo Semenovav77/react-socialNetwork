@@ -1,5 +1,4 @@
-import {authAPI, usersAPI} from "../api/Api";
-import {stopSubmit} from 'redux-form';
+
 import {getAuthMeThunkCreator} from "./auth-reducer";
 const SET_INITIALIZED  = 'SET_INITIALIZED';
 
@@ -29,7 +28,6 @@ export const InitSuccess = () => {
 export const initializeApp = () => {
     return (dispatch) => {
        let promise = dispatch(getAuthMeThunkCreator());
-       debugger;
        //dispatch
        //dispatch
         //promise

@@ -134,6 +134,7 @@ export const setIsFolowingProgress = (followingProgress, userId) => {
 export const getUsersThunkCreator = (currentPage, pageSize) => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
+        dispatch(setCurrentPage(currentPage));
         usersAPI.getUsers(currentPage, pageSize).then(data => {
             dispatch(setIsFetching(false));
             dispatch(setUsers(data.items));
