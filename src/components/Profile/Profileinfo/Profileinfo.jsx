@@ -4,6 +4,7 @@ import s from './Profileinfo.module.css';
 import Preloader from "../../common/preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import Profile from "../Profile";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -16,7 +17,7 @@ const ProfileInfo = (props) => {
                 <img src={props.profile.photos.large} />
                 ava+description
             </div>
-            <ProfileStatus status={props.status}
+            <ProfileStatusWithHooks status={props.status}
                            updateUserStatusThunkCreator={props.updateUserStatusThunkCreator}/>
         </div>
     )
