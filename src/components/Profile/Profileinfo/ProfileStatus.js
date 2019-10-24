@@ -4,7 +4,7 @@ import Profile from "../Profile";
 
 class ProfileStatus extends React.Component {
     state = {
-        editSwitch: false,
+        editSwitch: true,
         status: this.props.status
     };
     changeStatus = () => {
@@ -36,6 +36,7 @@ class ProfileStatus extends React.Component {
     }
 
     render() {
+        window.st = this.state;
         return (
             <div>
                 {!this.state.editSwitch &&

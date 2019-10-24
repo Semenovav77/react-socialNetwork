@@ -8,10 +8,10 @@ const ProfileStatusWithHooks = (props) => {
    // let stateWithSetState = useState(false);
     let [editSwitch, setEditSwitch] = useState(false);
     let [status, setStatus] = useState(props.status);
-  /*  useEffect(() => {
+    useEffect(() => {
         debugger;
         setStatus(props.status)
-    }, [props.status]);*/
+    }, [props.status]);
 
     const changeStatus = () => {
         setEditSwitch(true);
@@ -23,6 +23,7 @@ const ProfileStatusWithHooks = (props) => {
     const onStatusChange = (event) => {
             setStatus(event.currentTarget.value);
     };
+   window.localSt = [status, setStatus];
     return (
         <div>
             {!editSwitch &&
