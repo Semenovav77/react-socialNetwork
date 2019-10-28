@@ -9,7 +9,7 @@ const ProfileStatusWithHooks = (props) => {
     let [editSwitch, setEditSwitch] = useState(false);
     let [status, setStatus] = useState(props.status);
     useEffect(() => {
-        debugger;
+        //debugger;
         setStatus(props.status)
     }, [props.status]);
 

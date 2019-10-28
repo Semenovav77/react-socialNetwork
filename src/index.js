@@ -7,9 +7,9 @@ import App from "./App";
 import {Provider} from "react-redux"
 import {BrowserRouter} from "react-router-dom";
 
-setInterval(() => {
+/*setInterval(() => {
     store.dispatch({type: 'FAKE'})
-}, 1000);
+}, 1000);*/
 
 /*let rerenderTree = () => {*/
 ReactDOM.render(

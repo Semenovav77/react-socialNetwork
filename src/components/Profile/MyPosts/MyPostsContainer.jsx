@@ -22,9 +22,10 @@ import Dialogs from "../../Dialogs/Dialogs";
 }*/
 
 let mapStateToProps = (state) => {
+    console.log('mpspr');
     return {
         posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText
+       // newPostText: state.profilePage.newPostText
     }
 };
 let mapDispatchToProps = (dispatch) => {
