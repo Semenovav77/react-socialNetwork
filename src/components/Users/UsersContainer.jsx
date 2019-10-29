@@ -2,10 +2,8 @@ import React from 'react';
 import {
     followUser,
     unfollowUser,
-    setUsers,
     setCurrentPage,
-    setTotalUsersCount,
-    setIsFetching, setIsFolowingProgress, getUsersThunkCreator,followThunkCreator,unfollowThunkCreator
+    setIsFolowingProgress, getUsersThunkCreator,followThunkCreator,unfollowThunkCreator
 } from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import Users from "./Users";
@@ -14,19 +12,20 @@ import {
     getCurrentPage,
     getFollowingProgress, getIsFetching,
     getPageSize,
-    getTotalUserCount,
-    getUsers, getUsersReSelector
+    getTotalUserCount, getUsersReSelector
 } from "../../redux/users-selectors";
 
 
 
 class UsersAPI extends React.Component {
     componentDidMount(e) {
-       this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
+       const {currentPage, pageSize} = this.props;
+       this.props.getUsersThunkCreator(currentPage, pageSize);
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.getUsersThunkCreator(pageNumber, this.props.pageSize);
+        const {pageSize} = this.props;
+        this.props.getUsersThunkCreator(pageNumber, pageSize);
     };
 
     render() {

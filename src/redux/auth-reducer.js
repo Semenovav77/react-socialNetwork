@@ -1,6 +1,7 @@
 import {authAPI, usersAPI} from "../api/Api";
 import {stopSubmit} from 'redux-form';
-const SET_USER_DATA = 'SET_USER_DATA';
+
+const SET_USER_DATA = 'auth/SET_USER_DATA';
 
 
 let initialState = {
@@ -16,7 +17,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.data,
-               /* isAuth: action.data.isAuth*/
+                /* isAuth: action.data.isAuth*/
             };
         default:
             return state;
@@ -35,7 +36,7 @@ export const setAuthUserData = (id, email, login, isAuth) => {
     }
 };
 
-export const getAuthMeThunkCreator = () => {
+/*export const getAuthMeThunkCreator = () => {
     return (dispatch) => {
        return usersAPI.getAuthMe()
             .then(response => {
@@ -45,7 +46,17 @@ export const getAuthMeThunkCreator = () => {
                 }
             });
     }
+};*/
+export const getAuthMeThunkCreator = () => {
+    return async (dispatch) => {
+        let response = await usersAPI.getAuthMe();
+        if (response.data.resultCode === 0) {
+            let {id, login, email} = response.data.data;
+            dispatch(setAuthUserData(id, email, login, true))
+        }
+    }
 };
+/*
 
 export const loginThunkCreator = (email, password, rememberme) => {
     return (dispatch) => {
@@ -54,14 +65,38 @@ export const loginThunkCreator = (email, password, rememberme) => {
                 if (response.data.resultCode === 0) {
                     dispatch(getAuthMeThunkCreator())
                 } else {
-                    let message = response.data.messages.length > 0  ? response.data.messages[0] : "some error";
+                    let message = response.data.messages.length > 0 ? response.data.messages[0] : "some error";
                     let action = stopSubmit('login', {_error: message});
                     dispatch(action);
                 }
             });
     }
 };
+*/
+
+export const loginThunkCreator = (email, password, rememberme) => {
+    return async (dispatch) => {
+        let response = await authAPI.login(email, password, rememberme);
+        if (response.data.resultCode === 0) {
+            dispatch(getAuthMeThunkCreator())
+        } else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : "some error";
+            let action = stopSubmit('login', {_error: message});
+            dispatch(action);
+        }
+
+    }
+};
 export const logoutThunkCreator = () => {
+    return async (dispatch) => {
+        let response = await authAPI.logout();
+        if (response.data.resultCode === 0) {
+            dispatch(setAuthUserData(null, null, null, false));
+            dispatch(getAuthMeThunkCreator());
+        }
+    }
+};
+/*export const logoutThunkCreator = () => {
     return (dispatch) => {
         authAPI.logout()
             .then(response => {
@@ -71,6 +106,6 @@ export const logoutThunkCreator = () => {
                 }
             });
     }
-};
+};*/
 
 export default authReducer;

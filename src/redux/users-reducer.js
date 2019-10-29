@@ -32,6 +32,8 @@ let initialState = {
     fake: 10
 };
 
+
+
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         //case 'FAKE': return {...state, fake: state.fake + 1};
@@ -144,28 +146,25 @@ export const getUsersThunkCreator = (currentPage, pageSize) => {
         });
     }
 };
+
+const followUnfollowFlow = (dispatch, userId, apiMethod, actionCreator) => {
+    dispatch(setIsFolowingProgress(true, userId));
+    apiMethod(userId)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(actionCreator(userId))
+            }
+            dispatch(setIsFolowingProgress(false, userId));
+        });
+};
 export const followThunkCreator = (userId) => {
     return (dispatch) => {
-        dispatch(setIsFolowingProgress(true, userId));
-        usersAPI.follow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(followUser(userId))
-                }
-                dispatch(setIsFolowingProgress(false, userId));
-            });
+        followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), followUser)
     }
 };
 export const unfollowThunkCreator = (userId) => {
     return (dispatch) => {
-        dispatch(setIsFolowingProgress(true, userId));
-        usersAPI.unfollow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(unfollowUser(userId))
-                }
-                dispatch(setIsFolowingProgress(false, userId));
-            });
+        followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), unfollowUser)
     }
 };
 
