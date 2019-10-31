@@ -1,10 +1,8 @@
 import React from 'react';
-import s from './Profileinfo.module.css';
-import Profile from "../Profile";
 
 class ProfileStatus extends React.Component {
     state = {
-        editSwitch: true,
+        editSwitch: false,
         status: this.props.status
     };
     changeStatus = () => {

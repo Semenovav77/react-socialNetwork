@@ -11,7 +11,7 @@ export const getUsersSelector = (state) => {
 */
 
 export const getUsersReSelector = createSelector(getUsers, (userss) => {
-    debugger;
+    //debugger;
     return userss.filter(u => true);
 });
 
