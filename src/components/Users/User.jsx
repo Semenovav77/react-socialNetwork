@@ -4,7 +4,6 @@ import userPhoto from '../../assets/images/ava.jpg';
 import {NavLink} from "react-router-dom";
 
 let User = (props) => {
-    debugger;
     return (<div>
             <div>
                 <div>

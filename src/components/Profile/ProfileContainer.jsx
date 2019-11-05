@@ -5,6 +5,7 @@ import {getProfileThunkCreator, getUserStatusThunkCreator, updateUserStatusThunk
 import {withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
+import {withReactSuspense} from "../../HOC/with ReactSuspense";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
