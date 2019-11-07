@@ -39,7 +39,7 @@ const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);
 
 const Login = (props) => {
     const onSubmit = (formData) => {
-        props.loginThunkCreator(formData.email, formData.password, formData.rememberme,)
+        props.loginThunkCreator(formData.email, formData.password, formData.rememberme)
     };
 
     if (props.isAuth) {

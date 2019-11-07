@@ -6,8 +6,13 @@ const Profile = (props) => {
     console.log('profilelog');
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status}
-                         updateUserStatusThunkCreator={props.updateUserStatusThunkCreator}/>
+            <ProfileInfo
+                isOwner={props.isOwner}
+                profile={props.profile}
+                status={props.status}
+                updateUserStatusThunkCreator={props.updateUserStatusThunkCreator}
+                updateProfileThunkCreator={props.updateProfileThunkCreator}
+                userId={props.userId}/>
             <MyPostsContainer/>
         </div>
     )

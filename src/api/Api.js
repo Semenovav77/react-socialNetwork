@@ -38,6 +38,13 @@ export const profileAPI = {
     },
     updateStatus(status) {
         return instance.put(`profile/status`, {status: status})
+    },
+    updateProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription,contacts) {
+        return instance.put(`profile`, {fullName: fullName, aboutMe: aboutMe,
+            lookingForAJob: lookingForAJob,
+            lookingForAJobDescription:lookingForAJobDescription,
+            contacts: contacts
+        })
     }
 };
 

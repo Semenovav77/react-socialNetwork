@@ -1,5 +1,7 @@
-import {profileAPI, usersAPI} from "../api/Api";
+import {authAPI, profileAPI, usersAPI} from "../api/Api";
 import {setIsFetching, setTotalUsersCount, setUsers} from "./users-reducer";
+import {stopSubmit} from "redux-form";
+import {getAuthMeThunkCreator} from "./auth-reducer";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -79,6 +81,20 @@ export const getProfileThunkCreator = (userId) => {
             .then(response => {
                 dispatch(setUserProfile(response.data));
             });
+    }
+};
+
+export const updateProfileThunkCreator = (userId, fullName, aboutMe, lookingForAJob, lookingForAJobDescription,contacts) => {
+    return async (dispatch) => {
+        let response = await profileAPI.updateProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription,contacts);
+        if (response.data.resultCode === 0) {
+            dispatch(getProfileThunkCreator(userId))
+        }/* else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : "some error";
+            let action = stopSubmit('login', {_error: message});
+            dispatch(action);
+        }*/
+
     }
 };
 
