@@ -4,3 +4,7 @@
 .contacts {
     padding-left: 10px;
 }
+.formSummaryError {
+    border: solid #8f0d11 2px;
+    color: sandybrown;
+}

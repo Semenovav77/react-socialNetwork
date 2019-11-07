@@ -38,6 +38,10 @@ const ProfileDataForm = (props) => {
                 </div>
             })}
             </div>
+            {props.error && <div className={s.formSummaryError}>
+                {props.error}
+            </div>
+            }
         </form>
     )
 };

@@ -89,11 +89,12 @@ export const updateProfileThunkCreator = (userId, fullName, aboutMe, lookingForA
         let response = await profileAPI.updateProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription,contacts);
         if (response.data.resultCode === 0) {
             dispatch(getProfileThunkCreator(userId))
-        }/* else {
+        } else {
             let message = response.data.messages.length > 0 ? response.data.messages[0] : "some error";
-            let action = stopSubmit('login', {_error: message});
+            let action = stopSubmit('pfofile-edit', {_error: message});
             dispatch(action);
-        }*/
+            return Promise.reject(response.data.messages[0]);
+        }
 
     }
 };
