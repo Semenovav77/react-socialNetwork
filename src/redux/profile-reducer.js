@@ -119,4 +119,21 @@ export const updateUserStatusThunkCreator = (status) => {
     }
 };
 
+export const updateMainPhotoThunkCreator = (userId, photo) => {
+    return async (dispatch) => {
+        debugger;
+        let response = await profileAPI.updatePhoto(photo);
+        if (response.data.resultCode === 0) {
+            dispatch(getProfileThunkCreator(userId))
+        }/* else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : "some error";
+            let action = stopSubmit('pfofile-edit', {_error: message});
+            dispatch(action);
+            return Promise.reject(response.data.messages[0]);
+        }
+*/
+    }
+};
+
+
 export default profileReducer;

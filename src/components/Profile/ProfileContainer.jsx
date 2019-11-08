@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {getProfileThunkCreator,
     getUserStatusThunkCreator,
     updateUserStatusThunkCreator,
-    updateProfileThunkCreator} from "../../redux/profile-reducer";
+    updateProfileThunkCreator,updateMainPhotoThunkCreator} from "../../redux/profile-reducer";
 import {withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
@@ -21,7 +21,20 @@ class ProfileContainer extends React.Component {
         };
         this.props.getProfileThunkCreator(userId);
         this.props.getUserStatusThunkCreator(userId);
+    }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.match.params.userId!=prevProps.match.params.userId) {
+            let userId = this.props.match.params.userId;
+            if (!userId) {
+                userId = this.props.userId;
+                if (!userId) {
+                    this.props.history.push('/login')
+                }
+            };
+            this.props.getProfileThunkCreator(userId);
+            this.props.getUserStatusThunkCreator(userId);
+        }
     }
 
     render() {
@@ -31,7 +44,9 @@ class ProfileContainer extends React.Component {
                     isOwner={!this.props.match.params.userId}
                     profile={this.props.profile}
                     status={this.props.status}
-                    updateUserStatusThunkCreator={this.props.updateUserStatusThunkCreator}/>
+                    updateUserStatusThunkCreator={this.props.updateUserStatusThunkCreator}
+                    updateMainPhotoThunkCreator={this.props.updateMainPhotoThunkCreator}/>
+
         )
     }
 }
@@ -51,7 +66,7 @@ export default connect(mapStateToProps, {getProfileThunkCreator}) (WithUrlDataCo
 
 export default compose(
     connect(mapStateToProps, {getProfileThunkCreator,getUserStatusThunkCreator, updateUserStatusThunkCreator,
-        updateProfileThunkCreator}),
+        updateProfileThunkCreator, updateMainPhotoThunkCreator}),
     withRouter,
 /*    withAuthRedirect*/
 )(ProfileContainer);

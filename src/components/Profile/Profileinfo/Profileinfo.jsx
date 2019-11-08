@@ -21,13 +21,21 @@ const ProfileInfo = (props) => {
                 }
             );
     };
+    const mainPhotoSelect = (e) => {
+       if (e.target.files.length) {
+           debugger;
+           props.updateMainPhotoThunkCreator(props.userId, e.target.files[0])
+       }
+    };
     return (
         <div>
             {/*<img src={bg} className="App-bg" alt="bg"/>*/}
             <div className={s.decriptionBlock}>
                 <img src={props.profile.photos.large != null ? props.profile.photos.large : userPhoto}
-                    /* className={s.userPhoto}*//>
-                {/*<img src={props.profile.photos.large} />*/}
+                     className={s.userPhoto}/>
+            </div>
+            <div>
+                {props.isOwner && <input type={'file'} onChange={mainPhotoSelect}/>}
             </div>
             <div>
                 <b><span>Status: </span></b>

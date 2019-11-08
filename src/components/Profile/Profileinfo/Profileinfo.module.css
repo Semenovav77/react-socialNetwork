@@ -8,3 +8,6 @@
     border: solid #8f0d11 2px;
     color: sandybrown;
 }
+.userPhoto {
+    max-width: 200px;
+}
