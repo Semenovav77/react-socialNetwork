@@ -3,7 +3,7 @@ import {Field, reduxForm} from "redux-form";
 import {Input} from "../common/FormValid/FormValid";
 import {required} from "../../helpers/validations";
 import {connect} from "react-redux";
-import {loginThunkCreator} from "../../redux/auth-reducer";
+import {getCaptchaURL, loginThunkCreator} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import s from './../common/FormValid/FormValid.module.css';
 
@@ -24,6 +24,11 @@ const LoginForm = (props) => {
             <div>
                 <Field component={Input} name={'rememberme'} type={'checkbox'}/> rememder me
             </div>
+            {props.captchaURL && <img src={props.captchaURL}/>}
+            {props.captchaURL && <Field name={'captcha'}
+                validate={[required]}
+                component={Input}/>}
+
             {props.error && <div className={s.formSummaryError}>
                 {props.error}
             </div>
@@ -39,7 +44,8 @@ const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);
 
 const Login = (props) => {
     const onSubmit = (formData) => {
-        props.loginThunkCreator(formData.email, formData.password, formData.rememberme)
+        props.loginThunkCreator(formData.email, formData.password, formData.rememberme, formData.captcha)
+        props.getCaptchaURL(null);
     };
 
     if (props.isAuth) {
@@ -49,17 +55,18 @@ const Login = (props) => {
     return (
         <div>
             <h1>LOGIN</h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginReduxForm onSubmit={onSubmit} captchaURL={props.captchaURL}/>
         </div>)
 };
 
 const mapStateToProps = (state) => {
     return (
         {
-            isAuth: state.auth.isAuth
+            isAuth: state.auth.isAuth,
+            captchaURL: state.auth.captchaURL
         }
     )
 
 };
 
-export default connect(mapStateToProps, {loginThunkCreator})(Login);
+export default connect(mapStateToProps, {loginThunkCreator,getCaptchaURL})(Login);
