@@ -25,9 +25,9 @@ const LoginForm = (props) => {
                 <Field component={Input} name={'rememberme'} type={'checkbox'}/> rememder me
             </div>
             {props.captchaURL && <img src={props.captchaURL}/>}
-            {props.captchaURL && <Field name={'captcha'}
+            {props.captchaURL && <div>Введите символы<Field name={'captcha'}
                 validate={[required]}
-                component={Input}/>}
+                component={Input}/> </div> }
 
             {props.error && <div className={s.formSummaryError}>
                 {props.error}

@@ -3,7 +3,7 @@ import {
     followUser,
     unfollowUser,
     setCurrentPage,
-    setIsFolowingProgress, getUsersThunkCreator,followThunkCreator,unfollowThunkCreator
+    setIsFolowingProgress, getUsersThunkCreator, followThunkCreator, unfollowThunkCreator
 } from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import Users from "./Users";
@@ -16,11 +16,10 @@ import {
 } from "../../redux/users-selectors";
 
 
-
 class UsersAPI extends React.Component {
     componentDidMount(e) {
-       const {currentPage, pageSize} = this.props;
-       this.props.getUsersThunkCreator(currentPage, pageSize);
+        const {currentPage, pageSize} = this.props;
+        this.props.getUsersThunkCreator(currentPage, pageSize);
     }
 
     onPageChanged = (pageNumber) => {

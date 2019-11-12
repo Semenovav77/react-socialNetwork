@@ -32,12 +32,12 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 posts: state.posts.filter(p => p.id != action.postId),
             };
-         case SET_USER_PROFILE:
+        case SET_USER_PROFILE:
             return {
                 ...state,
                 profile: action.profile
             };
-         case SET_STATUS:
+        case SET_STATUS:
             return {
                 ...state,
                 status: action.status
@@ -84,9 +84,9 @@ export const getProfileThunkCreator = (userId) => {
     }
 };
 
-export const updateProfileThunkCreator = (userId, fullName, aboutMe, lookingForAJob, lookingForAJobDescription,contacts) => {
+export const updateProfileThunkCreator = (userId, fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts) => {
     return async (dispatch) => {
-        let response = await profileAPI.updateProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription,contacts);
+        let response = await profileAPI.updateProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts);
         if (response.data.resultCode === 0) {
             dispatch(getProfileThunkCreator(userId))
         } else {
@@ -108,16 +108,28 @@ export const getUserStatusThunkCreator = (userId) => {
     }
 };
 
+/*export const updateUserStatusThunkCreator = (status) => {
+    return async (dispatch) => {
+        try {
+            let response = await profileAPI.updateStatus(status)
+            if (response.data.resultCode === 0) {
+                dispatch(setUserStatus(status));
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+};*/
 export const updateUserStatusThunkCreator = (status) => {
     return (dispatch) => {
         profileAPI.updateStatus(status)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setUserStatus(status));
-                }
-            });
-    }
-};
+    .then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(setUserStatus(status));
+        }
+    }).catch(error => alert(error.message));
+
+}};
 
 export const updateMainPhotoThunkCreator = (userId, photo) => {
     return async (dispatch) => {

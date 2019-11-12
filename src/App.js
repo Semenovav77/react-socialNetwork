@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import NavBar from './components/Navbar/NavBar';
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -20,6 +20,16 @@ const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsCo
 class App extends React.Component {
     componentDidMount() {
         this.props.initializeApp();
+        window.addEventListener('unhandledrejection', function(e) {
+            console.log(e);
+            alert(e.reason);
+        });
+    }
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', function (e) {
+            console.log(e);
+            alert(e.reason);
+        });
     }
 
     render() {
@@ -27,48 +37,55 @@ class App extends React.Component {
             return <Preloader/>
         }
         return (
-                <div className='app-wrapper'>
-                    <HeaderContainer/>
-                    <NavBar/>
-                    <div className="app-wrapper-content">
-                        {/*             <Route path='/dialogs' component={Dialogs} />
+            <div className='app-wrapper'>
+                <HeaderContainer/>
+                <NavBar/>
+                <div className="app-wrapper-content">
+                    {/*             <Route path='/dialogs' component={Dialogs} />
                         <Route path='/profile' component={Profile} />*/}
 
-                       {/* <Route path='/dialogs' render={() => {
+                    {/* <Route path='/dialogs' render={() => {
                             return (
                                 <React.Suspense fallback={<Preloader />}>
                                     <DialogsContainer />
                                 </React.Suspense>
                             )
                         }}/>*/}
+                    <Switch>
+                        <Route exact path='/'>
+                            <Redirect from='/' to='profile' />
+                        </Route>
                         <Route path='/dialogs' render={withReactSuspense(DialogsContainer)}/>
-                        <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
-                        <Route path='/users' render={() => <UsersContainer />}/>
-                        <Route path='/login' render={() => <Login />}/>
-                    </div>
+                        <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
+                        <Route path='/users' render={() => <UsersContainer/>}/>
+                        <Route path='/login/vk' render={() => <div>VK</div>}/>
+                        <Route exact path='/login' render={() => <Login/>}/>
+                        <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
+                    </Switch>
                 </div>
+            </div>
 
-        );
+    );
     }
 
-}
+    }
 
-const mapStateToProps = (state) => ({
-    initialized: state.app.initialized
-});
+    const mapStateToProps = (state) => ({
+        initialized: state.app.initialized
+    });
 
-let AppContainer = compose(
+    let AppContainer = compose(
     withRouter,
     connect(mapStateToProps, {initializeApp}))(App);
 
-const MainApp = (props) => {
-    return (
+    const MainApp = (props) => {
+        return (
         <BrowserRouter>
-            <Provider store={store}>
-                <AppContainer />
-            </Provider>
+        <Provider store={store}>
+        <AppContainer/>
+        </Provider>
         </BrowserRouter>
-    )
-};
+        )
+    };
 
-export default MainApp;
+    export default MainApp;
