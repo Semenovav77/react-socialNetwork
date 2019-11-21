@@ -1,8 +1,9 @@
 import React from 'react';
-import './index.css';
+//import './index.css';
 import * as serviceWorker from './serviceWorker';
 import ReactDOM from "react-dom";
 import MainApp from "./App";
+import "./styles/index.scss";
 
 /*setInterval(() => {
     store.dispatch({type: 'FAKE'})
