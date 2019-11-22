@@ -1,5 +1,7 @@
 import React from "react";
 import s from "./FormValid.module.css";
+import {Input as BaseInput} from 'antd';
+import { Checkbox as BaseCheckbox } from 'antd';
 
 export const FormValid = ({input, meta, children, ...props}) => {
     return (
@@ -19,8 +21,17 @@ export const Textarea = (props) => {
 };
 
 export const Input = (props) => {
+
     const {input, meta, ...restProps} = props;
     return (
-        <FormValid {...props}> <input {...input} {...restProps}/> </FormValid>
+        <FormValid {...props}> <BaseInput {...input} {...restProps}/> </FormValid>
+    )
+};
+
+export const Checkbox = (props) => {
+
+    const {input, meta, ...restProps} = props;
+    return (
+        <FormValid {...props}> <BaseCheckbox {...input} {...restProps}/> </FormValid>
     )
 };
