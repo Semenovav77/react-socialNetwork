@@ -1,11 +1,11 @@
 import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogsItem";
-import Message from "./Message/Message";
+import Message from "./MessagesNew/Message";
 
 
 
-const Dialogs = (props) => {
+/*const Dialogs = (props) => {
     let state = props.dialogsPage;
     let dialogsElements = state.dialogs
         .map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
@@ -51,6 +51,26 @@ const Dialogs = (props) => {
             </div>
         </div>
     )
-};
+};*/
+const Dialogs = () => {
+    const newDate = new Date(2018, 10, 1, 23,23,23);
+    return (
+        <section className='dialogs'>
+            <Message
+                avatar='https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
+                text='Привет кул! как твои дела?'
+                date={newDate}
+                isMe={false}
+            />
+            <Message
+                avatar='https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
+                text='Привет кул! как твои дела?'
+                date={newDate}
+                isMe={true}
+            />
+        </section>
+        )
+
+}
 
 export default Dialogs;

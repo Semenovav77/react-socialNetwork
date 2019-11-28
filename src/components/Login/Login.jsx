@@ -4,7 +4,7 @@ import {Checkbox, Input} from "../common/FormValid/FormValid";
 import {required} from "../../helpers/validations";
 import {connect} from "react-redux";
 import {getCaptchaURL, loginThunkCreator} from "../../redux/auth-reducer";
-import {Redirect} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import s from './../common/FormValid/FormValid.module.css';
 import Button from '../common/Button/Button';
 import Block from "../common/Block/Block";
@@ -45,6 +45,9 @@ const LoginForm = (props) => {
                 }
                 <div>
                     <Button type='primary' htmlType='submit' size='large'>Войти в аккаунт</Button>
+                </div>
+                <div className={'auth__register-link'}>
+                    <NavLink to="/register"> Зарегистрироваться</NavLink>
                 </div>
             </Block>
         </form>

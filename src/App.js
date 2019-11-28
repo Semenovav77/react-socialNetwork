@@ -12,6 +12,7 @@ import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/preloader/Preloader";
 import store from "./redux/redux-store";
 import {withReactSuspense} from "./HOC/withReactSuspense";
+import RegisterContainer from "./components/Register/RegisterContainer";
 
 /*import DialogsContainer from "./components/Dialogs/DialogsContainer";*/
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -22,13 +23,13 @@ class App extends React.Component {
         this.props.initializeApp();
         window.addEventListener('unhandledrejection', function(e) {
             console.log(e);
-            alert(e.reason);
+            //alert(e.reason);
         });
     }
     componentWillUnmount() {
         window.removeEventListener('unhandledrejection', function (e) {
             console.log(e);
-            alert(e.reason);
+            //alert(e.reason);
         });
     }
 
@@ -60,6 +61,7 @@ class App extends React.Component {
                         <Route path='/users' render={() => <UsersContainer/>}/>
                         <Route path='/login/vk' render={() => <div>VK</div>}/>
                         <Route exact path='/login' render={() => <Login/>}/>
+                        <Route exact path='/register' render={() => <RegisterContainer/>}/>
                         <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
                     </Switch>
                 </div>

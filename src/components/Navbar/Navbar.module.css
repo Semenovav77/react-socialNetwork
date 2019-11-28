@@ -7,7 +7,7 @@
 .item a {
     color: white;
     text-decoration: none;
-
+    line-height: 20px;
 }
 
 .item a.active {
