@@ -12,7 +12,6 @@ import './Login.scss'
 import {Icon} from 'antd';
 
 
-
 const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
@@ -20,14 +19,14 @@ const LoginForm = (props) => {
                 <div className='email'>
                     <Field placeholder={'Email'} name={'email'}
                            validate={[required]}
-                           prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                           prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                            component={Input}/>
                 </div>
                 <div className='passwd'>
                     <Field placeholder={'Password'} name={'password'}
                            type={'password'}
                            validate={[required]}
-                           prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                           prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                            component={Input}/>
                 </div>
                 <div className='chkbox'>
@@ -57,28 +56,28 @@ const LoginForm = (props) => {
 const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);
 
 const Login = (props) => {
-    const onSubmit = (formData) => {
-        console.log(formData);
-        props.loginThunkCreator(formData.email, formData.password, formData.rememberme, formData.captcha)
-        props.getCaptchaURL(null);
-    };
+        const onSubmit = (formData) => {
+            console.log(formData);
+            props.loginThunkCreator(formData.email, formData.password, formData.rememberme, formData.captcha)
+            props.getCaptchaURL(null);
+        };
 
-    if (props.isAuth) {
-        return <Redirect to={'/profile'}/>
-    }
+        if (props.isAuth) {
+            return <Redirect to={'/profile'}/>
+        }
 
-    return (
-        <section className='auth'>
-            <div className='auth__content'>
-                <div className='auth__top'>
-                    <h2>Войти в аккаунт</h2>
-                    <p>Пожалуйcта, войдите в свой аккаунт</p>
+        return (
+            <section className='auth'>
+                <div className='auth__content'>
+                    <div className='auth__top'>
+                        <h2>Войти в аккаунт</h2>
+                        <p>Пожалуйcта, войдите в свой аккаунт</p>
+                    </div>
+                    <LoginReduxForm onSubmit={onSubmit} captchaURL={props.captchaURL}/>
                 </div>
-                <LoginReduxForm onSubmit={onSubmit} captchaURL={props.captchaURL}/>
-            </div>
-        </section>)
+            </section>)
 
-}
+    }
 ;
 
 const mapStateToProps = (state) => {

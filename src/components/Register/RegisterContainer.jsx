@@ -1,30 +1,13 @@
 import {withFormik} from 'formik';
 import Register from "./Register";
+import {validateFormik} from "../../helpers/validations";
 
 const RegisterContainer = withFormik({
-/*    mapPropsToValues: () => ({email: 'dfd'}),*/
+    mapPropsToValues: () => ({email: '', name: '', password: ''}),
     validate: values => {
         let errors = {};
-        if (!values.email) {
-            errors.email = 'Required';
-        } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-                values.email
-            )
-        ) {
-            errors.email = 'Invalid email address';
-        };
-        if (!values.name) {
-            errors.name = 'Required';
-        };
-        if (!values.password) {
-            errors.password = 'Required';
-        } else if (!/^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.{6,})/.test(
-            values.password
-        )
-        ) {
-            errors.password = 'Invalid password';
-        };
+        const keys = Object.keys(values);
+        keys.forEach(key => validateFormik[key] && validateFormik[key](errors, values[key]));
         return errors;
     },
 

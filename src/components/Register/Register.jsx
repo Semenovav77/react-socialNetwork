@@ -18,7 +18,6 @@ const Register = (props) => {
     if (props.isAuth) {
         return <Redirect to={'/profile'}/>
     }
-    debugger;
     return (
         <section className='auth'>
             <div className='auth__content'>
@@ -29,7 +28,7 @@ const Register = (props) => {
                 <Form onSubmit={handleSubmit} className="login-form">
                     <Form.Item validateStatus={!touched.email ? '' : errors.email && touched.email ? 'error':'success'}
                                hasFeedback
-                               help={!touched.email ? '' : errors.email}
+                               help={errors.email && touched.email ?  errors.email : ''}
                     >
                         <BaseInput
                             id='email'
