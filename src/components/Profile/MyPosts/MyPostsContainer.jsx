@@ -1,10 +1,7 @@
 import React from 'react';
 import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
-import {addMessageActionCreator, updateNewMessageTextActionCreator} from "../../../redux/dialogs-reducer";
 import {connect} from "react-redux";
-import Dialogs from "../../Dialogs/Dialogs";
-
 
 /*const MyPostsContainer = (props) => {
     let state = props.store.getState();

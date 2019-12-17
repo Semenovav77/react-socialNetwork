@@ -5,15 +5,11 @@ import {Button as BaseButton, Form, Icon, Input as BaseInput} from 'antd';
 
 const Register = (props) => {
         const {
-            values,
             touched,
             errors,
-            isSubmitting,
             handleChange,
             handleBlur,
-            handleSubmit,
-            handleReset,
-            dirty,
+            handleSubmit
         } = props;
     if (props.isAuth) {
         return <Redirect to={'/profile'}/>

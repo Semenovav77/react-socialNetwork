@@ -52,10 +52,34 @@ import Message from "./MessagesNew/Message";
         </div>
     )
 };*/
-const Dialogs = () => {
+const Dialogs = ({items}) => {
     const newDate = new Date(2018, 10, 1, 23,23,23);
     return (
-        <section className='dialogs'>
+        <section className='messagescomp'>
+            <div className={'dialogs'}>
+            {/*    {items.map(item => (*/}
+                    <DialogItem
+                        user={{
+                            fullname: 'Senya Dostoevskij',
+                            lastmessage: 'я учу реакт джс усердно,  а ты что сейчас делаешь????'
+
+                        }}
+                    />
+              {/*  ))}*/}
+
+            </div>
+
+            {/*<DialogList items={[
+                {user: {
+                    fullname: "Сеня",
+                    avatar:'https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
+                    },
+                message: {
+                    text: 'Ты начал учить react',
+                    created_at: new Date(2018, 10, 1, 23,23,23)
+                }
+                }
+            ]}/>*/}
             <Message
                 avatar='https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
                 text='Привет кул! как твои дела?'
@@ -64,13 +88,13 @@ const Dialogs = () => {
             />
             <Message
                 avatar='https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
-                text='Привет кул! как твои дела?'
+                text='Хорошо'
                 date={newDate}
                 isMe={true}
             />
         </section>
         )
 
-}
+};
 
 export default Dialogs;

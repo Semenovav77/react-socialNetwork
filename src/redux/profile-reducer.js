@@ -1,7 +1,6 @@
-import {authAPI, profileAPI, usersAPI} from "../api/Api";
-import {setIsFetching, setTotalUsersCount, setUsers} from "./users-reducer";
+import { profileAPI, usersAPI} from "../api/Api";
 import {stopSubmit} from "redux-form";
-import {getAuthMeThunkCreator} from "./auth-reducer";
+
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
