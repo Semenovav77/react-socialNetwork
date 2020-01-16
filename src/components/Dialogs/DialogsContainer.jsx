@@ -8,21 +8,35 @@ import {connect} from "react-redux";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 
-/*const DialogsContainer = (props) => {
-    let state = props.store.getState();
-    let sendMessageClick = () => {
-        props.store.dispatch(addMessageActionCreator());
-    }
-
-    let onMessageChange = (body) => {
-        props.store.dispatch(updateNewMessageTextActionCreator(body));
-    }
-    debugger;
+const DialogsContainer = (props) => {
     return (
-       <Dialogs updateNewMessageText={onMessageChange} sendMessage={sendMessageClick}
-       dialogsPage={state.dialogsPage}/>
+       <Dialogs
+           items={[
+               {
+                   id: Math.random(),
+                   user: {
+                       fullname: "Onotolle Vasserman",
+                       avatar: 'https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
+                   },
+                   lastMessage: {
+                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
+                       created_at: new Date(2019, 12, 1, 19,24,25),
+                   }
+               },
+               {
+                   id: Math.random(),
+                   user: {
+                       fullname: "Vasilij Pupkin",
+                       avatar: 'https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
+                   },
+                   lastMessage: {
+                       text: "Привет, нормально",
+                       created_at:  new Date(),
+                   }
+               }
+           ]}/>
     )
-};*/
+};
 
 let mapStateToProps = (state) => {
     return {
@@ -43,7 +57,7 @@ let mapDispatchToProps = (dispatch) => {
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     withAuthRedirect,
-)(Dialogs);
+)(DialogsContainer);
 
 /*
 let AuthRedirectComponent = withAuthRedirect(Dialogs);

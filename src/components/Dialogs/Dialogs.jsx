@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogsItem";
 import Message from "./MessagesNew/Message";
-
+import orderBy from "lodash/orderBy";
 
 
 /*const Dialogs = (props) => {
@@ -55,31 +55,16 @@ import Message from "./MessagesNew/Message";
 const Dialogs = ({items}) => {
     const newDate = new Date(2018, 10, 1, 23,23,23);
     return (
-        <section className='messagescomp'>
+        <section className='messages'>
             <div className={'dialogs'}>
-            {/*    {items.map(item => (*/}
+                {orderBy(items,["lastMessage.created_at"],["desc"]).map(item => (
                     <DialogItem
-                        user={{
-                            fullname: 'Senya Dostoevskij',
-                            lastmessage: 'я учу реакт джс усердно,  а ты что сейчас делаешь????'
-
-                        }}
+                        key={item.id}
+                        user={item.user}
+                        lastMessage={item.lastMessage}
                     />
-              {/*  ))}*/}
-
+                ))}
             </div>
-
-            {/*<DialogList items={[
-                {user: {
-                    fullname: "Сеня",
-                    avatar:'https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
-                    },
-                message: {
-                    text: 'Ты начал учить react',
-                    created_at: new Date(2018, 10, 1, 23,23,23)
-                }
-                }
-            ]}/>*/}
             <Message
                 avatar='https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
                 text='Привет кул! как твои дела?'

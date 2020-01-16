@@ -27,7 +27,7 @@ const Message = (props) => {
 
 Message.defaultProps = {
     user: {}
-}
+};
 
 Message.propTypes = {
     avatar: PropTypes.string,
