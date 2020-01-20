@@ -9,8 +9,16 @@ import pauseSvg from '../../../assets/images/pause.svg';
 import './Message.scss'
 import Time from "../../common/Time/Time";
 
-const Message = ({avatar, user, text, date, isMe, audio}) => {
+const convertToTime = (number) => {
+    const mins = Math.floor(number/60);
+    const secs = (number % 60).toFixed();
+    return `${mins < 10 ? '0':''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+};
+
+const MessageAudio = ({audio}) => {
     const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [progress, setProgress] = useState(0);
     const audioEl = useRef(null);
     useEffect(() => {
         console.log(audioEl.current);
@@ -19,10 +27,17 @@ const Message = ({avatar, user, text, date, isMe, audio}) => {
         }, false);
         audioEl.current && audioEl.current.addEventListener('ended', () => {
             setIsPlaying(false);
+            setProgress(0);
+            setCurrentTime(0);
         }, false);
         audioEl.current && audioEl.current.addEventListener('pause', () => {
             setIsPlaying(false);
         }, false);
+        audioEl.current && audioEl.current.addEventListener('timeupdate', () => {
+            const duration = audioEl.current && audioEl.current.duration || 0;
+            setCurrentTime(audioEl.current.currentTime);
+            setProgress((audioEl.current.currentTime/duration)*100);
+        });
     }, [audio]);
     const tooglePlay = () => {
         if (!isPlaying) {
@@ -30,9 +45,30 @@ const Message = ({avatar, user, text, date, isMe, audio}) => {
         } else {
             audioEl.current.pause()
         }
-        audioEl.current.volume = '0.1'
+        audioEl.current.volume = '0.1';
     };
-    debugger
+ return (
+     <div className='message__audio'>
+         <audio volume='0.1' ref={audioEl} src={audio} preload/>
+         <div className='message__audio-progress' style={{width: progress + "%"}}/>
+         <div className='message__audio-info'>
+             <div className='message__audio-btn'>
+                 <button onClick={tooglePlay}>
+                     {isPlaying ?
+                         <img src={pauseSvg} alt='Pause svg'/> : <img src={playSvg} alt='Pause svg'/>}
+                 </button>
+             </div>
+             <div className='message__audio-wave'><img src={waveSvg} alt={'wave'}/></div>
+             <span className='message__audio-duration'>
+                                {audioEl.current ? convertToTime(currentTime): convertToTime(0)}
+                            </span>
+         </div>
+     </div>
+ )
+};
+
+const Message = ({avatar, user, text, date, isMe, audio}) => {
+
     return (
         <div className={classNames('message', {'message--isme': isMe, 'message--is-audio': audio})}>
             <div className='message__avatar'>
@@ -41,20 +77,7 @@ const Message = ({avatar, user, text, date, isMe, audio}) => {
             <div className='message__content'>
                 <div className='message__bubble'>
                     {text && <p className='message__text'> {text} </p>}
-                    {audio && <div className='message__audio'>
-                        <audio volume='0.1' ref={audioEl} src={audio} preload/>
-                        <div className='message__audio-progress' style={{width: "40%"}}/>
-                        <div className='message__audio-info'>
-                            <div className='message__audio-btn'>
-                                <button onClick={tooglePlay}>
-                                    {isPlaying ?
-                                        <img src={pauseSvg} alt='Pause svg'/> : <img src={playSvg} alt='Pause svg'/>}
-                                </button>
-                            </div>
-                            <div className='message__audio-wave'><img src={waveSvg} alt={'wave'}/></div>
-                            <span className='message__audio-duration'>00:11</span>
-                        </div>
-                    </div>}
+                    {audio && <MessageAudio audio={audio}/>}
                 </div>
                 <span className='message__date'>
                     <Time date={date}/>
