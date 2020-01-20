@@ -1,8 +1,9 @@
-
 import React from 'react';
 import classNames from 'classnames';
-import format from 'date-fns/format'
-import isToday from 'date-fns/isToday'
+import format from 'date-fns/format';
+import isToday from 'date-fns/isToday';
+import generateColorAva from "./../../../helpers/generateColorAva";
+import Avatar from '../../common/Avatar/Avatar.jsx';
 
 import './DialogItem.scss'
 
@@ -20,7 +21,7 @@ const getAvatar = (avatar) => {
             <img src={avatar} alt={`avatar`} />
         );
     } else {
-        //make ava
+        console.log(generateColorAva('0882984d8266657048f875667f080fba'))
     }
 
 };
@@ -28,7 +29,7 @@ const DialogItem = ({user, lastMessage}) => {
     return (
         <div className={classNames('dialogs__item', '')}>
             <div className='dialogs__item-avatar'>
-                {getAvatar(user.avatar)}
+                <Avatar user={user}/>
             </div>
             <div className='dialogs__item-info'>
                 <div className='dialogs__item-info-top'>

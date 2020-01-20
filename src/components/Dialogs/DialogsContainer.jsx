@@ -8,15 +8,17 @@ import {connect} from "react-redux";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 
+
 const DialogsContainer = (props) => {
     return (
        <Dialogs
            items={[
                {
-                   id: Math.random(),
+                   id: "0882984d8266657048f875667f080fba",
                    user: {
+                       id:"0892984d8266657048f875667f080fba",
                        fullname: "Onotolle Vasserman",
-                       avatar: 'https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
+                       avatar: null
                    },
                    lastMessage: {
                        text: "Привет кул! как твои дела? сколько лет, сколько зим",
@@ -26,6 +28,7 @@ const DialogsContainer = (props) => {
                {
                    id: Math.random(),
                    user: {
+                       id:"0892984d8266657048f875667f080fba",
                        fullname: "Vasilij Pupkin",
                        avatar: 'https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
                    },
