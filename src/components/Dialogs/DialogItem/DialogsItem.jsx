@@ -15,17 +15,8 @@ const getMessageTime = created_at => {
     }
 };
 
-const getAvatar = (avatar) => {
-    if (avatar) {
-        return (
-            <img src={avatar} alt={`avatar`} />
-        );
-    } else {
-        console.log(generateColorAva('0882984d8266657048f875667f080fba'))
-    }
-
-};
 const DialogItem = ({user, lastMessage}) => {
+    console.log(lastMessage.created_at);
     return (
         <div className={classNames('dialogs__item', '')}>
             <div className='dialogs__item-avatar'>

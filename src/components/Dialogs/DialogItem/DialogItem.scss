@@ -1,12 +1,13 @@
 @import '../../../styles/variables';
 
 .dialogs{
-  width: 300px;
-  margin-bottom: 15px;
+  width: 320px;
   &__item {
     display: flex;
+    margin-bottom: 15px;
+
     &-avatar {
-      flex: 0 0 50;
+      flex: 0 0 auto;
       width: 40px;
       height: 40px;
       margin-right: 10px;
@@ -36,7 +37,7 @@
       &-bottom {
         p {
           opacity: 0.4;
-          width : 250px;
+          width : 230px;
           overflow:hidden;
           display:inline-block;
           text-overflow: ellipsis;

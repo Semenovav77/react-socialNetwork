@@ -3,10 +3,9 @@
 .message {
   $self: &;
   display: flex;
-  max-width: 400px;
+  max-width: 560px;
   margin-bottom: 15px;
   position: relative;
-
   &__avatar {
     display: flex;
     flex-direction: column-reverse;
