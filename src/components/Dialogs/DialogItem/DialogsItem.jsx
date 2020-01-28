@@ -16,7 +16,7 @@ const getMessageTime = created_at => {
 };
 
 const DialogItem = ({user, lastMessage}) => {
-    console.log(lastMessage.created_at);
+
     return (
         <div className={classNames('dialogs__item', '')}>
             <div className='dialogs__item-avatar'>

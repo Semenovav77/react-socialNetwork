@@ -4,8 +4,10 @@
   width: 320px;
   &__item {
     display: flex;
-    margin-bottom: 15px;
-
+    padding-bottom: 15px;
+    padding-top: 15px;
+    height: 50px;
+    align-items: center;
     &-avatar {
       flex: 0 0 auto;
       width: 40px;

@@ -3,7 +3,7 @@ import {
     addMessageActionCreator,
     updateNewMessageTextActionCreator
 } from "../../redux/dialogs-reducer";
-import Dialogs from "./Dialogs";
+import DialogsFilter from "./DialogsFilter/DialogsFilter";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
@@ -11,14 +11,14 @@ import {compose} from "redux";
 
 const DialogsContainer = (props) => {
     return (
-       <Dialogs
+       <DialogsFilter
            items={[
                {
                    id: "0882984d8266657048f875667f080fba",
                    user: {
                        id:"0892984d8266657048f875667f080fba",
                        fullname: "Onotolle Vasserman",
-                       avatar: null
+                       avatar: null,
                    },
                    lastMessage: {
                        text: "Привет кул! как твои дела? сколько лет, сколько зим",
@@ -88,14 +88,97 @@ const DialogsContainer = (props) => {
                {
                    id: Math.random(),
                    user: {
-                       id:"48f875667f080fba",
+                       id:"875667f080fba",
                        fullname: "Vasilij Pupkin",
                        avatar: null
                    },
                    lastMessage: {
                        text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2011, 12, 1, 19,24,25),
-
+                       created_at: new Date(2019, 12, 1, 19,24,25),
+                   }
+               },
+               {
+                   id: Math.random(),
+                   user: {
+                       id:"875667f080fba",
+                       fullname: "Vasilij Pupkin",
+                       avatar: null
+                   },
+                   lastMessage: {
+                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
+                       created_at: new Date(2019, 12, 1, 19,24,25),
+                   }
+               },
+               {
+                   id: Math.random(),
+                   user: {
+                       id:"875667f080fba",
+                       fullname: "Vasilij Pupkin",
+                       avatar: null
+                   },
+                   lastMessage: {
+                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
+                       created_at: new Date(2019, 12, 1, 19,24,25),
+                   }
+               },
+               {
+                   id: Math.random(),
+                   user: {
+                       id:"875667f080fba",
+                       fullname: "Vasilij Pupkin",
+                       avatar: null
+                   },
+                   lastMessage: {
+                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
+                       created_at: new Date(2019, 12, 1, 19,24,25),
+                   }
+               },
+               {
+                   id: Math.random(),
+                   user: {
+                       id:"875667f080fba",
+                       fullname: "Vasilij Pupkin",
+                       avatar: null
+                   },
+                   lastMessage: {
+                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
+                       created_at: new Date(2019, 12, 1, 19,24,25),
+                   }
+               },
+               {
+                   id: Math.random(),
+                   user: {
+                       id:"875667f080fba",
+                       fullname: "Vasilij Pupkin",
+                       avatar: null
+                   },
+                   lastMessage: {
+                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
+                       created_at: new Date(2019, 12, 1, 19,24,25),
+                   }
+               },
+               {
+                   id: Math.random(),
+                   user: {
+                       id:"875667f080fba",
+                       fullname: "Vasilij Pupkin",
+                       avatar: null
+                   },
+                   lastMessage: {
+                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
+                       created_at: new Date(2019, 12, 1, 19,24,25),
+                   }
+               },
+               {
+                   id: Math.random(),
+                   user: {
+                       id:"875667f080fba",
+                       fullname: "Vasilij Pupkin",
+                       avatar: null
+                   },
+                   lastMessage: {
+                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
+                       created_at: new Date(2019, 12, 1, 19,24,25),
                    }
                }
            ]}/>

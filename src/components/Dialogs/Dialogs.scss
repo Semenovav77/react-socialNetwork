@@ -5,82 +5,147 @@
   height: 100%;
 }
 
-.chat{
-  display:flex;
-  background-color: #fff ;
+.chat {
+  display: flex;
+  background-color: #fff;
   height: 100%;
   width: 900px;
   margin: 0 auto;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.04204);
 
-    &__dialogs-bar {
-      width: 320px;
-      border-right: 1px solid #f7f7f7;
-        &-header {
-          display:flex;
-          justify-content: space-between;
-          padding: 20px;
+  &__dialogs-bar {
+    width: 320px;
+    border-right: 1px solid #f7f7f7;
 
-          & > div {
-            i{
-              display: inline-block;
-              margin-right: 5px;
-            }
-          }
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      align-items: center;
+      & > div {
+        i {
+          display: inline-block;
+          margin-right: 5px;
         }
-        &-search {
-          padding: 0px 20px 20px 20px;
-          input {
-            background-color: #f7f8f9;
-            border: 0;
-          }
-        }
-        &-dialogs {
-          .dialogs {
-            &__item {
-              padding: 0 20px;
-              &.active,
-              &:hover {
-                background-color: #f3f7ff;
-                padding: 0 20px;
-              }
-            }
-          }
-        }
-    }
-    &__current-dialog {
-      flex: 1;
-      padding: 15px 15px 15px 15px;
-      &-header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-          &-fullname {
-            font-weight: 700;
-            margin: 5px 0px 3px 0px;
-          }
-           &-status {
-             display: inline-block;
-            margin-bottom: 25px;
-            opacity: 0.5;
-            position:relative;
-             &--online {
-               &::before {
-                 background-color: #00c980;
-               }
-             }
-             &::before {
-               top: 5px;
-               left: -10px;
-               position:absolute;
-               display: block;
-               content: '';
-               width: 5px;
-               height: 5px;
-               border-radius: 30px;
-               background-color: #D3D3D3;
-             }
-          }
+      }
+      .ant-btn-ghost {
+        border: 0;
       }
     }
+
+    &-search {
+      padding: 0px 20px 20px 20px;
+
+      input {
+        background-color: #f7f8f9;
+        border: 0;
+      }
+    }
+
+    &-dialogs {
+      height: 100%;
+      .dialogs {
+        height: 100%;
+        overflow: auto;
+        &__item {
+          padding: 0 20px;
+          &.active,
+          &:hover {
+            background-color: #f6fff3;
+            padding: 0 20px;
+          }
+        }
+      }
+    }
+  }
+
+  &__current-dialog {
+    flex: 1;
+    padding: 15px 15px 15px 15px;
+    height: 100%;
+    &-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &-fullname {
+        font-weight: 700;
+        margin: 5px 0px 3px 0px;
+      }
+    }
+
+    &-messages {
+      height: 600px;
+      overflow: auto;
+    }
+
+    &-input {
+      display: flex;
+      position: relative;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      &-smile {
+        margin-right: 15px;
+        i.anticon {
+          opacity: 0.5;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+
+      &-actions {
+        display: flex;
+        margin: 0px 15px 0px 15px;
+        width: 50px;
+        justify-content: space-between;
+        i.anticon {
+          font-size: 18px;
+          opacity: 0.5;
+          cursor: pointer;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+
+
+      .ant-input:focus {
+        box-shadow: none;
+        border: 1px solid #d9d9d9;
+      }
+
+      &-text {
+        width: 450px;
+      }
+    }
+  }
+
+  .status {
+    display: inline-block;
+    margin-bottom: 25px;
+    opacity: 0.5;
+    position: relative;
+
+    &::before {
+      top: 5px;
+      left: -10px;
+      position: absolute;
+      display: block;
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 30px;
+      background-color: #D3D3D3;
+    }
+
+    &--online {
+      &::before {
+        background-color: #00c980;
+      }
+    }
+  }
 }
