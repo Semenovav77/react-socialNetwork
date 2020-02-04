@@ -21,7 +21,6 @@ const MessageAudio = ({audio}) => {
     const [progress, setProgress] = useState(0);
     const audioEl = useRef(null);
     useEffect(() => {
-        console.log(audioEl.current);
         audioEl.current && audioEl.current.addEventListener('playing', () => {
             setIsPlaying(true);
         }, false);

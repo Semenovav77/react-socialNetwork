@@ -71,3 +71,17 @@ export const securityAPI = {
     }
 };
 
+
+const instanceChat = axios.create( {
+    withCredentials: true,
+    baseURL:'http://localhost:3004/',
+});
+
+export const dialogsAPI = {
+    getDialogs() {
+        return instanceChat.get('dialogs')
+    },
+    getMessages(currentDialog) {
+        return instanceChat.get(`messages?dialog=${currentDialog}`)
+    }
+};

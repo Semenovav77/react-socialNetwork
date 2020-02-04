@@ -8,7 +8,7 @@ import classNames from "classnames";
 import './Dialogs.scss'
 import InputChat from "./InputChat/InputChat";
 
-const Dialogs = ({items, onSearch, inputValue}) => {
+const Dialogs = ({dialogs, messages, onSearch, inputValue, getAllMessageDialogsThunkCreator}) => {
 
     const { Search } = Input;
     const online=true;
@@ -34,11 +34,14 @@ const Dialogs = ({items, onSearch, inputValue}) => {
                     </div>
                     <div className="chat__dialogs-bar-dialogs">
                         <div className={'dialogs'}>
-                            {items.length ? (orderBy(items, ["lastMessage.created_at"], ["desc"]).map(item => (
+                            {dialogs.length ? (orderBy(dialogs, ["lastMessage.created_at"], ["desc"]).map(item => (
                                 <DialogItem
                                     key={item.id}
+                                    id={item.id}
                                     user={item.user}
-                                    lastMessage={item.lastMessage}
+                                    text={item.text}
+                                    created_at={item.created_at}
+                                    getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
                                 />
                             ))) : (<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='Ничего не найдено'/>)}
                         </div>
@@ -54,7 +57,7 @@ const Dialogs = ({items, onSearch, inputValue}) => {
                         </div>
                     </div>
                     <div className="chat__current-dialog-messages">
-                        <Messages />
+                        <Messages messages={messages}/>
                     </div>
                     <InputChat />
 

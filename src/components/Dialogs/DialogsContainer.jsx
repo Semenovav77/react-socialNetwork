@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-    addMessageActionCreator,
-    updateNewMessageTextActionCreator
+    getAllMessageDialogsThunkCreator,
+    getDialogsThunkCreator
 } from "../../redux/dialogs-reducer";
 import DialogsFilter from "./DialogsFilter/DialogsFilter";
 import {connect} from "react-redux";
@@ -9,188 +9,23 @@ import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 
 
-const DialogsContainer = (props) => {
+const DialogsContainer = ({dialogs, messages, getAllMessageDialogsThunkCreator, getDialogsThunkCreator}) => {
     return (
        <DialogsFilter
-           items={[
-               {
-                   id: "0882984d8266657048f875667f080fba",
-                   user: {
-                       id:"0892984d8266657048f875667f080fba",
-                       fullname: "Onotolle Vasserman",
-                       avatar: null,
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"57048f875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2018, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"4d8266657048f875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"0892984d8266657048f875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2017, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"84d8266657048f875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: 'https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
-                   },
-                   lastMessage: {
-                       text: "Привет, нормально",
-                       created_at:  new Date(),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               },
-               {
-                   id: Math.random(),
-                   user: {
-                       id:"875667f080fba",
-                       fullname: "Vasilij Pupkin",
-                       avatar: null
-                   },
-                   lastMessage: {
-                       text: "Привет кул! как твои дела? сколько лет, сколько зим",
-                       created_at: new Date(2019, 12, 1, 19,24,25),
-                   }
-               }
-           ]}/>
+           dialogs={dialogs}
+           messages={messages}
+           getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
+           getDialogsThunkCreator={getDialogsThunkCreator}/>
     )
 };
 
 let mapStateToProps = (state) => {
     return {
-        dialogsPage: state.dialogsPage,
+        dialogs: state.dialogsPage.dialogs,
+        messages: state.dialogsPage.messages,
     }
 };
-let mapDispatchToProps = (dispatch) => {
+/*let mapDispatchToProps = (dispatch) => {
     return {
         updateNewMessageText: (name, body) => {
             dispatch(updateNewMessageTextActionCreator(name, body))
@@ -199,10 +34,10 @@ let mapDispatchToProps = (dispatch) => {
             dispatch(addMessageActionCreator());
         }
     }
-};
+};*/
 
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, {getAllMessageDialogsThunkCreator, getDialogsThunkCreator}),
     /*withAuthRedirect,*/
 )(DialogsContainer);
 

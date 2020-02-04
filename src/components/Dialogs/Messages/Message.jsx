@@ -4,14 +4,16 @@ import {Empty} from "antd";
 
 import './Message.scss'
 import Message from "../MessagesNew/Message";
+import User from "../../Users/User";
 
-const Messages = ({items = 1}) => {
+const Messages = ({messages}) => {
     const newDate = new Date(2018, 10, 1, 23,23,23);
+    console.log(messages)
     return (
         <div>
-            {items ? (
+            {messages.length ? (
                     <div>
-                <Message
+               {/* <Message
                     avatar='https://social-network.samuraijs.com/activecontent/images/users/1779/user.jpg?v=7'
                     text='Привет кул! как твои дела?'
                     date={newDate}
@@ -63,7 +65,15 @@ const Messages = ({items = 1}) => {
                 text='Привет кул! как твои дела?'
                 date={newDate}
                 isMe={false}
-                />
+                />*/}
+                        {messages.map(mes => {console.log(mes);
+                            {/*<Messages key={mes.id}
+                                                       avatar={mes.avatar}
+                                                       text={mes.text}
+                                                       audio={mes.audio}
+                                                       date={mes.created_at}
+                                                       isMe={false} />*/} } )
+                        }
                     </div>
                 ) : (
                 <Empty  description="Нет сообщений"/>)}
