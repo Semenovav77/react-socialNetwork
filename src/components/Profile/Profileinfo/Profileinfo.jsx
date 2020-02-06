@@ -11,7 +11,6 @@ const ProfileInfo = (props) => {
         return <Preloader/>
     }
     const onSubmit = (formData) => {
-       /*console.log(formData)*/
         props.updateProfileThunkCreator(props.userId, formData.fullName, formData.aboutMe,
             formData.lookingForAJob,
             formData.lookingForAJobDescription,

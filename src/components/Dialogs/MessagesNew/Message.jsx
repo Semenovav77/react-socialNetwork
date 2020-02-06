@@ -71,7 +71,7 @@ const Message = ({avatar, user, text, date, isMe, audio}) => {
     return (
         <div className={classNames('message', {'message--isme': isMe, 'message--is-audio': audio})}>
             <div className='message__avatar'>
-                <img src={avatar} alt={`Avatar ${user.fullname}`}/>
+                <img src={user.avatar} alt={`Avatar ${user.fullname}`}/>
             </div>
             <div className='message__content'>
                 <div className='message__bubble'>
