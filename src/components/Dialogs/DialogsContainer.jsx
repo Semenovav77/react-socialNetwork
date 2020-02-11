@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {
     getAllMessageDialogsThunkCreator,
-    getDialogsThunkCreator
+    getDialogsThunkCreator,
+    setCurrentDialogActionCreator
 } from "../../redux/dialogs-reducer";
 import DialogsFilter from "./DialogsFilter/DialogsFilter";
 import {connect} from "react-redux";
@@ -9,13 +10,22 @@ import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 
 
-const DialogsContainer = ({dialogs, messages, getAllMessageDialogsThunkCreator, getDialogsThunkCreator}) => {
+const DialogsContainer = ({
+                              dialogs, messages, currentDialog,
+                              isFetchingDialogs, isFetchingMessages,
+                              getAllMessageDialogsThunkCreator,
+                              getDialogsThunkCreator, setCurrentDialogActionCreator
+                          }) => {
     return (
-       <DialogsFilter
-           dialogs={dialogs}
-           messages={messages}
-           getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
-           getDialogsThunkCreator={getDialogsThunkCreator}/>
+        <DialogsFilter
+            dialogs={dialogs}
+            messages={messages}
+            currentDialog={currentDialog}
+            isFetchingDialogs={isFetchingDialogs}
+            isFetchingMessages={isFetchingMessages}
+            getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
+            setCurrentDialogActionCreator={setCurrentDialogActionCreator}
+            getDialogsThunkCreator={getDialogsThunkCreator}/>
     )
 };
 
@@ -23,6 +33,9 @@ let mapStateToProps = (state) => {
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
+        currentDialog: state.dialogsPage.currentDialog,
+        isFetchingDialogs: state.dialogsPage.isFetchingDialogs,
+        isFetchingMessages: state.dialogsPage.isFetchingMessages
     }
 };
 /*let mapDispatchToProps = (dispatch) => {
@@ -37,7 +50,7 @@ let mapStateToProps = (state) => {
 };*/
 
 export default compose(
-    connect(mapStateToProps, {getAllMessageDialogsThunkCreator, getDialogsThunkCreator}),
+    connect(mapStateToProps, {getAllMessageDialogsThunkCreator, getDialogsThunkCreator, setCurrentDialogActionCreator}),
     /*withAuthRedirect,*/
 )(DialogsContainer);
 

@@ -10,9 +10,9 @@ import './Message.scss'
 import Time from "../../common/Time/Time";
 
 const convertToTime = (number) => {
-    const mins = Math.floor(number/60);
+    const mins = Math.floor(number / 60);
     const secs = (number % 60).toFixed();
-    return `${mins < 10 ? '0':''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
 };
 
 const MessageAudio = ({audio}) => {
@@ -35,7 +35,7 @@ const MessageAudio = ({audio}) => {
         audioEl.current && audioEl.current.addEventListener('timeupdate', () => {
             const duration = audioEl.current && audioEl.current.duration || 0;
             setCurrentTime(audioEl.current.currentTime);
-            setProgress((audioEl.current.currentTime/duration)*100);
+            setProgress((audioEl.current.currentTime / duration) * 100);
         });
     }, [audio]);
     const tooglePlay = () => {
@@ -46,28 +46,28 @@ const MessageAudio = ({audio}) => {
         }
         audioEl.current.volume = '0.1';
     };
- return (
-     <div className='message__audio'>
-         <audio volume='0.1' ref={audioEl} src={audio} preload/>
-         <div className='message__audio-progress' style={{width: progress + "%"}}/>
-         <div className='message__audio-info'>
-             <div className='message__audio-btn'>
-                 <button onClick={tooglePlay}>
-                     {isPlaying ?
-                         <img src={pauseSvg} alt='Pause svg'/> : <img src={playSvg} alt='Pause svg'/>}
-                 </button>
-             </div>
-             <div className='message__audio-wave'><img src={waveSvg} alt={'wave'}/></div>
-             <span className='message__audio-duration'>
-                                {audioEl.current ? convertToTime(currentTime): convertToTime(0)}
-                            </span>
-         </div>
-     </div>
- )
+    return (
+        <div className='message__audio'>
+            <audio volume='0.1' ref={audioEl} src={audio} preload="auto"/>
+            <div className='message__audio-progress' style={{width: progress + "%"}}/>
+            <div className='message__audio-info'>
+                <div className='message__audio-btn'>
+                    <button onClick={tooglePlay}>
+                        {isPlaying ?
+                            <img src={pauseSvg} alt='Pause svg'/> : <img src={playSvg} alt='Pause svg'/>}
+                    </button>
+                </div>
+                <div className='message__audio-wave'><img src={waveSvg} alt={'wave'}/></div>
+                <span className='message__audio-duration'>
+                 {audioEl.current ? convertToTime(currentTime) : convertToTime(0)}
+             </span>
+            </div>
+        </div>
+    )
 };
 
 const Message = ({avatar, user, text, date, isMe, audio}) => {
-
+    console.log(date)
     return (
         <div className={classNames('message', {'message--isme': isMe, 'message--is-audio': audio})}>
             <div className='message__avatar'>

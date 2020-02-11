@@ -7,11 +7,17 @@ import classNames from "classnames";
 
 import './Dialogs.scss'
 import InputChat from "./InputChat/InputChat";
+import Preloader from './../common/preloader/Preloader';
 
-const Dialogs = ({dialogs, messages, onSearch, inputValue, getAllMessageDialogsThunkCreator}) => {
+const Dialogs = ({
+                     dialogs, currentDialog, isFetchingDialogs,
+                     isFetchingMessages, messages, onSearch,
+                     inputValue, getAllMessageDialogsThunkCreator,
+                     setCurrentDialogActionCreator
+                 }) => {
 
-    const { Search } = Input;
-    const online=true;
+    const {Search} = Input;
+    const online = true;
     return (
         <section className='messages'>
             <div className="chat">
@@ -28,22 +34,28 @@ const Dialogs = ({dialogs, messages, onSearch, inputValue, getAllMessageDialogsT
                         <Search
                             placeholder="Поиск контактов"
                             onChange={e => onSearch(e)}
-                            style={{ width: "100%" }}
+                            style={{width: "100%"}}
                             value={inputValue}
                         />
                     </div>
                     <div className="chat__dialogs-bar-dialogs">
                         <div className={'dialogs'}>
-                            {dialogs.length ? (orderBy(dialogs, ["lastMessage.created_at"], ["desc"]).map(item => (
-                                <DialogItem
-                                    key={item.id}
-                                    id={item.id}
-                                    user={item.user}
-                                    text={item.text}
-                                    created_at={item.created_at}
-                                    getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
-                                />
-                            ))) : (<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='Ничего не найдено'/>)}
+                            {isFetchingDialogs ?
+                                (<Preloader/>)
+                                :
+                                (dialogs.length ? (orderBy(dialogs, ["lastMessage.created_at"], ["desc"]).map(item => (
+                                        <DialogItem
+                                            key={item.id}
+                                            id={item.id}
+                                            user={item.user}
+                                            text={item.text}
+                                            created_at={item.created_at}
+                                            currentDialog={currentDialog}
+                                            setCurrentDialogActionCreator={setCurrentDialogActionCreator}
+                                        />
+                                    ))) : (
+                                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='Ничего не найдено'/>)
+                                )}
                         </div>
                     </div>
                 </div>
@@ -57,14 +69,17 @@ const Dialogs = ({dialogs, messages, onSearch, inputValue, getAllMessageDialogsT
                         </div>
                     </div>
                     <div className="chat__current-dialog-messages">
-                        <Messages messages={messages}/>
+                        <Messages messages={messages}
+                                  currentDialog={currentDialog}
+                                  isFetchingMessages={isFetchingMessages}
+                                  getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}/>
                     </div>
-                    <InputChat />
+                    <InputChat/>
 
                 </div>
             </div>
         </section>
-        )
+    )
 
 };
 
