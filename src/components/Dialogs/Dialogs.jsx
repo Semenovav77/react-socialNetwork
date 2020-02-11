@@ -43,7 +43,7 @@ const Dialogs = ({
                             {isFetchingDialogs ?
                                 (<Preloader/>)
                                 :
-                                (dialogs.length ? (orderBy(dialogs, ["lastMessage.created_at"], ["desc"]).map(item => (
+                                (dialogs.length ? (orderBy(dialogs, ["created_at"], ["desc"]).map(item => (
                                         <DialogItem
                                             key={item.id}
                                             id={item.id}
@@ -61,7 +61,9 @@ const Dialogs = ({
                 </div>
                 <div className="chat__current-dialog">
                     <div className="chat__current-dialog-header">
-                        <b className="chat__current-dialog-header-fullname">Ontoshka</b>
+                        <b className="chat__current-dialog-header-fullname">
+                            {dialogs.length && dialogs.map(dialo => (dialo.id === currentDialog) && dialo.user.fullname)}
+                        </b>
                         <div className="chat__current-dialog-header-status">
                             <span className={classNames("status", {"status--online": online})}>
                                 {online ? "online" : "offline"}
