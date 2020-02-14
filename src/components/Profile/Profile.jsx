@@ -4,7 +4,6 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {updateMainPhotoThunkCreator} from "../../redux/profile-reducer";
 
 const Profile = (props) => {
-    console.log('profilelog');
     return (
         <div>
             <ProfileInfo

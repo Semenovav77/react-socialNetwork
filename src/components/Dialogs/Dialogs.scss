@@ -58,6 +58,11 @@
             background-color: #f6fff3;
           }
         }
+        &--isFetching {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
 
       }
     }
@@ -80,7 +85,6 @@
 
     &-messages {
       height: 600px;
-      overflow: auto;
     }
 
     &-input {
@@ -99,6 +103,11 @@
             opacity: 1;
           }
         }
+      }
+      &-emoji-picker {
+        position: absolute;
+        bottom: 45px;
+        z-index: 1;
       }
 
       &-actions {
@@ -123,7 +132,7 @@
       }
 
       &-text {
-        width: 450px;
+        width: 440px;
       }
     }
   }

@@ -1,23 +1,24 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Empty} from "antd";
+import classNames from "classnames";
 
 import './Message.scss'
 import Message from "../MessagesNew/Message";
-import User from "../../Users/User";
 import Preloader from "../../common/preloader/Preloader";
 
-const Messages = ({messages, isFetchingMessages, currentDialog, getAllMessageDialogsThunkCreator}) => {
+
+const Messages = ({blockRef, messages, isFetchingMessages, currentDialog, getAllMessageDialogsThunkCreator}) => {
     useEffect(() => {
         if (currentDialog != null) getAllMessageDialogsThunkCreator(currentDialog);
     }, [currentDialog]);
     return (
-        <div>
+        <div ref={blockRef} className={classNames('currentMessages', {'currentMessages--isFetching': isFetchingMessages})}>
             {isFetchingMessages ?
                 (<Preloader/>)
                 :
                 (messages.length ? (
-                    <div>
+                    <>
                         {messages.map(mes => {
                             return (<Message key={mes.id}
                                              user={mes.user}
@@ -27,7 +28,7 @@ const Messages = ({messages, isFetchingMessages, currentDialog, getAllMessageDia
                                              isMe={false}/>)
                         })
                         }
-                    </div>
+                    </>
                 ) : (
                     <Empty description="Нет сообщений"/>))}
 

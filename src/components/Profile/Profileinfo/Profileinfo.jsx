@@ -22,7 +22,6 @@ const ProfileInfo = (props) => {
     };
     const mainPhotoSelect = (e) => {
        if (e.target.files.length) {
-           debugger;
            props.updateMainPhotoThunkCreator(props.userId, e.target.files[0])
        }
     };

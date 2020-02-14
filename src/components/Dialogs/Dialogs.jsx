@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import DialogItem from "./DialogItem/DialogsItem";
 import Messages from "./Messages/Message";
 import orderBy from "lodash/orderBy";
@@ -15,7 +15,12 @@ const Dialogs = ({
                      inputValue, getAllMessageDialogsThunkCreator,
                      setCurrentDialogActionCreator
                  }) => {
-
+    const messagesRef = useRef(null);
+    useEffect(() => {
+        if (messagesRef.current) {
+            messagesRef.current.scrollTo(0, 9999)
+         }
+    });
     const {Search} = Input;
     const online = true;
     return (
@@ -39,7 +44,7 @@ const Dialogs = ({
                         />
                     </div>
                     <div className="chat__dialogs-bar-dialogs">
-                        <div className={'dialogs'}>
+                        <div className={classNames('dialogs',{'dialogs--isFetching': isFetchingDialogs})}>
                             {isFetchingDialogs ?
                                 (<Preloader/>)
                                 :
@@ -74,6 +79,7 @@ const Dialogs = ({
                         <Messages messages={messages}
                                   currentDialog={currentDialog}
                                   isFetchingMessages={isFetchingMessages}
+                                  blockRef={messagesRef}
                                   getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}/>
                     </div>
                     <InputChat/>

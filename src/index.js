@@ -4,6 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import ReactDOM from "react-dom";
 import MainApp from "./App";
 import "./styles/index.scss";
+import "emoji-mart/css/emoji-mart.css";
 
 /*setInterval(() => {
     store.dispatch({type: 'FAKE'})

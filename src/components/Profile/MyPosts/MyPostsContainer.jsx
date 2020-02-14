@@ -19,7 +19,6 @@ import {connect} from "react-redux";
 }*/
 
 let mapStateToProps = (state) => {
-    console.log('mpspr');
     return {
         posts: state.profilePage.posts,
        // newPostText: state.profilePage.newPostText

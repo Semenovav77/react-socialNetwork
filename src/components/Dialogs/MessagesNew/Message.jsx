@@ -67,7 +67,6 @@ const MessageAudio = ({audio}) => {
 };
 
 const Message = ({avatar, user, text, date, isMe, audio}) => {
-    console.log(date)
     return (
         <div className={classNames('message', {'message--isme': isMe, 'message--is-audio': audio})}>
             <div className='message__avatar'>

@@ -1,2 +1,11 @@
 @import '../../../styles/variables';
 
+.currentMessages {
+  height: 100%;
+  overflow: auto;
+  &--isFetching {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
