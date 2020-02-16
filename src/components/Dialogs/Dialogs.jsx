@@ -1,6 +1,4 @@
 import React, {useRef, useEffect} from 'react';
-import DialogItem from "./DialogItem/DialogsItem";
-import Messages from "./Messages/Message";
 import orderBy from "lodash/orderBy";
 import {Button, Icon, Input, Empty} from "antd";
 import classNames from "classnames";
@@ -8,6 +6,8 @@ import classNames from "classnames";
 import './Dialogs.scss'
 import InputChat from "./InputChat/InputChat";
 import Preloader from './../common/preloader/Preloader';
+import DialogItem from "./DialogItem/DialogsItem";
+import Messages from "./Messages/Message";
 
 const Dialogs = ({
                      dialogs, currentDialog, isFetchingDialogs,
@@ -48,7 +48,7 @@ const Dialogs = ({
                             {isFetchingDialogs ?
                                 (<Preloader/>)
                                 :
-                                (dialogs.length ? (orderBy(dialogs, ["created_at"], ["desc"]).map(item => (
+                                (dialogs.length ? (orderBy(dialogs, ["created_at"], ["asc"]).map(item => (
                                         <DialogItem
                                             key={item.id}
                                             id={item.id}

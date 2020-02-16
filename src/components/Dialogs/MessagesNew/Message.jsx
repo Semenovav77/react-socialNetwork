@@ -5,6 +5,8 @@ import checkedImg from '../../../assets/images/clipart2243667.png';
 import waveSvg from '../../../assets/images/wave.svg';
 import playSvg from '../../../assets/images/play.svg';
 import pauseSvg from '../../../assets/images/pause.svg';
+import reactStringReplace from 'react-string-replace';
+import {Emoji} from 'emoji-mart';
 
 import './Message.scss'
 import Time from "../../common/Time/Time";
@@ -74,7 +76,9 @@ const Message = ({avatar, user, text, date, isMe, audio}) => {
             </div>
             <div className='message__content'>
                 <div className='message__bubble'>
-                    {text && <p className='message__text'> {text} </p>}
+                    {text && <p className='message__text'> {reactStringReplace(text, /:(.+?):/g, (match, i) => (
+                        <Emoji emoji={match} set='apple' size={16} />
+                    ))} </p>}
                     {audio && <MessageAudio audio={audio}/>}
                 </div>
                 <span className='message__date'>
@@ -84,23 +88,7 @@ const Message = ({avatar, user, text, date, isMe, audio}) => {
         </div>
     )
 };
-const Message1 = (props) => {
-    return (
-        <div className={classNames('message', {'message--isme': props.isMe})}>
-            <div className='message__avatar'>
-                <img src={props.avatar} alt={`Avatar ${props.user.fullname}`}/>
-            </div>
-            <div className='message__content'>
-                <div className='message__bubble'>
-                    <p className='message__text'> {props.text} </p>
-                </div>
-                <span className='message__date'>
-                    <Time date={props.date}/>
-                </span>
-            </div>
-        </div>
-    )
-};
+
 
 Message.defaultProps = {
     user: {}
