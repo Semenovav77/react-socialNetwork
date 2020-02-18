@@ -4,8 +4,15 @@ import {stopSubmit} from 'redux-form';
 const SET_USER_DATA = 'auth/SET_USER_DATA';
 const GET_CAPTCHA_URL = 'GET_CAPTCHA_URL';
 
+export type InitialStateType = {
+    id: number | null
+    email:string | null
+    login: string | null
+    isAuth: boolean
+    captchaURL: string | null
+};
 
-let initialState = {
+let initialState: InitialStateType= {
     id: null,
     email: null,
     login: null,
@@ -13,7 +20,7 @@ let initialState = {
     captchaURL: null
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
@@ -31,7 +38,18 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
-export const setAuthUserData = (id, email, login, isAuth) => {
+type SetAuthUserDataActionDataType = {
+    id: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+}
+type SetAuthUserDataActionType = {
+    type: typeof SET_USER_DATA
+    data: SetAuthUserDataActionDataType
+}
+
+export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean): SetAuthUserDataActionType => {
     return {
         type: SET_USER_DATA,
         data: {
@@ -42,7 +60,12 @@ export const setAuthUserData = (id, email, login, isAuth) => {
         }
     }
 };
-export const getCaptchaURL = (url) => {
+
+type GetCaptchaURLActionType = {
+    type: typeof GET_CAPTCHA_URL
+    url: string
+}
+export const getCaptchaURL = (url: string): GetCaptchaURLActionType => {
     return {
         type: GET_CAPTCHA_URL,
         url
@@ -61,7 +84,7 @@ export const getCaptchaURL = (url) => {
     }
 };*/
 export const getAuthMeThunkCreator = () => {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         let response = await usersAPI.getAuthMe();
         if (response.data.resultCode === 0) {
             let {id, login, email} = response.data.data;
@@ -87,8 +110,8 @@ export const loginThunkCreator = (email, password, rememberme) => {
 };
 */
 
-export const loginThunkCreator = (email, password, rememberme, captcha) => {
-    return async (dispatch) => {
+export const loginThunkCreator = (email: string, password: string, rememberme: boolean, captcha: string) => {
+    return async (dispatch: any) => {
         let response = await authAPI.login(email, password, rememberme, captcha);
         if (response.data.resultCode === 0) {
             dispatch(getAuthMeThunkCreator())
@@ -104,7 +127,7 @@ export const loginThunkCreator = (email, password, rememberme, captcha) => {
     }
 };
 export const logoutThunkCreator = () => {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         let response = await authAPI.logout();
         if (response.data.resultCode === 0) {
             dispatch(setAuthUserData(null, null, null, false));
@@ -125,7 +148,7 @@ export const logoutThunkCreator = () => {
 };*/
 
 export const getCaptchaThunkCreator = () => {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         let response = await security.captcha();
         let url = response.data.url;
         dispatch(getCaptchaURL(url))

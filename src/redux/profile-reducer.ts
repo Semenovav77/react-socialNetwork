@@ -6,18 +6,45 @@ const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
-let initialState = {
 
+export type PhotosProfileType = {
+   small: string |null
+   large: string |null
+}
+
+export type ContactsOfProfileType ={
+    facebook: string | null
+    website: string | null
+    vk: string | null
+    twitter: string | null
+    instagram: string | null
+    youtube: string | null
+    github: string | null
+    mainLink: string | null
+}
+export type UserProfileType = {
+    aboutMe: string | null
+    contacts: ContactsOfProfileType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string | null
+    fullName: string | null
+    userId: number
+    photos: PhotosProfileType
+}
+
+let initialState = {
     posts: [
         {id: 1, post: "First post", likesCount: 2},
         {id: 2, post: "Second post", likesCount: 22},
     ],
-    profile: null,
-    status: ''
-
+    profile: null as null | UserProfileType,
+    status: '',
+    newPostText: ''
 };
 
-const profileReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState;
+
+const profileReducer = (state = initialState, action:any): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost = action.newPost;
@@ -45,46 +72,63 @@ const profileReducer = (state = initialState, action) => {
             return state;
     }
 };
-
-export const addPostActionCreator = (newPost) => {
+type AddPostActionType = {
+    type: typeof ADD_POST
+    newPost: string
+}
+export const addPostActionCreator = (newPost: string): AddPostActionType => {
     return {
         type: ADD_POST,
         newPost
     }
 };
 
-export const deletePost = (postId) => {
+type DeletePostActionType = {
+    type: typeof DELETE_POST
+    postId: number
+}
+export const deletePost = (postId:number): DeletePostActionType => {
     return {
         type: DELETE_POST,
         postId
     }
 };
 
-export const setUserProfile = (profile) => {
+type SetUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    profile: UserProfileType
+}
+export const setUserProfile = (profile: UserProfileType): SetUserProfileActionType => {
     return {
         type: SET_USER_PROFILE,
         profile
     }
 };
 
-export const setUserStatus = (status) => {
+type SetUserStatusActionType = {
+    type: typeof SET_STATUS
+    status: string
+}
+export const setUserStatus = (status:string): SetUserStatusActionType => {
     return {
         type: SET_STATUS,
         status
     }
 };
 
-export const getProfileThunkCreator = (userId) => {
-    return (dispatch) => {
+export const getProfileThunkCreator = (userId: number) => {
+    return (dispatch: any) => {
         usersAPI.getProfile(userId)
-            .then(response => {
+            .then((response: any) => {
                 dispatch(setUserProfile(response.data));
             });
     }
 };
 
-export const updateProfileThunkCreator = (userId, fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts) => {
-    return async (dispatch) => {
+export const updateProfileThunkCreator = (userId: number, fullName: string | null,
+                                          aboutMe: string | null, lookingForAJob: boolean,
+                                          lookingForAJobDescription: string | null, contacts: ContactsOfProfileType) => {
+    return async (dispatch: any) => {
         let response = await profileAPI.updateProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts);
         if (response.data.resultCode === 0) {
             dispatch(getProfileThunkCreator(userId))
@@ -98,10 +142,10 @@ export const updateProfileThunkCreator = (userId, fullName, aboutMe, lookingForA
     }
 };
 
-export const getUserStatusThunkCreator = (userId) => {
-    return (dispatch) => {
+export const getUserStatusThunkCreator = (userId: number) => {
+    return (dispatch: any) => {
         profileAPI.getStatus(userId)
-            .then(response => {
+            .then((response: any) => {
                 dispatch(setUserStatus(response.data));
             });
     }
@@ -119,19 +163,19 @@ export const getUserStatusThunkCreator = (userId) => {
         }
     }
 };*/
-export const updateUserStatusThunkCreator = (status) => {
-    return (dispatch) => {
+export const updateUserStatusThunkCreator = (status:string) => {
+    return (dispatch: any) => {
         profileAPI.updateStatus(status)
-    .then(response => {
+    .then((response: any) => {
         if (response.data.resultCode === 0) {
             dispatch(setUserStatus(status));
         }
-    }).catch(error => alert(error.message));
+    }).catch((error: any) => alert(error.message));
 
 }};
 
-export const updateMainPhotoThunkCreator = (userId, photo) => {
-    return async (dispatch) => {
+export const updateMainPhotoThunkCreator = (userId: number, photo: object) => {
+    return async (dispatch: any) => {
         debugger;
         let response = await profileAPI.updatePhoto(photo);
         if (response.data.resultCode === 0) {
