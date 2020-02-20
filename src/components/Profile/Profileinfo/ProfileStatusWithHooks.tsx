@@ -15,15 +15,21 @@ const ProfileStatusWithHooks: React.FC<ProfileStatusProps> = ({status, updateUse
     let [editSwitch, setEditSwitch] = useState<boolean> (false);
     let [valueStatus, setStatus] = useState<string> (status);
     useEffect(() => {
-        //debugger;
-        setStatus(status)
+        const savedEditSwitch = JSON.parse(localStorage.getItem('editSwitch') || 'false') as boolean;
+        if (savedEditSwitch) {setEditSwitch(savedEditSwitch)}
+        setStatus(status);
     }, [status]);
+    useEffect(() => {
+        localStorage.setItem('editSwitch', JSON.stringify(false))
+    }, []);
 
     const changeStatus = () => {
         setEditSwitch(true);
+        localStorage.setItem('editSwitch', JSON.stringify(true))
     };
     const saveStatus = () => {
         setEditSwitch(false);
+        localStorage.setItem('editSwitch', JSON.stringify(false))
         updateUserStatusThunkCreator(valueStatus);
     };
     const saveStatusOnKey = (event: React.KeyboardEvent) => {

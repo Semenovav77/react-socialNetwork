@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 import {Field, reduxForm} from "redux-form";
@@ -25,7 +25,7 @@ const MyPostsForm = (props) => {
 
 const MyReduxPostsForm = reduxForm({form: 'ProfileAddNewPostForm'})(MyPostsForm);
 
-class MyPosts extends Component {
+const MyPosts = (props) => {
    /*Вместо PureComponent --- shouldComponentUpdate(nextProps, nextState) {
         return nextProps != this.props || nextState != this.state ;
     }
@@ -35,13 +35,11 @@ class MyPosts extends Component {
             this.setState({x:2});
         }, 3000)
     }*/
+    let postsElements = props.posts.map(p => <Post message={p.post} likesCount={p.likesCount}/>);
+    let onAddPost = (values) => {
+        props.addPost(values.newPost);
+    };
 
-    render() {
-        console.log('RERENDER RR');
-        let postsElements = this.props.posts.map(p => <Post message={p.post} likesCount={p.likesCount}/>)
-        let onAddPost = (values) => {
-            this.props.addPost(values.newPost);
-        };
         return (
             <div className={s.postBlocks}>
                 My post
@@ -51,7 +49,7 @@ class MyPosts extends Component {
                 </div>
             </div>
         )
-    }
-}
+
+};
 
 export default MyPosts;
