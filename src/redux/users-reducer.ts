@@ -1,4 +1,5 @@
 import {usersAPI} from "../api/Api";
+import {UserType} from "../types/types";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -8,14 +9,6 @@ const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
 const SET_TOGGLE_ISFETCHING = 'SET_TOGGLE_ISFETCHING';
 const SET_TOGGLE_ISFOLLOWINGPROPGRESS = 'SET_TOGGLE_ISFOLLOWINGPROPGRESS';
 
-type UserType = {
-    id: number
-    photoUrl: string
-    followed: boolean
-    fullName: string
-    status: string
-    location: {city: string, country: string}
-};
 let initialState = {
     users: [
         /*  {

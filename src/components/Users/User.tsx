@@ -2,34 +2,42 @@ import React from 'react';
 import s from './users.module.css';
 import userPhoto from '../../assets/images/ava.jpg';
 import {NavLink} from "react-router-dom";
+import {UserType} from "../../types/types";
 
-let User = (props) => {
+type PropsType = {
+    user: UserType
+    followingProgress: Array<number>
+    unfollowThunkCreator(id: number): void
+    followThunkCreator(id: number): void
+}
+
+let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator, followThunkCreator}) => {
     return (<div>
             <div>
                 <div>
                     <div>
-                        <NavLink to={'/profile/' + props.user.id}>
-                            <img src={props.user.photos.small != null ? props.user.photos.small : userPhoto}
+                        <NavLink to={'/profile/' + user.id}>
+                            <img src={user.photos.small != null ? user.photos.small : userPhoto}
                                  className={s.userPhoto}/>
                         </NavLink>
                     </div>
                     <div>
-                        {props.user.followed
-                            ? <button disabled={props.followingProgress.some(id => id === props.user.id)}
+                        {user.followed
+                            ? <button disabled={followingProgress.some(id => id === user.id)}
                                       onClick={() => {
-                                          props.unfollowThunkCreator(props.user.id);
+                                          unfollowThunkCreator(user.id);
                                       }}> Unfollow </button>
-                            : <button disabled={props.followingProgress.some(id => id === props.user.id)}
+                            : <button disabled={followingProgress.some(id => id === user.id)}
                                       onClick={() => {
-                                          props.followThunkCreator(props.user.id);
+                                          followThunkCreator(user.id);
                                       }}>Follow</button>}
 
                     </div>
                 </div>
                 <span>
                         <span>
-                            <div>{props.user.name}</div>
-                            <div>{props.user.status} </div>
+                            <div>{user.name}</div>
+                            <div>{user.status} </div>
                         </span>
                         <span>
                             <div> {"u.location.country"}</div>

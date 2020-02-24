@@ -1,10 +1,7 @@
 import React from 'react';
 import {
-    followUser,
-    unfollowUser,
-    setCurrentPage,
-    setIsFolowingProgress, getUsersThunkCreator, followThunkCreator, unfollowThunkCreator
-} from "../../redux/users-reducer";
+    getUsersThunkCreator, followThunkCreator, unfollowThunkCreator
+    } from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
@@ -12,23 +9,45 @@ import {
     getCurrentPage,
     getFollowingProgress, getIsFetching,
     getPageSize,
-    getTotalUserCount, getUsersReSelector
+    getTotalUserCount, getUsers, getUsersReSelector
 } from "../../redux/users-selectors";
+import {UserType} from "../../types/types";
+import {AppStateType} from "../../redux/redux-store";
+
+type MapStatePropsType = {
+    currentPage: number
+    pageSize: number
+    isFetching: boolean
+    totalUsersCount: number
+    users: Array<UserType>
+    followingProgress: Array<number>
+}
+type MapDispatchPropsType = {
+    unfollowThunkCreator(userId: number): void
+    followThunkCreator(userId: number): void
+    getUsersThunkCreator(pageNumber: number, pageSize: number): void
+}
+type OwnPropsType = {
+    pageTitle: string
+}
+
+type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 
 
-class UsersAPI extends React.Component {
-    componentDidMount(e) {
+class UsersAPI extends React.Component<PropsType> {
+    componentDidMount() {
         const {currentPage, pageSize} = this.props;
         this.props.getUsersThunkCreator(currentPage, pageSize);
     }
 
-    onPageChanged = (pageNumber) => {
+    onPageChanged = (pageNumber: number) => {
         const {pageSize} = this.props;
         this.props.getUsersThunkCreator(pageNumber, pageSize);
     };
 
     render() {
         return <>
+            <h2>{this.props.pageTitle}</h2>
             {this.props.isFetching ? <Preloader/> : null}
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
@@ -53,7 +72,7 @@ class UsersAPI extends React.Component {
     }
 };*/
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         //users: getUsers(state),
         users: getUsersReSelector(state),
@@ -90,11 +109,7 @@ let mapDispatchToProps = (dispatch) => {
 */
 
 
-const UsersContainer = connect(mapStateToProps, {
-    followUser,
-    unfollowUser,
-    setCurrentPage,
-    setIsFolowingProgress,
+const UsersContainer = connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
     getUsersThunkCreator,
     followThunkCreator,
     unfollowThunkCreator
