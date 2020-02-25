@@ -3,6 +3,7 @@ import s from './users.module.css';
 import userPhoto from '../../assets/images/ava.jpg';
 import {NavLink} from "react-router-dom";
 import {UserType} from "../../types/types";
+import {Button as BaseButton} from 'antd';
 
 type PropsType = {
     user: UserType
@@ -12,8 +13,7 @@ type PropsType = {
 }
 
 let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator, followThunkCreator}) => {
-    return (<div>
-            <div>
+    return (<div className='users__item-info'>
                 <div>
                     <div>
                         <NavLink to={'/profile/' + user.id}>
@@ -23,14 +23,17 @@ let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator,
                     </div>
                     <div>
                         {user.followed
-                            ? <button disabled={followingProgress.some(id => id === user.id)}
-                                      onClick={() => {
-                                          unfollowThunkCreator(user.id);
-                                      }}> Unfollow </button>
-                            : <button disabled={followingProgress.some(id => id === user.id)}
-                                      onClick={() => {
-                                          followThunkCreator(user.id);
-                                      }}>Follow</button>}
+                            ?
+                            <BaseButton type="danger" htmlType='submit' disabled={followingProgress.some(id => id === user.id)}
+                                    onClick={() => {
+                                        unfollowThunkCreator(user.id);
+                                    }}>Unfollow</BaseButton>
+                            :
+                            <BaseButton type='primary' htmlType='submit' disabled={followingProgress.some(id => id === user.id)}
+                                    onClick={() => {
+                                        followThunkCreator(user.id);
+                                    }}>Follow</BaseButton>}
+
 
                     </div>
                 </div>
@@ -40,14 +43,11 @@ let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator,
                             <div>{user.status} </div>
                         </span>
                         <span>
-                            <div> {"u.location.country"}</div>
-                            <div> {"u.location.city"}</div>
+                            <div> {"u.location.country"} </div>
+                            <div> {"u.location.city"} </div>
                         </span>
-                    </span>
+                </span>
             </div>
-            )
-            }
-        </div>
     );
 
 }

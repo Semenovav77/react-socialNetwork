@@ -1,0 +1,25 @@
+.header {
+  grid-area: h;
+  background-color: black;
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    .lk {
+      &__login{
+        display:flex;
+        align-items: center;
+        &-name {
+          color: white;
+          margin-right: 7px;
+        }
+        &-button-logout {
+          .ant-btn-danger {
+            height: 25px;
+          }
+        }
+      }
+    }
+  }
+}

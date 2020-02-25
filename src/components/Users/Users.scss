@@ -1,0 +1,31 @@
+.users {
+  &__pages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    &-button {
+      .ant-btn-primary {
+        height: 23px;
+      }
+    }
+  }
+  &__item {
+    padding: 20px;
+    &-info {
+      margin-bottom: 15px;
+      .ant-btn-primary {
+        background-color: #52c41a;
+        border-color: #52c41a;
+      }
+    }
+  }
+  .page {
+    margin: 0 5px;
+    color: #2c8ce4;
+    &--selected {
+      font-weight: bold;
+    }
+  }
+
+}

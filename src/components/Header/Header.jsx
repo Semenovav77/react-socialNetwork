@@ -1,23 +1,37 @@
 import React from 'react';
 import logo from '../logo.png';
-import s from './Header.module.css';
+//import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
+import {Button as BaseButton} from "antd";
 
-const Header = (props) => {
+import './Header.scss';
+
+const Header = ({isAuth, login, logoutThunkCreator}) => {
     const onSubmit = () => {
-        props.logoutThunkCreator();
+        logoutThunkCreator();
     };
     return (
-        <header className={s.header}>
-            <img src={logo} className="App-logo" alt="logo"/>
-            <div className={s.loginBlock}>
-                {props.isAuth
-                    ? <div><span className={s.login}> {props.login} --</span> <button onClick={onSubmit}>Logout</button> </div>
-                    : <NavLink to={'/login'}>Login</NavLink>}
+        <header className='header'>
+            <div className='header__info'>
+                <div className='logo'>
+                    <img src={logo} className="App-logo" alt="logo"/>
+                </div>
+                <div className='lk'>
+                    {isAuth
+                        ? <div className='lk__login'>
+                            <div className='lk__login-name'>
+                                <span> {login} </span>
+                            </div>
+                            <div className='lk__login-button-logout'>
+                                <BaseButton type="danger" htmlType='submit' onClick={onSubmit}> Logout </BaseButton>
+                            </div>
+                        </div>
+                        : <NavLink to={'/login'}>Login</NavLink>}
+                </div>
             </div>
         </header>
     )
 
-}
+};
 
 export default Header;

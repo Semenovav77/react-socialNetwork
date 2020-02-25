@@ -1,7 +1,5 @@
 .userPhoto {
     width: 100px;
     height: 100px;
-}
-.selectedPage {
-    font-weight: bold;
+    border-radius: 5px;
 }

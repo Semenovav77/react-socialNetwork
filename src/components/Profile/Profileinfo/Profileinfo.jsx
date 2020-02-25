@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import s from './Profileinfo.module.css';
+//import s from './Profileinfo.module.css';
 import Preloader from "../../common/preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/ava.jpg";
 import ProfileDataForm from "./ProfileDataForm";
+
+import './Profile.scss';
 
 const ProfileInfo = (props) => {
     let [editSwitch, setEditSwitch] = useState(false);
@@ -15,37 +17,48 @@ const ProfileInfo = (props) => {
             formData.lookingForAJob,
             formData.lookingForAJobDescription,
             formData.contacts).then(
-                () => {
-                    setEditSwitch(false);
-                }
-            );
+            () => {
+                setEditSwitch(false);
+            }
+        );
     };
     const mainPhotoSelect = (e) => {
-       if (e.target.files.length) {
-           props.updateMainPhotoThunkCreator(props.userId, e.target.files[0])
-       }
+        if (e.target.files.length) {
+            props.updateMainPhotoThunkCreator(props.userId, e.target.files[0])
+        }
     };
     return (
-        <div>
-            {/*<img src={bg} className="App-bg" alt="bg"/>*/}
-            <div className={s.decriptionBlock}>
-                <img src={props.profile.photos.large != null ? props.profile.photos.large : userPhoto}
-                     className={s.userPhoto}/>
+        <div className='profile__info'>
+            <div className='profile__info-header'>
+                <div className='profile__info-avatar'>
+                    <div className='profile__info-avatar-photo'>
+                        <img src={props.profile.photos.large != null ? props.profile.photos.large : userPhoto}/>
+                    </div>
+                    <div className='profile__info-avatar-edit-photo'>
+                        {props.isOwner && <input type={'file'} onChange={mainPhotoSelect}/>}
+                    </div>
+                </div>
+                <div className='profile__info-status'>
+                    <div className='profile__info-status-name'>
+                        <span>{props.profile.fullName}</span>
+                    </div>
+                    <div className='profile__info-status-data'>
+                        <span>Status: </span>
+                        <ProfileStatusWithHooks status={props.status}
+                                                updateUserStatusThunkCreator={props.updateUserStatusThunkCreator}/>
+                    </div>
+                    <br/>
+                </div>
             </div>
-            <div>
-                {props.isOwner && <input type={'file'} onChange={mainPhotoSelect}/>}
+            <div className='profile__info-data'>
+                {editSwitch
+                    ? <ProfileDataForm initialValues={props.profile}{...props} onSubmit={onSubmit}/>
+                    : <ProfileData profile={props.profile}
+                                   isOwner={props.isOwner}
+                                   goToEditSwitch={() => {
+                                       setEditSwitch(true)
+                                   }}/>}
             </div>
-            <div>
-                <b><span>Status: </span></b>
-                <ProfileStatusWithHooks status={props.status}
-                                        updateUserStatusThunkCreator={props.updateUserStatusThunkCreator}/>
-                <br/>
-            </div>
-            {editSwitch
-                ? <ProfileDataForm initialValues={props.profile}{...props} onSubmit={onSubmit}/>
-                : <ProfileData profile={props.profile}
-                               isOwner={props.isOwner}
-                               goToEditSwitch={() => {setEditSwitch(true)}}/>}
 
         </div>
     )
@@ -54,7 +67,9 @@ const ProfileInfo = (props) => {
 const ProfileData = (props) => {
     return (
         <div>
-            {props.isOwner && <div><button onClick={props.goToEditSwitch}>Edit</button></div>}
+            {props.isOwner && <div>
+                <button onClick={props.goToEditSwitch}>Edit</button>
+            </div>}
             <div>
                 <b>Fullname:</b>{props.profile.fullName}
             </div>
@@ -70,7 +85,7 @@ const ProfileData = (props) => {
                 <b>About me:</b>{props.profile.aboutMe}
             </div>
             <div>
-                <br />
+                <br/>
                 <b>Contacts:</b> {Object.keys(props.profile.contacts).map(key => {
                 return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key]}/>
             })}
@@ -81,7 +96,9 @@ const ProfileData = (props) => {
 
 const Contact = ({contactTitle, contactValue}) => {
     return (
-        <div className={s.contacts}><b>{contactTitle}</b>: {contactValue}</div>
+        <div>
+            <b>{contactTitle}</b>: {contactValue}
+        </div>
     )
 }
 

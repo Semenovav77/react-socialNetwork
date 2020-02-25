@@ -1,0 +1,21 @@
+.profile {
+  &__info {
+    padding: 20px 20px;
+    &-header {
+      display: flex;
+    }
+    &-status {
+      margin-left: 25px;
+      &-name {
+        font-size: 22px;
+        color: #458ce4;
+        margin-bottom: 8px;
+      }
+      &-data {
+        display: flex;
+        opacity: 0.6;
+        color: #458ce4;
+      }
+    }
+  }
+}

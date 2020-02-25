@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import s from './users.module.css';
-/*import cn from 'classnames';*/
+import classNames from 'classnames';
+
+import {Button as BaseButton} from 'antd';
 
 type PropsType = {
     totalItemsCount: number
@@ -21,18 +23,24 @@ const Paginator: React.FC<PropsType> = ({totalItemsCount, pageSize, currentPage,
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
     return (
-            <div>
+            <>
                 {portionNumber > 1 &&
-                <button onClick={() => {setPortionNumber(portionNumber - 1)}}>PREV</button>}
+                    <div className='users__pages-button'>
+                        <BaseButton type='primary' htmlType='submit'
+                                 onClick={() => {setPortionNumber(portionNumber - 1)}}>PREV</BaseButton>
+                    </div>}
                 {pages
                     .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                     .map(p => {
-                    return <span className={currentPage === p ? s.selectedPage : ''}
+                    return <span className={classNames('page',{'page--selected': (currentPage === p)})}
                                  onClick={() => onPageChanged(p)}>{p}</span>
                 })}
-                { portionCount > portionNumber &&
-                <button onClick={() => {setPortionNumber(portionNumber + 1)}}>NEXT</button>}
-            </div>
+                {portionCount > portionNumber &&
+                    <div className='users__pages-button'>
+                        <BaseButton type='primary' htmlType='submit'
+                                onClick={() => {setPortionNumber(portionNumber + 1)}}>NEXT</BaseButton>
+                    </div>}
+            </>
     )
 };
 

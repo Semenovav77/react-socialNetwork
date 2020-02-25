@@ -5,7 +5,7 @@ import {updateMainPhotoThunkCreator} from "../../redux/profile-reducer";
 
 const Profile = (props) => {
     return (
-        <div>
+        <div className='profile'>
             <ProfileInfo
                 isOwner={props.isOwner}
                 profile={props.profile}
