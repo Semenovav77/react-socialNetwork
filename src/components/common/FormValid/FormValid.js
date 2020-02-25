@@ -2,6 +2,7 @@ import React from "react";
 import s from "./FormValid.module.css";
 import {Input as BaseInput} from 'antd';
 import { Checkbox as BaseCheckbox } from 'antd';
+const {TeaxtArea} = BaseInput;
 
 export const FormValid = ({input, meta, children, ...props}) => {
     return (

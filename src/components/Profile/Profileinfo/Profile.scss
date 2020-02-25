@@ -4,18 +4,39 @@
     &-header {
       display: flex;
     }
-    &-status {
-      margin-left: 25px;
-      &-name {
-        font-size: 22px;
-        color: #458ce4;
-        margin-bottom: 8px;
-      }
-      &-data {
+    &-avatar {
+      &-edit-photo {
         display: flex;
-        opacity: 0.6;
-        color: #458ce4;
+        justify-content: center;
+        margin: 8px 0;
       }
     }
+    &-user{
+      &-status {
+        margin-left: 25px;
+        &-name {
+          font-size: 22px;
+          color: #458ce4;
+          margin-bottom: 8px;
+        }
+        &-value {
+          display: flex;
+          opacity: 0.6;
+          color: #458ce4;
+            span {
+              margin-right:5px;
+            }
+        }
+      }
+    }
+    &-data {
+      &-user{
+        margin-top: 20px;
+        margin-left: 25px;
+        line-height: 20px;
+        color: #2a5885;
+      }
+    }
+
   }
 }

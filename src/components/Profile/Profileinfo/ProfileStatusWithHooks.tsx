@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import s from './Profileinfo.module.css';
 import Profile from "../Profile";
 import {string} from "prop-types";
 /*let arr = [0, () => {}];
@@ -33,8 +32,9 @@ const ProfileStatusWithHooks: React.FC<ProfileStatusProps> = ({status, updateUse
         updateUserStatusThunkCreator(valueStatus);
     };
     const saveStatusOnKey = (event: React.KeyboardEvent) => {
-        if (event.key = 'Enter') {
+        if (event.key === 'Enter') {
             setEditSwitch(false);
+            localStorage.setItem('editSwitch', JSON.stringify(false))
             updateUserStatusThunkCreator(valueStatus);
         }
     };
@@ -51,7 +51,8 @@ const ProfileStatusWithHooks: React.FC<ProfileStatusProps> = ({status, updateUse
             }
             {editSwitch &&
             <div>
-                <input onChange={onStatusChange} autoFocus={true} onBlur={saveStatus} onKeyPress={saveStatusOnKey} value={valueStatus}></input>
+                <input onChange={onStatusChange} autoFocus={true}
+                       onBlur={saveStatus} onKeyPress={saveStatusOnKey} value={valueStatus}></input>
             </div>
             }
         </div>

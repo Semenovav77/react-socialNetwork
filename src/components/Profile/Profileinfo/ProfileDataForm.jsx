@@ -1,13 +1,15 @@
 import React from "react";
 import {required} from "../../../helpers/validations";
-import {Input,Textarea} from "../../common/FormValid/FormValid";
+import {Input, Textarea} from "../../common/FormValid/FormValid";
 import {Field, reduxForm} from "redux-form";
 import s from './Profileinfo.module.css';
+import {Button as BaseButton} from 'antd';
+
 
 const ProfileDataForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <div><button>Save</button></div>
+            <div><BaseButton>Save</BaseButton></div>
             <div>
                 <b>Fullname:</b><Field placeholder={'Fullname'} name={'fullName'}
                                        validate={[required]}
