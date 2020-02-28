@@ -17,6 +17,11 @@
       .ant-btn-primary {
         background-color: #52c41a;
         border-color: #52c41a;
+        &:hover, &:focus{
+          color: #fff;
+          background-color: #52c41abf;
+          border-color: #52c41abf;
+        }
       }
     }
   }

@@ -26,7 +26,7 @@ const Header = ({isAuth, login, logoutThunkCreator}) => {
                                 <BaseButton type="danger" htmlType='submit' onClick={onSubmit}> Logout </BaseButton>
                             </div>
                         </div>
-                        : <NavLink to={'/login'}>Login</NavLink>}
+                        : <div className='lk__login-not-auth'> <NavLink to={'/login'}>Login</NavLink></div>}
                 </div>
             </div>
         </header>

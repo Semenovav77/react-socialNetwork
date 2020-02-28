@@ -4,12 +4,16 @@ import {Input, Textarea} from "../../common/FormValid/FormValid";
 import {Field, reduxForm} from "redux-form";
 import s from './Profileinfo.module.css';
 import {Button as BaseButton} from 'antd';
+import Button from "../../common/Button/Button";
 
 
 const ProfileDataForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <div><BaseButton>Save</BaseButton></div>
+            <div>
+                <BaseButton htmlType='submit' type="primary">Save</BaseButton>
+                <BaseButton type="danger" onClick={props.goToEditSwitch}>Cancel</BaseButton>
+            </div>
             <div>
                 <b>Fullname:</b><Field placeholder={'Fullname'} name={'fullName'}
                                        validate={[required]}
@@ -27,16 +31,16 @@ const ProfileDataForm = (props) => {
             </div>
             <div>
                 <b>About me:</b><Field placeholder={'about me'} name={'aboutMe'}
-                                        validate={[required]}
-                                        component={Textarea}/>
+                                       validate={[required]}
+                                       component={Textarea}/>
             </div>
             <div>
-                <br />
+                <br/>
                 <b>Contacts:</b> {Object.keys(props.profile.contacts).map(key => {
                 return <div className={s.contacts}>
-                <b>{key}:</b> <Field placeholder={key}
-                                    name={'contacts.'+key}
-                                    component={Input}/>
+                    <b>{key}:</b> <Field placeholder={key}
+                                         name={'contacts.' + key}
+                                         component={Input}/>
                 </div>
             })}
             </div>

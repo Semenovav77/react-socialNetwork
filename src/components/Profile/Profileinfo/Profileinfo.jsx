@@ -42,12 +42,13 @@ const ProfileInfo = (props) => {
                     </div>
                     <div className='profile__info-avatar-edit-photo'>
                         {props.isOwner &&
-                        <Upload onClick={uploadDocuments}{...props}>
-                            <BaseButton>
+                        <div>
+                            <BaseButton onClick={uploadDocuments}>
                                 <Icon type="upload"/> Click to Upload
                             </BaseButton>
-                        </Upload>}
-                        {props.isOwner && <input ref={file} type={'file'} onChange={mainPhotoSelect} hidden/>}
+                            <input ref={file} type={'file'} onChange={mainPhotoSelect} hidden/>
+                        </div>
+                        }
                     </div>
                 </div>
                 <div className='profile__info-user'>
@@ -55,7 +56,7 @@ const ProfileInfo = (props) => {
                         <div className='profile__info-user-status-name'>
                             <span>{props.profile.fullName}</span>
                         </div>
-                        <div className='profile__info-user-status-value'>
+                        <div className='profile__info-user-status-block'>
                             <span>Status: </span>
                             <ProfileStatusWithHooks status={props.status}
                                                     updateUserStatusThunkCreator={props.updateUserStatusThunkCreator}/>
@@ -64,7 +65,9 @@ const ProfileInfo = (props) => {
                     </div>
                     <div className='profile__info-data-user'>
                         {editSwitch
-                            ? <ProfileDataForm initialValues={props.profile}{...props} onSubmit={onSubmit}/>
+                            ? <ProfileDataForm initialValues={props.profile}{...props} onSubmit={onSubmit} goToEditSwitch={() => {
+                                setEditSwitch(false)
+                            }}/>
                             : <ProfileData profile={props.profile}
                                            isOwner={props.isOwner}
                                            goToEditSwitch={() => {

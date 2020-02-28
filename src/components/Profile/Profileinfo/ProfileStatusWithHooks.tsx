@@ -43,17 +43,13 @@ const ProfileStatusWithHooks: React.FC<ProfileStatusProps> = ({status, updateUse
     };
    //window.localSt = [valueStatus, setStatus];
     return (
-        <div>
+        <div className='profile__info-user-status-block-value'>
             {!editSwitch &&
-            <div>
                 <span onDoubleClick={changeStatus}>{status || '---'}</span>
-            </div>
             }
             {editSwitch &&
-            <div>
                 <input onChange={onStatusChange} autoFocus={true}
                        onBlur={saveStatus} onKeyPress={saveStatusOnKey} value={valueStatus}></input>
-            </div>
             }
         </div>
     )

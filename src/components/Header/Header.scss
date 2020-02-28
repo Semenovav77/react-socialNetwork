@@ -19,6 +19,12 @@
             height: 25px;
           }
         }
+        &-not-auth {
+          text-transform:  uppercase;
+          a {
+            color: white;
+          }
+        }
       }
     }
   }

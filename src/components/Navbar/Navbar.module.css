@@ -1,15 +1,17 @@
 .nav {
     grid-area: n;
-    background-color: rgba(80, 80, 80, 0.23);
-    padding: 25px;
+    background-color: #a2a5a71f;
+    padding: 40px 0 0 50px;
+    line-height: 23px;
 }
 
 .item a {
-    color: white;
+    color: #458ce4;
     text-decoration: none;
     line-height: 20px;
 }
 
 .item a.active {
-    color: rgba(70, 7, 17, 0.98);
+    color: #458ce4;
+    font-weight: 500;
 }

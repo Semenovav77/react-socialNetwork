@@ -1,9 +1,11 @@
 import React, {Component, useEffect} from 'react';
 import s from './MyPosts.module.css';
-import Post from "./Post/Post";
 import {Field, reduxForm} from "redux-form";
+import {Button as BaseButton} from 'antd';
+
 import {maxLengthCreator, required} from "../../../helpers/validations";
 import {Textarea} from "../../common/FormValid/FormValid";
+import Post from "./Post/Post";
 
 const maxlenght10 = maxLengthCreator(10);
 
@@ -16,7 +18,7 @@ const MyPostsForm = (props) => {
                            component={Textarea} placeholder={'Add massage'} validate={[required, maxlenght10]}/>
                 </div>
                 <div>
-                    <button>Add post</button>
+                    <BaseButton htmlType='submit'>Add post</BaseButton>
                 </div>
             </div>
         </form>

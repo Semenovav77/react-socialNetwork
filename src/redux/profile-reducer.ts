@@ -1,6 +1,8 @@
 import { profileAPI, usersAPI} from "../api/Api";
 import {stopSubmit} from "redux-form";
 import {ContactsOfProfileType, UserProfileType} from "../types/types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 
 const ADD_POST = 'ADD-POST';
@@ -20,7 +22,8 @@ let initialState = {
 
 export type InitialStateType = typeof initialState;
 
-const profileReducer = (state = initialState, action:any): InitialStateType => {
+type ActionsTypes = AddPostActionType | DeletePostActionType | SetUserProfileActionType | SetUserStatusActionType;
+const profileReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost = action.newPost;
@@ -48,6 +51,7 @@ const profileReducer = (state = initialState, action:any): InitialStateType => {
             return state;
     }
 };
+
 type AddPostActionType = {
     type: typeof ADD_POST
     newPost: string
@@ -92,8 +96,8 @@ export const setUserStatus = (status:string): SetUserStatusActionType => {
     }
 };
 
-export const getProfileThunkCreator = (userId: number) => {
-    return (dispatch: any) => {
+export const getProfileThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return (dispatch) => {
         usersAPI.getProfile(userId)
             .then((response: any) => {
                 dispatch(setUserProfile(response.data));
@@ -103,8 +107,8 @@ export const getProfileThunkCreator = (userId: number) => {
 
 export const updateProfileThunkCreator = (userId: number, fullName: string | null,
                                           aboutMe: string | null, lookingForAJob: boolean,
-                                          lookingForAJobDescription: string | null, contacts: ContactsOfProfileType) => {
-    return async (dispatch: any) => {
+                                          lookingForAJobDescription: string | null, contacts: ContactsOfProfileType): ThunkAction<void, AppStateType, unknown, ActionsTypes | any> => {
+    return async (dispatch) => {
         let response = await profileAPI.updateProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts);
         if (response.data.resultCode === 0) {
             dispatch(getProfileThunkCreator(userId))
@@ -118,8 +122,8 @@ export const updateProfileThunkCreator = (userId: number, fullName: string | nul
     }
 };
 
-export const getUserStatusThunkCreator = (userId: number) => {
-    return (dispatch: any) => {
+export const getUserStatusThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return (dispatch) => {
         profileAPI.getStatus(userId)
             .then((response: any) => {
                 dispatch(setUserStatus(response.data));
@@ -139,8 +143,8 @@ export const getUserStatusThunkCreator = (userId: number) => {
         }
     }
 };*/
-export const updateUserStatusThunkCreator = (status:string) => {
-    return (dispatch: any) => {
+export const updateUserStatusThunkCreator = (status:string): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return (dispatch) => {
         profileAPI.updateStatus(status)
     .then((response: any) => {
         if (response.data.resultCode === 0) {
@@ -150,9 +154,8 @@ export const updateUserStatusThunkCreator = (status:string) => {
 
 }};
 
-export const updateMainPhotoThunkCreator = (userId: number, photo: object) => {
-    return async (dispatch: any) => {
-        debugger;
+export const updateMainPhotoThunkCreator = (userId: number, photo: object): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return async (dispatch) => {
         let response = await profileAPI.updatePhoto(photo);
         if (response.data.resultCode === 0) {
             dispatch(getProfileThunkCreator(userId))

@@ -1,5 +1,7 @@
 
 import {getAuthMeThunkCreator} from "./auth-reducer";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 const SET_INITIALIZED  = 'SET_INITIALIZED';
 
 export type InitialStateType = {
@@ -9,6 +11,8 @@ export type InitialStateType = {
 let initialState: InitialStateType = {
     initialized: false
 };
+
+type ActionsTypes = SetInitializedActionType;
 
 const appReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
@@ -32,13 +36,10 @@ export const InitSuccess = (): SetInitializedActionType => {
     }
 };
 
-export const initializeApp = () => {
-    return (dispatch: any) => {
+export const initializeApp = (): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return (dispatch) => {
        let promise = dispatch(getAuthMeThunkCreator());
-       //dispatch
-       //dispatch
-        //promise
-        Promise.all([promise])
+       Promise.all([promise])
             .then(() => {
             dispatch(InitSuccess());
         });

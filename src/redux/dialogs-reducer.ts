@@ -1,5 +1,7 @@
 import {dialogsAPI} from "../api/Api";
 import {setCurrentPage, setIsFetching, setTotalUsersCount, setUsers} from "./users-reducer";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
@@ -44,6 +46,9 @@ let initialState = {
 
 export type InitialStateType = typeof initialState;
 
+type ActionsTypes = SetIsFetchingDialogsActionType | SetIsFetchingMessagesActionType | SetDialogsActionCreatorActionType
+                    | SetCurrentDialogActionCreatorActionType |setMessagesCurrentDialogActionCreatorActionType
+
 const dialogsReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case  SET_DIALOGS:
@@ -80,7 +85,6 @@ type SetIsFetchingDialogsActionType = {
     type: typeof SET_IS_FETCHING_DIALOG,
     isFetchingDialogs: boolean
 }
-
 export const setIsFetchingDialogs = (isFetchingDialogs: boolean): SetIsFetchingDialogsActionType => {
     return {
         type: SET_IS_FETCHING_DIALOG,
@@ -92,7 +96,6 @@ type SetIsFetchingMessagesActionType = {
     type: typeof SET_IS_FETCHING_MESSAGES,
     isFetchingMessages: boolean
 }
-
 export const setIsFetchingMessages = (isFetchingMessages: boolean): SetIsFetchingMessagesActionType => {
     return {
         type: SET_IS_FETCHING_MESSAGES,
@@ -118,7 +121,6 @@ type SetDialogsActionCreatorActionType = {
     type: typeof SET_DIALOGS
     dialogs: Array<DialogType>
 }
-
 export const setDialogsActionCreator = (dialogs: Array<DialogType>): SetDialogsActionCreatorActionType => {
     return {
         type: SET_DIALOGS,
@@ -130,7 +132,6 @@ type SetCurrentDialogActionCreatorActionType = {
     type: typeof SET_CURRENT_DIALOG
     currentDialog: string
 }
-
 export const setCurrentDialogActionCreator = (id: string): SetCurrentDialogActionCreatorActionType => {
     return {
         type: SET_CURRENT_DIALOG,
@@ -142,7 +143,6 @@ type setMessagesCurrentDialogActionCreatorActionType = {
     type: typeof SET_MESSAGES_CURRENT_DIALOG
     messages: Array<MessageType>
 }
-
 export const setMessagesCurrentDialogActionCreator = (messages: Array<MessageType>): setMessagesCurrentDialogActionCreatorActionType => {
     return {
         type: SET_MESSAGES_CURRENT_DIALOG,
@@ -150,8 +150,8 @@ export const setMessagesCurrentDialogActionCreator = (messages: Array<MessageTyp
     }
 };
 
-export const getDialogsThunkCreator = () => {
-    return (dispatch: any) => {
+export const getDialogsThunkCreator = (): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return (dispatch) => {
         dispatch(setIsFetchingDialogs(true));
         dialogsAPI.getDialogs().then((data: any) => {
             dispatch(setIsFetchingDialogs(false));
@@ -159,8 +159,9 @@ export const getDialogsThunkCreator = () => {
         });
     }
 };
-export const getAllMessageDialogsThunkCreator = (currentDialog: string) => {
-    return (dispatch: any) => {
+
+export const getAllMessageDialogsThunkCreator = (currentDialog: string): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return (dispatch) => {
         dispatch(setIsFetchingMessages(true));
         dialogsAPI.getMessages(currentDialog).then((data: any) => {
             dispatch(setIsFetchingMessages(false));

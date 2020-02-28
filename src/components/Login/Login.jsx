@@ -57,7 +57,6 @@ const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);
 
 const Login = (props) => {
         const onSubmit = (formData) => {
-            console.log(formData);
             props.loginThunkCreator(formData.email, formData.password, formData.rememberme, formData.captcha)
             props.getCaptchaURL(null);
         };
