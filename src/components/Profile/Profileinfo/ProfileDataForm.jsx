@@ -1,17 +1,23 @@
-import React from "react";
-import {required} from "../../../helpers/validations";
-import {Input, Textarea} from "../../common/FormValid/FormValid";
+import React, {useState} from "react";
 import {Field, reduxForm} from "redux-form";
-import s from './Profileinfo.module.css';
 import {Button as BaseButton} from 'antd';
 import Button from "../../common/Button/Button";
 
+import {required} from "../../../helpers/validations";
+import {Input, Textarea} from "../../common/FormValid/FormValid";
+import s from './Profileinfo.module.css';
+import Modal from './Modal'
 
 const ProfileDataForm = (props) => {
+    const [editModal, setModalEdit] = useState(false);
+    const onSubmit = (e) => {
+        e.preventDefault();
+        setModalEdit(true)
+    };
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <BaseButton htmlType='submit' type="primary">Save</BaseButton>
+                <BaseButton htmlType='submit' type="primary" onClick={onSubmit}>Save</BaseButton>
                 <BaseButton type="danger" onClick={props.goToEditSwitch}>Cancel</BaseButton>
             </div>
             <div>
@@ -44,10 +50,11 @@ const ProfileDataForm = (props) => {
                 </div>
             })}
             </div>
-            {props.error && <div className={s.formSummaryError}>
+            {props.error &&
+            <div className={s.formSummaryError}>
                 {props.error}
-            </div>
-            }
+            </div>}
+            <Modal title={'Тест'} isOpen={editModal} onCancel={() => {setModalEdit(false)}} onSubmit={props.handleSubmit}>  Вы уверены, что хотите сохранить? </Modal>
         </form>
     )
 };
