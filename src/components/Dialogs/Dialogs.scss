@@ -87,12 +87,28 @@
       height: 400px;
     }
 
+
+
     &-input {
       display: flex;
       position: relative;
       align-items: center;
       justify-content: space-between;
       padding-top: 20px;
+      &-add {
+        padding: 6px 4px;
+        min-height:30px;
+        font-size: 14px;
+        border:1px solid #c1c1c1;
+        border-radius: 7px;
+      }
+      &-placeholder {
+        position: absolute;
+        top: 29px;
+        color: grey;
+        margin: 0 6px;
+        pointer-events: none;
+      }
       &-smile {
         margin-right: 15px;
         i.anticon {
@@ -104,6 +120,7 @@
           }
         }
       }
+
       &-emoji-picker {
         position: absolute;
         bottom: 45px;

@@ -6,19 +6,19 @@ import Button from "../../common/Button/Button";
 import {required} from "../../../helpers/validations";
 import {Input, Textarea} from "../../common/FormValid/FormValid";
 import s from './Profileinfo.module.css';
-import Modal from './Modal'
+import Modal from '../../common/Portal/Modal'
 
-const ProfileDataForm = (props) => {
+const ProfileDataForm = ({profile, error, handleSubmit, goToEditSwitch}) => {
     const [editModal, setModalEdit] = useState(false);
     const onSubmit = (e) => {
         e.preventDefault();
         setModalEdit(true)
     };
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <BaseButton htmlType='submit' type="primary" onClick={onSubmit}>Save</BaseButton>
-                <BaseButton type="danger" onClick={props.goToEditSwitch}>Cancel</BaseButton>
+                <BaseButton type="danger" onClick={goToEditSwitch}>Cancel</BaseButton>
             </div>
             <div>
                 <b>Fullname:</b><Field placeholder={'Fullname'} name={'fullName'}
@@ -42,7 +42,7 @@ const ProfileDataForm = (props) => {
             </div>
             <div>
                 <br/>
-                <b>Contacts:</b> {Object.keys(props.profile.contacts).map(key => {
+                <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
                 return <div className={s.contacts}>
                     <b>{key}:</b> <Field placeholder={key}
                                          name={'contacts.' + key}
@@ -50,11 +50,11 @@ const ProfileDataForm = (props) => {
                 </div>
             })}
             </div>
-            {props.error &&
+            {error &&
             <div className={s.formSummaryError}>
-                {props.error}
+                {error}
             </div>}
-            <Modal title={'Тест'} isOpen={editModal} onCancel={() => {setModalEdit(false)}} onSubmit={props.handleSubmit}>  Вы уверены, что хотите сохранить? </Modal>
+            <Modal title={''} isOpen={editModal} onCancel={() => {setModalEdit(false)}} onSubmit={handleSubmit}>  Вы уверены, что хотите сохранить? </Modal>
         </form>
     )
 };

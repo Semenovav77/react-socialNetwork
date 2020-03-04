@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import s from './users.module.css';
-import userPhoto from '../../assets/images/ava.jpg';
-import {NavLink} from "react-router-dom";
-import {UserType} from "../../types/types";
 import {Button as BaseButton} from 'antd';
+import {NavLink} from "react-router-dom";
+
+import userPhoto from '../../assets/images/ava.jpg';
+import {UserType} from "../../types/types";
+import Modal from "../common/Portal/Modal";
 
 type PropsType = {
     user: UserType
@@ -13,13 +15,12 @@ type PropsType = {
 }
 
 let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator, followThunkCreator}) => {
+    const [editPhotoModal, setPhotoModal] = useState(false);
     return (<div className='users__item-info'>
                 <div>
                     <div>
-                        <NavLink to={'/profile/' + user.id}>
-                            <img src={user.photos.small != null ? user.photos.small : userPhoto}
+                            <img onClick={() => {setPhotoModal(true)}} src={user.photos.small != null ? user.photos.small : userPhoto}
                                  className={s.userPhoto}/>
-                        </NavLink>
                     </div>
                     <div>
                         {user.followed
@@ -39,14 +40,15 @@ let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator,
                 </div>
                 <span>
                         <span>
-                            <div>{user.name}</div>
+                            <NavLink to={'/profile/' + user.id}>
+                                <div>{user.name}</div>
+                            </NavLink>
                             <div>{user.status} </div>
                         </span>
-                        <span>
-                            <div> {"u.location.country"} </div>
-                            <div> {"u.location.city"} </div>
-                        </span>
                 </span>
+            <Modal title={user.name} isImg={true} isOpen={editPhotoModal} onCancel={() => {setPhotoModal(false)}} onSubmit={() => {console.log('1')}}>
+                <img onClick={() => {setPhotoModal(true)}} src={user.photos.small != null ? user.photos.large : userPhoto} className={s.userPhoto}/>
+            </Modal>
             </div>
     );
 

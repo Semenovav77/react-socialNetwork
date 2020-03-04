@@ -1,53 +1,79 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Icon, Input, Button} from "antd";
-import {Picker} from 'emoji-mart';
+import {Emoji, Picker} from 'emoji-mart';
 
 import './InputChat.scss'
+import reactStringReplace from "react-string-replace";
+import ContentEditable from "./ContentEditable";
 
 const {TextArea} = Input;
-const InputChat = (props) => {
+const InputChat = () => {
+    const [value, setValue] = useState('');
+    const [emojiVisible, setVisibleEmoji] = useState(false);
+    const [editModeState, setEditModeState] = useState(false);
+    const cellRef = useRef(null);
+    const onCl = () => {
+        setEditModeState(true);
+        cellRef.current.focus();
+    };
+
+    useEffect(() => {
+        if (editModeState) cellRef.current.focus();
+    }, [editModeState]);
+
+    useEffect(() => {
+        setValue(value)
+        }, [value]);
+
     const handleClick = (element, e) => {
         if (element && !element.contains(e.target)) {
             setVisibleEmoji(false);
         }
     };
-
     useEffect(() => {
         const element = document.querySelector('.chat__current-dialog-input-smile');
-        document.addEventListener("click", handleClick.bind(this,element));
+        document.addEventListener("click", handleClick.bind(this, element));
 
         return () => {
-            document.removeEventListener("click", handleClick.bind(this,element));
+            document.removeEventListener("click", handleClick.bind(this, element));
         };
-    },[]);
-    const [value, setValue] = useState('');
-    const [emojiVisible, setVisibleEmoji] = useState(false);
+    }, []);
+
     const toogleEmoji = () => {
         if (emojiVisible == false) {
-            setVisibleEmoji(true)
+            setVisibleEmoji(true);
         } else {
-            setVisibleEmoji(false)
+            setVisibleEmoji(false);
         }
     };
     const changeValue = (e) => {
+        setValue(e.target.innerText);
+       /* cellRef.current.focus()*/
+    };
+
+    const handleChange = (e) => {
         setValue(e.target.value);
     };
+
     const documents = useRef(null);
+
     const uploadDocuments = () => {
         documents.current.click();
     };
 
-
     const PhotoSelect = (e) => {
         if (e.target.files.length) {
             for (let i = 0; i < e.target.files.length; i++) {
-                console.log(e.target.files[i])
+               /* console.log(e.target.files[i])*/
             }
         }
     };
-    const addEmojiInput = ({colons}) => {
-        setValue((value + ' ' + colons).trim());
+
+    const addEmojiInput = (emoji) => {
+        setValue(value + ' ' + emoji.colons);
     };
+
+
     return (
         <div className="chat__current-dialog-input">
             <div className="chat__current-dialog-input-smile">
@@ -58,12 +84,22 @@ const InputChat = (props) => {
 
             </div>
             <div className="chat__current-dialog-input-text">
-                <TextArea size="large"
-                          onChange={changeValue}
-                          onKeyUp={()=> {alert(value)}}
-                          placeholder="Введите текст сообщения"
-                          value={value}
-                          autoSize={{ minRows: 1, maxRows: 5 }}/>
+                <ContentEditable contentEditable={editModeState}
+                                 refS={cellRef} onInput={changeValue} onCl={onCl} value={value}/>
+                {/*<div className="chat__current-dialog-input-add">
+                    <ContentEditable
+                        html={value}// innerHTML of the editable div
+                        disabled={false} // use true to disable edition
+                        onChange={handleChange} // handle innerHTML change
+                    />
+                    {reactStringReplace(value, /:(.+?):/g, (match, i) => (
+                        <Emoji emoji={match} set='apple' size={16}/>))}
+                </div>*/}
+                {!value &&
+                <div className="chat__current-dialog-input-placeholder">
+                    Напишите сообщение
+                </div>
+                }
             </div>
             <div className="chat__current-dialog-input-actions">
                 <input ref={documents} type="file" onChange={PhotoSelect} multiple hidden/>

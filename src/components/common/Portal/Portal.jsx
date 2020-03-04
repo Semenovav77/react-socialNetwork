@@ -2,7 +2,12 @@ import React from 'react';
 import ReactDOM from "react-dom";
 
 class Portal extends React.Component {
-    el = document.createElement('div');
+    constructor(props) {
+        super(props);
+        this.el = document.createElement("div");
+        this.el.className = 'modal-wrap';
+    }
+
 
     componentDidMount() {
         document.body.appendChild(this.el);
