@@ -2,19 +2,20 @@ import React, {useEffect, useState} from 'react';
 import {
     getAllMessageDialogsThunkCreator,
     getDialogsThunkCreator,
-    setCurrentDialogActionCreator
+    setCurrentDialogActionCreator,
+    sendMessageThunkCreator
 } from "../../redux/dialogs-reducer";
 import DialogsFilter from "./DialogsFilter/DialogsFilter";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
-
+import {withRouter} from "react-router-dom";
 
 const DialogsContainer = ({
-                              dialogs, messages, currentDialog,
+                              dialogs, messages, currentDialog, id,
                               isFetchingDialogs, isFetchingMessages,
                               getAllMessageDialogsThunkCreator,
-                              getDialogsThunkCreator, setCurrentDialogActionCreator
+                              getDialogsThunkCreator, setCurrentDialogActionCreator, match, sendMessageThunkCreator
                           }) => {
     return (
         <DialogsFilter
@@ -25,12 +26,17 @@ const DialogsContainer = ({
             isFetchingMessages={isFetchingMessages}
             getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
             setCurrentDialogActionCreator={setCurrentDialogActionCreator}
-            getDialogsThunkCreator={getDialogsThunkCreator}/>
+            getDialogsThunkCreator={getDialogsThunkCreator}
+            match={match}
+            sendMessageThunkCreator={sendMessageThunkCreator}
+            id={id}
+        />
     )
 };
 
 let mapStateToProps = (state) => {
     return {
+        id: state.auth.id,
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
         currentDialog: state.dialogsPage.currentDialog,
@@ -50,8 +56,10 @@ let mapStateToProps = (state) => {
 };*/
 
 export default compose(
-    connect(mapStateToProps, {getAllMessageDialogsThunkCreator, getDialogsThunkCreator, setCurrentDialogActionCreator}),
+    connect(mapStateToProps, {getAllMessageDialogsThunkCreator, getDialogsThunkCreator,
+        sendMessageThunkCreator, setCurrentDialogActionCreator,}),
     /*withAuthRedirect,*/
+    withRouter,
 )(DialogsContainer);
 
 /*

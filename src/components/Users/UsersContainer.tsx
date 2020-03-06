@@ -2,6 +2,9 @@ import React from 'react';
 import {
     getUsersThunkCreator, followThunkCreator, unfollowThunkCreator
     } from "../../redux/users-reducer";
+import {
+    addDialogThunkCreator
+    } from "../../redux/dialogs-reducer";
 import {connect} from "react-redux";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
@@ -26,6 +29,7 @@ type MapDispatchPropsType = {
     unfollowThunkCreator(userId: number): void
     followThunkCreator(userId: number): void
     getUsersThunkCreator(pageNumber: number, pageSize: number): void
+    addDialogThunkCreator(userId: number): void
 }
 type OwnPropsType = {
     pageTitle: string
@@ -56,7 +60,8 @@ class UsersAPI extends React.Component<PropsType> {
                    users={this.props.users}
                    followingProgress={this.props.followingProgress}
                    followThunkCreator={this.props.followThunkCreator}
-                   unfollowThunkCreator={this.props.unfollowThunkCreator}/>
+                   unfollowThunkCreator={this.props.unfollowThunkCreator}
+                   addDialogThunkCreator={this.props.addDialogThunkCreator}/>
         </>
     }
 }
@@ -80,7 +85,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         totalUsersCount: getTotalUserCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        followingProgress: getFollowingProgress(state)
+        followingProgress: getFollowingProgress(state),
     }
 };
 /*
@@ -112,7 +117,8 @@ let mapDispatchToProps = (dispatch) => {
 const UsersContainer = connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
     getUsersThunkCreator,
     followThunkCreator,
-    unfollowThunkCreator
+    unfollowThunkCreator,
+    addDialogThunkCreator
 })(UsersAPI);
 
 export default UsersContainer;

@@ -7,7 +7,7 @@ import reactStringReplace from "react-string-replace";
 import ContentEditable from "./ContentEditable";
 
 const {TextArea} = Input;
-const InputChat = () => {
+const InputChat = ({currentDialog, sendMessageThunkCreator}) => {
     const [value, setValue] = useState('');
     const [emojiVisible, setVisibleEmoji] = useState(false);
     const [editModeState, setEditModeState] = useState(false);
@@ -106,7 +106,8 @@ const InputChat = () => {
                 <Button type="ghost" onClick={uploadDocuments} shape="circle" icon='camera'/>
                 {!value ? <Button type="ghost" shape="circle" icon='audio'/>
                     :
-                    <Button type="ghost" shape="circle" icon='check'/>}
+                    <Button type="ghost" shape="circle" icon='check'
+                            onClick={() => {sendMessageThunkCreator(currentDialog, value)}}/>}
             </div>
 
         </div>

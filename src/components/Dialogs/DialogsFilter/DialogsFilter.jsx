@@ -1,25 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import Dialogs from './../Dialogs'
 
-import './DialogsFilter.scss'
+import './DialogsFilter.scss';
+/*import socket from './../../../socket/socket'*/
 
 const DialogsFilter = ({
-                           dialogs, messages, currentDialog,
+                           dialogs, messages, currentDialog, id,
                            isFetchingDialogs, isFetchingMessages,
                            getAllMessageDialogsThunkCreator, getDialogsThunkCreator,
-                           setCurrentDialogActionCreator
+                           setCurrentDialogActionCreator, match, sendMessageThunkCreator
                        }) => {
     const [inputValue, setValue] = useState('');
     const [filtred, setFiltredItems] = useState(Array.from(dialogs));
+
     const onChangeInputSearch = (e) => {
         const value = e.target.value;
-        setFiltredItems(dialogs.filter(dialog => dialog.user.fullname.toLowerCase().indexOf(value.toLowerCase()) >= 0));
+        setFiltredItems(dialogs.filter(dialog => dialog.userName.toLowerCase().indexOf(value.toLowerCase()) >= 0));
         setValue(value);
     };
+
     useEffect(() => {
-        if (!dialogs.length) getDialogsThunkCreator();
+        getDialogsThunkCreator();
+        setFiltredItems(dialogs);
+    }, []);
+    useEffect(() => {
         setFiltredItems(dialogs);
     }, [dialogs]);
+
+
+/*    socket.on('SERVER:DIALOG_CREATED', (data) =>{
+        console.log(data);
+        getDialogsThunkCreator();
+    });*/
+
     return (
         <Dialogs dialogs={filtred}
                  messages={messages}
@@ -29,7 +42,10 @@ const DialogsFilter = ({
                  onSearch={onChangeInputSearch}
                  inputValue={inputValue}
                  setCurrentDialogActionCreator={setCurrentDialogActionCreator}
-                 getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}/>
+                 getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
+                 match={match}
+                 sendMessageThunkCreator={sendMessageThunkCreator}
+                 id={id}/>
     );
 };
 

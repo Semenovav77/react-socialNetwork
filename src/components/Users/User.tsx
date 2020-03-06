@@ -12,9 +12,10 @@ type PropsType = {
     followingProgress: Array<number>
     unfollowThunkCreator(id: number): void
     followThunkCreator(id: number): void
+    addDialogThunkCreator(id: number): void
 }
 
-let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator, followThunkCreator}) => {
+let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator, followThunkCreator, addDialogThunkCreator}) => {
     const [editPhotoModal, setPhotoModal] = useState(false);
     return (<div className='users__item-info'>
                 <div>
@@ -44,6 +45,7 @@ let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator,
                                 <div>{user.name}</div>
                             </NavLink>
                             <div>{user.status} </div>
+                            <div onClick={() => addDialogThunkCreator(user.id)}>Начать диалог</div>
                         </span>
                 </span>
             <Modal title={user.name} isImg={true} isOpen={editPhotoModal} onCancel={() => {setPhotoModal(false)}} onSubmit={() => {console.log('1')}}>

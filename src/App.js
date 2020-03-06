@@ -1,18 +1,20 @@
 import React from 'react';
-import './App.css';
-import NavBar from './components/Navbar/NavBar';
 import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {connect, Provider} from "react-redux";
+import {compose} from "redux";
+import {initializeApp} from "./redux/app-reducer";
+
+import './App.css';
+import store from "./redux/redux-store";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
-import {connect, Provider} from "react-redux";
-import {compose} from "redux";
-import {initializeApp} from "./redux/app-reducer";
-import Preloader from "./components/common/preloader/Preloader";
-import store from "./redux/redux-store";
+import NavBar from './components/Navbar/NavBar';
 import {withReactSuspense} from "./HOC/withReactSuspense";
 import RegisterContainer from "./components/Register/RegisterContainer";
+import Preloader from "./components/common/preloader/Preloader";
+
 
 /*import DialogsContainer from "./components/Dialogs/DialogsContainer";*/
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -56,7 +58,7 @@ class App extends React.Component {
                         <Route exact path='/'>
                             <Redirect from='/' to='profile' />
                         </Route>
-                        <Route path='/dialogs' render={withReactSuspense(DialogsContainer)}/>
+                        <Route path={['/dialogs/:id?']} render={withReactSuspense(DialogsContainer)}/>
                         <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                         <Route path='/users' render={() => <UsersContainer pageTitle={''}/>}/>
                         <Route path='/login/vk' render={() => <div>VK</div>}/>

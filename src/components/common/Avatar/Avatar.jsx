@@ -4,15 +4,16 @@ import classNames from 'classnames';
 import './Avatar.scss'
 import generateColorAva from "../../../helpers/generateColorAva";
 
-const Avatar = ({user}) => {
+const Avatar = ({photos, userName, id}) => {
 
-    if (user.avatar) {
+    if (photos.small) {
         return (
-            <img className='avatar' src={user.avatar} alt={`Avatar${user.fullname}`}/>
+            <img className='avatar' src={photos.small} alt={`Avatar${userName}`}/>
         );
     } else {
-        const {color, colorLighten} = generateColorAva(user.id);
-        const firstChar = user.fullname[0].toUpperCase();
+        const idStr=id.toString();
+        const {color, colorLighten} = generateColorAva(idStr);
+        const firstChar = userName[0].toUpperCase();
         return <div
             style={{background: `linear-gradient(135deg, ${color} 0%, ${colorLighten} 96%)`}}
             className='avatar avatar--symbol'>{firstChar}</div>

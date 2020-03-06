@@ -14,11 +14,12 @@ type PropsType = {
     onPageChanged(pageNumber: number): void
     unfollowThunkCreator(userId: number): void
     followThunkCreator(userId: number): void
+    addDialogThunkCreator(userId: number): void
 }
 
 let Users: React.FC<PropsType> = ({
                                       currentPage, totalUsersCount, pageSize, users, onPageChanged,
-                                      followingProgress, unfollowThunkCreator, followThunkCreator
+                                      followingProgress, unfollowThunkCreator, followThunkCreator, addDialogThunkCreator
                                   }) => {
 
     return (<div className='users'>
@@ -33,7 +34,8 @@ let Users: React.FC<PropsType> = ({
                                      user={u}
                                      followingProgress={followingProgress}
                                      unfollowThunkCreator={unfollowThunkCreator}
-                                     followThunkCreator={followThunkCreator}/>)}
+                                     followThunkCreator={followThunkCreator}
+                                     addDialogThunkCreator={addDialogThunkCreator}/>)}
                 </div>
         </div>
     );

@@ -112,9 +112,18 @@ const instanceChat = axios.create( {
 
 export const dialogsAPI = {
     getDialogs() {
-        return instanceChat.get('dialogs')
+        return instance.get('dialogs')
     },
-    getMessages(currentDialog: string) {
+   /* getMessages(currentDialog: string) {
         return instanceChat.get(`messages?dialog=${currentDialog}`)
+    },*/
+    getMessages(currentDialog: number) {
+        return instance.get(`dialogs/${currentDialog}/messages`)
+    },
+    addDialog(userId: number) {
+        return instance.put(`dialogs/${userId}`)
+    },
+    sendMessage(userId: number, message: string) {
+        return instance.post(`dialogs/${userId}/messages`, {body: message})
     }
 };

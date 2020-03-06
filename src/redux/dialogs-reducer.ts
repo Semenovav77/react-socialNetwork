@@ -11,34 +11,47 @@ const SET_DIALOGS = 'SET_DIALOGS';
 const SET_IS_FETCHING_DIALOG = 'SET_IS_FETCHING_DIALOG';
 const SET_IS_FETCHING_MESSAGES = 'SET_IS_FETCHING_MESSAGES';
 
-type UserType = {
-    id: string
-    fullname: string
-    avatar: string | null
-}
+
 type DialogType = {
-    id: string
-    text: string | null
-    created_at: string
-    user: UserType
+        id: string
+        text: string | null
+        userName: string
+        lastDialogActivityDate:string
+        lastUserActivityDate: string
+        newMessagesCount: number
+        photos: {
+            small: string | null
+            large: string | null
+        }
+
 }
 
-type UserMessageType = {
-    id: string
-    fullname: string
-    avatar: string
-}
 type MessageType = {
     id: string
-    text: string | null
-    created_at: string
-    user: UserMessageType
-    dialog: string
+    body: string | null
+    addedAt: string
+    senderId: number
+    senderName: string
+    recipientId: number
+    viewed: boolean
 }
+
+type MessagesType ={
+items: {
+    id: string
+    body: string | null
+    addedAt: string
+    senderId: number
+    senderName: string
+    recipientId: number
+    viewed: boolean
+}
+}
+
 let initialState = {
     dialogs: [] as Array<DialogType>,
-    messages: [] as Array<MessageType>,
-    currentDialog: null as null | string,
+    messages: [] as Array<MessagesType>,
+    currentDialog: null as null | number,
     isFetchingDialogs: false,
     isFetchingMessages: false
 
@@ -130,9 +143,9 @@ export const setDialogsActionCreator = (dialogs: Array<DialogType>): SetDialogsA
 
 type SetCurrentDialogActionCreatorActionType = {
     type: typeof SET_CURRENT_DIALOG
-    currentDialog: string
+    currentDialog: number
 }
-export const setCurrentDialogActionCreator = (id: string): SetCurrentDialogActionCreatorActionType => {
+export const setCurrentDialogActionCreator = (id: number): SetCurrentDialogActionCreatorActionType => {
     return {
         type: SET_CURRENT_DIALOG,
         currentDialog: id
@@ -150,6 +163,24 @@ export const setMessagesCurrentDialogActionCreator = (messages: Array<MessageTyp
     }
 };
 
+export const addDialogThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return (dispatch) => {
+        dispatch(setIsFetchingDialogs(true));
+        dialogsAPI.addDialog(userId).then((data: any) => {
+            dispatch(setIsFetchingDialogs(false));
+        });
+    }
+};
+
+export const sendMessageThunkCreator = (userId: number, message: string): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return (dispatch) => {
+        dialogsAPI.sendMessage(userId, message).then((data: any) => {
+            //dispatch(setIsFetchingDialogs(false));
+        });
+    }
+};
+
+
 export const getDialogsThunkCreator = (): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
     return (dispatch) => {
         dispatch(setIsFetchingDialogs(true));
@@ -160,7 +191,7 @@ export const getDialogsThunkCreator = (): ThunkAction<void, AppStateType, unknow
     }
 };
 
-export const getAllMessageDialogsThunkCreator = (currentDialog: string): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+export const getAllMessageDialogsThunkCreator = (currentDialog: number): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
     return (dispatch) => {
         dispatch(setIsFetchingMessages(true));
         dialogsAPI.getMessages(currentDialog).then((data: any) => {

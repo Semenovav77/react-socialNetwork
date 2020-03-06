@@ -6,8 +6,8 @@ import ruLocale from "date-fns/locale/ru";
 
 const Time = ({date}) => {
     return (
-        /*formatDistanceToNow(new Date(Date.parse(date)),{addSuffix: true, locale: ruLocale})*/
-        'test'
+        formatDistanceToNow(new Date(Date.parse(date)),{addSuffix: true, locale: ruLocale})
+
     );
 };
 

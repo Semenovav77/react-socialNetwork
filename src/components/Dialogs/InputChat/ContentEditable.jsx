@@ -8,7 +8,6 @@ class ContentEditable extends React.Component {
     }*/
 
     render() {
-        debugger;
         return (
             <div className="chat__current-dialog-input-add"
                  contentEditable={this.props.contentEditable} suppressContentEditableWarning
@@ -18,7 +17,6 @@ class ContentEditable extends React.Component {
                 {/*{this.props.value && reactStringReplace(this.props.value.replace(/&nbsp;|\u202F|\u00A0/g, ' '), /:(.+?):/g, (match) => (
                     <Emoji emoji={match} set='apple' size={16} />
                 ))}*/}
-                {console.log(this.props.refS)}
             </div>
         )
     }

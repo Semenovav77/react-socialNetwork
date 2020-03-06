@@ -8,7 +8,16 @@ import Message from "../MessagesNew/Message";
 import Preloader from "../../common/preloader/Preloader";
 
 
-const Messages = ({blockRef, messages, isFetchingMessages, currentDialog, getAllMessageDialogsThunkCreator}) => {
+const Messages = ({blockRef, messages, isFetchingMessages, currentDialog, id,
+                      getAllMessageDialogsThunkCreator, match, setCurrentDialogActionCreator}) => {
+
+    useEffect(() => {
+        let dialogId = match.params.id;
+        if (dialogId) {
+            setCurrentDialogActionCreator(Number(dialogId));
+        };
+    }, [match.params.id]);
+
     useEffect(() => {
         if (currentDialog != null) getAllMessageDialogsThunkCreator(currentDialog);
     }, [currentDialog]);
@@ -17,21 +26,19 @@ const Messages = ({blockRef, messages, isFetchingMessages, currentDialog, getAll
             {isFetchingMessages ?
                 (<Preloader/>)
                 :
-                (messages.length ? (
+                ((messages.totalCount > 0) ? (
                     <>
-                        {messages.map(mes => {
+                        {messages.items.map(mes => {
                             return (<Message key={mes.id}
-                                             user={mes.user}
-                                             text={mes.text}
+                                             body={mes.body}
                                              audio={mes.audio}
-                                             date={mes.created_at}
-                                             isMe={false}/>)
+                                             date={mes.addedAt}
+                                             isMe={(mes.senderId === id)}/>)
                         })
                         }
                     </>
                 ) : (
                     <Empty description="Нет сообщений"/>))}
-
         </div>)
 };
 

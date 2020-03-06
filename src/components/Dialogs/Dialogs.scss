@@ -49,6 +49,7 @@
         overflow: auto;
         &__item {
           padding: 0 20px;
+          color: black;
           &.active,
           &:hover {
             background-color: #f6fff3;

@@ -68,15 +68,15 @@ const MessageAudio = ({audio}) => {
     )
 };
 
-const Message = ({avatar, user, text, date, isMe, audio}) => {
+const Message = ({body, date, isMe, audio}) => {
     return (
         <div className={classNames('message', {'message--isme': isMe, 'message--is-audio': audio})}>
             <div className='message__avatar'>
-                <img src={user.avatar} alt={`Avatar ${user.fullname}`}/>
+                {/*<img src={user.avatar} alt={`Avatar ${user.fullname}`}/>*/}
             </div>
             <div className='message__content'>
                 <div className='message__bubble'>
-                    {text && <p className='message__text'> {reactStringReplace(text, /:(.+?):/g, (match, i) => (
+                    {body && <p className='message__text'> {reactStringReplace(body, /:(.+?):/g, (match, i) => (
                         <Emoji emoji={match} set='apple' size={16} />
                     ))} </p>}
                     {audio && <MessageAudio audio={audio}/>}

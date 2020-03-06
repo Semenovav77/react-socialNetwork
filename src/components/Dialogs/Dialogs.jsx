@@ -8,12 +8,13 @@ import InputChat from "./InputChat/InputChat";
 import Preloader from './../common/preloader/Preloader';
 import DialogItem from "./DialogItem/DialogsItem";
 import Messages from "./Messages/Message";
+import DialogsFilter from "./DialogsFilter/DialogsFilter";
 
 const Dialogs = ({
-                     dialogs, currentDialog, isFetchingDialogs,
+                     dialogs, currentDialog, isFetchingDialogs, id,
                      isFetchingMessages, messages, onSearch,
                      inputValue, getAllMessageDialogsThunkCreator,
-                     setCurrentDialogActionCreator
+                     setCurrentDialogActionCreator, match, sendMessageThunkCreator
                  }) => {
     const messagesRef = useRef(null);
     useEffect(() => {
@@ -48,15 +49,18 @@ const Dialogs = ({
                             {isFetchingDialogs ?
                                 (<Preloader/>)
                                 :
-                                (dialogs.length ? (orderBy(dialogs, ["created_at"], ["asc"]).map(item => (
+                                (dialogs.length ? (orderBy(dialogs, ["lastDialogActivityDate"], ["desc"]).map(item => (
                                         <DialogItem
                                             key={item.id}
                                             id={item.id}
-                                            user={item.user}
-                                            text={item.text}
-                                            created_at={item.created_at}
+                                            userName={item.userName}
+                                            photos={item.photos}
+                                            /*text={item.text}*/
+                                            /*created_at={item.created_at}*/
+                                            lastDialogActivityDate={item.lastDialogActivityDate}
                                             currentDialog={currentDialog}
                                             setCurrentDialogActionCreator={setCurrentDialogActionCreator}
+
                                         />
                                     ))) : (
                                         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='Ничего не найдено'/>)
@@ -67,7 +71,7 @@ const Dialogs = ({
                 <div className="chat__current-dialog">
                     <div className="chat__current-dialog-header">
                         <b className="chat__current-dialog-header-fullname">
-                            {dialogs.length && dialogs.map(dialo => (dialo.id === currentDialog) && dialo.user.fullname)}
+                            {dialogs.length && dialogs.map(dialo => (dialo.id === currentDialog) && dialo.userName)}
                         </b>
                         <div className="chat__current-dialog-header-status">
                             <span className={classNames("status", {"status--online": online})}>
@@ -80,9 +84,12 @@ const Dialogs = ({
                                   currentDialog={currentDialog}
                                   isFetchingMessages={isFetchingMessages}
                                   blockRef={messagesRef}
-                                  getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}/>
+                                  getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
+                                  setCurrentDialogActionCreator={setCurrentDialogActionCreator}
+                                  match={match}
+                                  id={id}/>
                     </div>
-                    <InputChat/>
+                    <InputChat sendMessageThunkCreator={sendMessageThunkCreator} currentDialog={currentDialog}/>
 
                 </div>
             </div>
