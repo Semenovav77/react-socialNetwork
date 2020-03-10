@@ -5,6 +5,10 @@ import {AppStateType} from "./redux-store";
 export const getUsers = (state: AppStateType) => {
     return state.usersPage.users;
 };
+
+export const getIsAuth = (state: AppStateType) => {
+    return state.auth.isAuth;
+};
 /*
 export const getUsersSelector = (state) => {
     return getUsers(state).filter(u => true);

@@ -2,6 +2,7 @@ import {dialogsAPI} from "../api/Api";
 import {setCurrentPage, setIsFetching, setTotalUsersCount, setUsers} from "./users-reducer";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
+import {getProfileThunkCreator} from "./profile-reducer";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
@@ -175,7 +176,9 @@ export const addDialogThunkCreator = (userId: number): ThunkAction<void, AppStat
 export const sendMessageThunkCreator = (userId: number, message: string): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
     return (dispatch) => {
         dialogsAPI.sendMessage(userId, message).then((data: any) => {
-            //dispatch(setIsFetchingDialogs(false));
+            if (data.data.resultCode === 0) {
+                dispatch(getAllMessageDialogsThunkCreator(userId))
+            }
         });
     }
 };

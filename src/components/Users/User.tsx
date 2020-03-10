@@ -8,6 +8,7 @@ import {UserType} from "../../types/types";
 import Modal from "../common/Portal/Modal";
 
 type PropsType = {
+    isAuth: boolean
     user: UserType
     followingProgress: Array<number>
     unfollowThunkCreator(id: number): void
@@ -15,27 +16,32 @@ type PropsType = {
     addDialogThunkCreator(id: number): void
 }
 
-let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator, followThunkCreator, addDialogThunkCreator}) => {
+let User: React.FC<PropsType> = ({isAuth, followingProgress, user, unfollowThunkCreator, followThunkCreator, addDialogThunkCreator}) => {
     const [editPhotoModal, setPhotoModal] = useState(false);
     return (<div className='users__item-info'>
                 <div>
                     <div>
-                            <img onClick={() => {setPhotoModal(true)}} src={user.photos.small != null ? user.photos.small : userPhoto}
-                                 className={s.userPhoto}/>
+                            <img className={'users__item-info-photo'}  onClick={() => {setPhotoModal(true)}}
+                                 src={user.photos.small != null ? user.photos.small : userPhoto}
+                                />
                     </div>
                     <div>
-                        {user.followed
-                            ?
-                            <BaseButton type="danger" htmlType='submit' disabled={followingProgress.some(id => id === user.id)}
-                                    onClick={() => {
-                                        unfollowThunkCreator(user.id);
-                                    }}>Unfollow</BaseButton>
-                            :
-                            <BaseButton type='primary' htmlType='submit' disabled={followingProgress.some(id => id === user.id)}
-                                    onClick={() => {
-                                        followThunkCreator(user.id);
-                                    }}>Follow</BaseButton>}
-
+                        {isAuth &&
+                        (user.followed
+                                ?
+                                <BaseButton type="danger" htmlType='submit'
+                                            disabled={followingProgress.some(id => id === user.id)}
+                                            onClick={() => {
+                                                unfollowThunkCreator(user.id);
+                                            }}>Unfollow</BaseButton>
+                                :
+                                <BaseButton type='primary' htmlType='submit'
+                                            disabled={followingProgress.some(id => id === user.id)}
+                                            onClick={() => {
+                                                followThunkCreator(user.id);
+                                            }}>Follow</BaseButton>
+                            )
+                        }
 
                     </div>
                 </div>
@@ -45,7 +51,7 @@ let User: React.FC<PropsType> = ({followingProgress, user, unfollowThunkCreator,
                                 <div>{user.name}</div>
                             </NavLink>
                             <div>{user.status} </div>
-                            <div onClick={() => addDialogThunkCreator(user.id)}>Начать диалог</div>
+                            {isAuth && <div className={'users__item-info-addDialog'} onClick={() => addDialogThunkCreator(user.id)}>Начать диалог</div>}
                         </span>
                 </span>
             <Modal title={user.name} isImg={true} isOpen={editPhotoModal} onCancel={() => {setPhotoModal(false)}} onSubmit={() => {console.log('1')}}>

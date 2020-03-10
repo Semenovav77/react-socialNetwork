@@ -58,7 +58,7 @@ let mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps, {getAllMessageDialogsThunkCreator, getDialogsThunkCreator,
         sendMessageThunkCreator, setCurrentDialogActionCreator,}),
-    /*withAuthRedirect,*/
+    withAuthRedirect,
     withRouter,
 )(DialogsContainer);
 

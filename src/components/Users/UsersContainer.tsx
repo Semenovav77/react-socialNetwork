@@ -12,12 +12,13 @@ import {
     getCurrentPage,
     getFollowingProgress, getIsFetching,
     getPageSize,
-    getTotalUserCount, getUsers, getUsersReSelector
+    getTotalUserCount, getUsers, getUsersReSelector, getIsAuth
 } from "../../redux/users-selectors";
 import {UserType} from "../../types/types";
 import {AppStateType} from "../../redux/redux-store";
 
 type MapStatePropsType = {
+    isAuth: boolean
     currentPage: number
     pageSize: number
     isFetching: boolean
@@ -53,7 +54,8 @@ class UsersAPI extends React.Component<PropsType> {
         return <>
             <h2>{this.props.pageTitle}</h2>
             {this.props.isFetching ? <Preloader/> : null}
-            <Users totalUsersCount={this.props.totalUsersCount}
+            <Users isAuth={this.props.isAuth}
+                   totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
@@ -80,6 +82,7 @@ class UsersAPI extends React.Component<PropsType> {
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         //users: getUsers(state),
+        isAuth: getIsAuth(state),
         users: getUsersReSelector(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUserCount(state),

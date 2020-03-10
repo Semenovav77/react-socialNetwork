@@ -6,6 +6,7 @@ import {UserType} from "../../types/types";
 import './Users.scss'
 
 type PropsType = {
+    isAuth: boolean
     totalUsersCount: number
     pageSize: number
     currentPage: number
@@ -18,7 +19,7 @@ type PropsType = {
 }
 
 let Users: React.FC<PropsType> = ({
-                                      currentPage, totalUsersCount, pageSize, users, onPageChanged,
+                                      isAuth, currentPage, totalUsersCount, pageSize, users, onPageChanged,
                                       followingProgress, unfollowThunkCreator, followThunkCreator, addDialogThunkCreator
                                   }) => {
 
@@ -31,7 +32,7 @@ let Users: React.FC<PropsType> = ({
                 </div>
                 <div className='users__item'>
                     {users.map(u => <User key={u.id}
-                                     user={u}
+                                     user={u} isAuth = {isAuth}
                                      followingProgress={followingProgress}
                                      unfollowThunkCreator={unfollowThunkCreator}
                                      followThunkCreator={followThunkCreator}

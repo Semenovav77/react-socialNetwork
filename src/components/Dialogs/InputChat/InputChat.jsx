@@ -73,6 +73,17 @@ const InputChat = ({currentDialog, sendMessageThunkCreator}) => {
         setValue(value + ' ' + emoji.colons);
     };
 
+    const sendMessage = (currentDialog, value) => {
+        sendMessageThunkCreator(currentDialog, value);
+        setValue('');
+        cellRef.current.textContent = '';
+    };
+
+    const sendMessageOnKey = (e, currentDialog, value) => {
+        if (e.key === 'Enter') {
+            sendMessage(currentDialog, value);
+        }
+    };
 
     return (
         <div className="chat__current-dialog-input">
@@ -84,8 +95,8 @@ const InputChat = ({currentDialog, sendMessageThunkCreator}) => {
 
             </div>
             <div className="chat__current-dialog-input-text">
-                <ContentEditable contentEditable={editModeState}
-                                 refS={cellRef} onInput={changeValue} onCl={onCl} value={value}/>
+                <ContentEditable contentEditable={editModeState} currentDialog={currentDialog}
+                                 refS={cellRef} onInput={changeValue} onCl={onCl} value={value} sendMessageOnKey={sendMessageOnKey}/>
                 {/*<div className="chat__current-dialog-input-add">
                     <ContentEditable
                         html={value}// innerHTML of the editable div
@@ -107,9 +118,8 @@ const InputChat = ({currentDialog, sendMessageThunkCreator}) => {
                 {!value ? <Button type="ghost" shape="circle" icon='audio'/>
                     :
                     <Button type="ghost" shape="circle" icon='check'
-                            onClick={() => {sendMessageThunkCreator(currentDialog, value)}}/>}
+                            onClick={() => {sendMessage(currentDialog, value)}}/>}
             </div>
-
         </div>
     );
 };

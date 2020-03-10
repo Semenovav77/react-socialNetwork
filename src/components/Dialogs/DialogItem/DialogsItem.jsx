@@ -18,7 +18,8 @@ const getMessageTime = created_at => {
     }
 };
 
-const DialogItem = ({id, userName, text='Здесь будет последнее сообщение от пользователя', lastDialogActivityDate, photos, currentDialog}) => {
+const DialogItem = ({id, userName, text='Здесь будет последнее сообщение от пользователя',
+                        lastDialogActivityDate, photos, currentDialog}) => {
     return (
         <Link to={`/dialogs/${id}`}>
             <div className={classNames('dialogs__item', currentDialog === id && 'dialogs__item--selected')}>
