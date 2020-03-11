@@ -18,11 +18,15 @@ class ProfileContainer extends React.Component {
             userId = this.props.userId;
             if (!userId) {
                 this.props.history.push('/login')
+            } else {
+                this.props.getProfileThunkCreator(userId);
+                this.props.getUserStatusThunkCreator(userId);
             }
+        } else {
+            this.props.getProfileThunkCreator(userId);
+            this.props.getUserStatusThunkCreator(userId);
         }
-        ;
-        this.props.getProfileThunkCreator(userId);
-        this.props.getUserStatusThunkCreator(userId);
+
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -32,11 +36,14 @@ class ProfileContainer extends React.Component {
                 userId = this.props.userId;
                 if (!userId) {
                     this.props.history.push('/login')
+                }  else {
+                    this.props.getProfileThunkCreator(userId);
+                    this.props.getUserStatusThunkCreator(userId);
                 }
+            } else {
+                this.props.getProfileThunkCreator(userId);
+                this.props.getUserStatusThunkCreator(userId);
             }
-            ;
-            this.props.getProfileThunkCreator(userId);
-            this.props.getUserStatusThunkCreator(userId);
         }
     }
 
@@ -73,5 +80,5 @@ export default compose(
         updateProfileThunkCreator, updateMainPhotoThunkCreator
     }),
     withRouter,
-    /*    withAuthRedirect*/
+  /*      withAuthRedirect*/
 )(ProfileContainer);

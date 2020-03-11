@@ -3,6 +3,7 @@ import {UserType} from "../types/types";
 import {AppStateType} from "./redux-store";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
+import {openNotification} from "../helpers/openNotification";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -178,6 +179,13 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
             dispatch(setIsFetching(false));
             dispatch(setUsers(data.items));
             dispatch(setTotalUsersCount(data.totalCount));
+        }).catch((err) => {
+            dispatch(setIsFetching(false));
+            openNotification({
+                title: 'Ошибка!',
+                text: err.message,
+                type: 'error',
+            });
         });
     }
 };

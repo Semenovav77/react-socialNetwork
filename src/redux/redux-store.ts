@@ -9,7 +9,7 @@ import {reducer as formReducer} from "redux-form";
 import appReducer from "./app-reducer";
 
 
-let rootReduсer = combineReducers({
+const applicReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
@@ -19,12 +19,20 @@ let rootReduсer = combineReducers({
     form: formReducer
 });
 
-type RootReducerType = typeof rootReduсer;
+const rootReducer = (state: any, action: any) => {
+    if (action.type === 'USER_LOGOUT') {
+        state = undefined
+    }
+
+    return applicReducer(state, action)
+};
+
+type RootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<RootReducerType>;
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReduсer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 //let store = createStore(reduсers, applyMiddleware(thunkMiddleware));
 

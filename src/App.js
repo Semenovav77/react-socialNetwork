@@ -28,6 +28,11 @@ class App extends React.Component {
             //alert(e.reason);
         });
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.props.initializeApp();
+    }
+
     componentWillUnmount() {
         window.removeEventListener('unhandledrejection', function (e) {
             console.log(e);
