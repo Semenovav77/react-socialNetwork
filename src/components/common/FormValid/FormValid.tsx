@@ -2,26 +2,31 @@ import React from "react";
 import s from "./FormValid.module.css";
 import {Input as BaseInput} from 'antd';
 import { Checkbox as BaseCheckbox } from 'antd';
-const {TeaxtArea} = BaseInput;
+import {WrappedFieldMetaProps, WrappedFieldProps} from "redux-form";
+/*const {TeaxtArea} = BaseInput;*/
 
-export const FormValid = ({input, meta, children, ...props}) => {
+type FormValidPropsType = {
+    meta: WrappedFieldMetaProps
+}
+
+const FormValid: React.FC<FormValidPropsType> = ({meta:{touched, error}, children}) => {
     return (
-        <div className={s.formControl + ' ' + (meta.touched && meta.error ? s.error : '')}>
+        <div className={s.formControl + ' ' + ((touched && error) ? s.error : '')}>
             <div>
                 {children}
             </div>
-            {meta.touched && meta.error && <span>{meta.error}</span>}
+            {(touched && error) && <span>{error}</span>}
         </div>
     )
 };
-export const Textarea = (props) => {
+export const Textarea: React.FC<WrappedFieldProps> = (props) => {
     const {input, meta, ...restProps} = props;
     return (
        <FormValid {...props}> <textarea {...input} {...restProps}/> </FormValid>
     )
 };
 
-export const Input = (props) => {
+export const Input: React.FC<WrappedFieldProps> = (props) => {
 
     const {input, meta, ...restProps} = props;
     return (
@@ -29,7 +34,7 @@ export const Input = (props) => {
     )
 };
 
-export const Checkbox = (props) => {
+export const Checkbox: React.FC<WrappedFieldProps> = (props) => {
 
     const {input, meta, ...restProps} = props;
     return (

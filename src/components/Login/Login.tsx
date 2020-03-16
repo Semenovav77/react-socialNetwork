@@ -1,21 +1,28 @@
 import React from 'react';
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Checkbox, Input} from "../common/FormValid/FormValid";
 import {required} from "../../helpers/validations";
 import {connect} from "react-redux";
-import {getCaptchaURL, loginThunkCreator} from "../../redux/auth-reducer";
+import {loginThunkCreator} from "../../redux/auth-reducer";
 import {NavLink, Redirect} from "react-router-dom";
+
+
 import s from './../common/FormValid/FormValid.module.css';
 import Button from '../common/Button/Button';
 import Block from "../common/Block/Block";
 import './Login.scss'
-import {Icon} from 'antd';
+import {Icon, Button as BaseButton } from 'antd';
+import {AppStateType} from "../../redux/redux-store";
 
 
-const LoginForm = (props) => {
+type LoginFormOwnPropsType = {
+    captchaURL: string | null
+}
+
+const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType,LoginFormOwnPropsType> & LoginFormOwnPropsType> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <Block>
+            <Block className='login'>
                 <div className='email'>
                     <Field placeholder={'Email'} name={'email'}
                            validate={[required]}
@@ -43,7 +50,7 @@ const LoginForm = (props) => {
                 </div>
                 }
                 <div>
-                    <Button type='primary' htmlType='submit' size='large'>Войти в аккаунт</Button>
+                    <BaseButton type='primary' htmlType='submit' size='large'>Войти в аккаунт</BaseButton>
                 </div>
                 <div className={'auth__register-link'}>
                     <NavLink to="/register"> Зарегистрироваться</NavLink>
@@ -53,12 +60,28 @@ const LoginForm = (props) => {
     )
 };
 
-const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);
+const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnPropsType>({form: 'login'})(LoginForm);
 
-const Login = (props) => {
-        const onSubmit = (formData) => {
+type MapStatePropsType = {
+    isAuth: boolean
+    captchaURL: string | null
+}
+type MapDispatchPropsType = {
+    loginThunkCreator(email: string, password: string, rememberme: boolean, captcha: string | null): void
+    getCaptchaURL(url: string | null): void
+}
+type LoginFormValuesType ={
+    email: string
+    password: string
+    rememberme: boolean
+    captcha: string | null
+}
+
+
+
+const Login: React.FC<MapStatePropsType & MapDispatchPropsType & LoginFormOwnPropsType> = (props) => {
+        const onSubmit = (formData: LoginFormValuesType) => {
             props.loginThunkCreator(formData.email, formData.password, formData.rememberme, formData.captcha)
-            props.getCaptchaURL(null);
         };
 
         if (props.isAuth) {
@@ -79,7 +102,7 @@ const Login = (props) => {
     }
 ;
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
     return (
         {
             isAuth: state.auth.isAuth,
@@ -89,4 +112,4 @@ const mapStateToProps = (state) => {
 
 };
 
-export default connect(mapStateToProps, {loginThunkCreator, getCaptchaURL})(Login);
+export default connect(mapStateToProps, {loginThunkCreator})(Login);

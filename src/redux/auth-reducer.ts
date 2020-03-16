@@ -78,9 +78,9 @@ const logoutAction = (): logoutActionType => {
 
 type GetCaptchaURLActionType = {
     type: typeof GET_CAPTCHA_URL
-    url: string
+    url: string | null
 }
-export const getCaptchaURL = (url: string): GetCaptchaURLActionType => {
+export const getCaptchaURL = (url: string | null): GetCaptchaURLActionType => {
     return {
         type: GET_CAPTCHA_URL,
         url
@@ -137,7 +137,7 @@ export const loginThunkCreator = (email, password, rememberme) => {
 */
 
 export const loginThunkCreator = (email: string, password: string, rememberme: boolean, captcha: string): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
-    return async (dispatch: any) => {
+    return async (dispatch) => {
         try {
             let response = await authAPI.login(email, password, rememberme, captcha);
             if (response.resultCode === ResultCodeEnum.Success) {
@@ -146,7 +146,8 @@ export const loginThunkCreator = (email: string, password: string, rememberme: b
                     text: 'Авторизация успешна.',
                     type: 'success',
                 });
-                dispatch(getAuthMeThunkCreator())
+                dispatch(getAuthMeThunkCreator());
+                dispatch(getCaptchaURL(null))
             } else {
                 if (response.resultCode === ResultCodeEnum.CaptchaIsRequired) {
                     openNotification({
