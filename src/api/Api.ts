@@ -5,8 +5,7 @@ import {ContactsOfProfileType} from "../types/types";
 const instance = axios.create( {
     withCredentials: true,
     baseURL:'https://social-network.samuraijs.com/api/1.0/',
-    headers: {'API-KEY': 'def23896-29d0-43ae-b35a-fe87c7a4483e'}
-   /* headers: {'API-KEY': 'd4f26dac-ff2a-40f8-a2bd-335572a1fbe4'}*/
+    headers: {'API-KEY': 'd4f26dac-ff2a-40f8-a2bd-335572a1fbe4'}
 });
 
 export enum ResultCodeEnum {
