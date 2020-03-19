@@ -58,7 +58,8 @@ const ProfileInfo = (props) => {
                         </div>
                         <div className='profile__info-user-status-block'>
                             <span>Status: </span>
-                            <ProfileStatusWithHooks status={props.status}
+                            <ProfileStatusWithHooks isOwner={props.isOwner}
+                                                    status={props.status}
                                                     updateUserStatusThunkCreator={props.updateUserStatusThunkCreator}/>
                         </div>
                         <br/>

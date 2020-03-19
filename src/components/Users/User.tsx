@@ -51,7 +51,9 @@ let User: React.FC<PropsType> = ({isAuth, followingProgress, user, unfollowThunk
                                 <div>{user.name}</div>
                             </NavLink>
                             <div>{user.status} </div>
+                             <NavLink to={'/dialogs/' + user.id}>
                             {isAuth && <div className={'users__item-info-addDialog'} onClick={() => addDialogThunkCreator(user.id)}>Начать диалог</div>}
+                            </NavLink>
                         </span>
                 </span>
             <Modal title={user.name} isImg={true} isOpen={editPhotoModal} onCancel={() => {setPhotoModal(false)}} onSubmit={() => {console.log('1')}}>

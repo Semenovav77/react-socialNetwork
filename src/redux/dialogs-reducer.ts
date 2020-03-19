@@ -3,6 +3,7 @@ import {setCurrentPage, setIsFetching, setTotalUsersCount, setUsers} from "./use
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {getProfileThunkCreator} from "./profile-reducer";
+import {openNotification} from "../helpers/openNotification";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
@@ -14,16 +15,16 @@ const SET_IS_FETCHING_MESSAGES = 'SET_IS_FETCHING_MESSAGES';
 
 
 type DialogType = {
-        id: string
-        text: string | null
-        userName: string
-        lastDialogActivityDate:string
-        lastUserActivityDate: string
-        newMessagesCount: number
-        photos: {
-            small: string | null
-            large: string | null
-        }
+    id: string
+    text: string | null
+    userName: string
+    lastDialogActivityDate: string
+    lastUserActivityDate: string
+    newMessagesCount: number
+    photos: {
+        small: string | null
+        large: string | null
+    }
 
 }
 
@@ -37,16 +38,16 @@ type MessageType = {
     viewed: boolean
 }
 
-type MessagesType ={
-items: {
-    id: string
-    body: string | null
-    addedAt: string
-    senderId: number
-    senderName: string
-    recipientId: number
-    viewed: boolean
-}
+type MessagesType = {
+    items: {
+        id: string
+        body: string | null
+        addedAt: string
+        senderId: number
+        senderName: string
+        recipientId: number
+        viewed: boolean
+    }
 }
 
 let initialState = {
@@ -61,7 +62,7 @@ let initialState = {
 export type InitialStateType = typeof initialState;
 
 type ActionsTypes = SetIsFetchingDialogsActionType | SetIsFetchingMessagesActionType | SetDialogsActionCreatorActionType
-                    | SetCurrentDialogActionCreatorActionType |setMessagesCurrentDialogActionCreatorActionType
+    | SetCurrentDialogActionCreatorActionType | setMessagesCurrentDialogActionCreatorActionType
 
 const dialogsReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
@@ -169,8 +170,15 @@ export const addDialogThunkCreator = (userId: number): ThunkAction<void, AppStat
         dispatch(setIsFetchingDialogs(true));
         dialogsAPI.addDialog(userId).then((data: any) => {
             dispatch(setIsFetchingDialogs(false));
-        });
-    }
+        }).catch((err) => {
+            openNotification({
+                title: 'Ошибка!',
+                text: err.message,
+                type: 'error',
+            });
+        })
+    };
+
 };
 
 export const sendMessageThunkCreator = (userId: number, message: string): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {

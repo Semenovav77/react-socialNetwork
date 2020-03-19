@@ -81,6 +81,7 @@ const InputChat = ({currentDialog, sendMessageThunkCreator}) => {
 
     const sendMessageOnKey = (e, currentDialog, value) => {
         if (e.key === 'Enter') {
+            e.preventDefault();
             sendMessage(currentDialog, value);
         }
     };

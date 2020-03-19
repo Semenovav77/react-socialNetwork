@@ -5,11 +5,12 @@ import {string} from "prop-types";
 let [a, setA] = arr;*/
 
 interface ProfileStatusProps {
+    isOwner: boolean
     status: string
     updateUserStatusThunkCreator(status: string): void
 }
 
-const ProfileStatusWithHooks: React.FC<ProfileStatusProps> = ({status, updateUserStatusThunkCreator}) => {
+const ProfileStatusWithHooks: React.FC<ProfileStatusProps> = ({status, updateUserStatusThunkCreator, isOwner}) => {
    // let stateWithSetState = useState(false);
     let [editSwitch, setEditSwitch] = useState<boolean> (false);
     let [valueStatus, setStatus] = useState<string> (status);
@@ -23,8 +24,8 @@ const ProfileStatusWithHooks: React.FC<ProfileStatusProps> = ({status, updateUse
     }, []);
 
     const changeStatus = () => {
-        setEditSwitch(true);
-        localStorage.setItem('editSwitch', JSON.stringify(true))
+        isOwner && setEditSwitch(true);
+        isOwner && localStorage.setItem('editSwitch', JSON.stringify(true))
     };
     const saveStatus = () => {
         setEditSwitch(false);
