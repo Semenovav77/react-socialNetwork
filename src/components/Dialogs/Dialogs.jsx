@@ -14,7 +14,7 @@ const Dialogs = ({
                      dialogs, currentDialog, isFetchingDialogs, id,
                      isFetchingMessages, messages, onSearch,
                      inputValue, getAllMessageDialogsThunkCreator,
-                     setCurrentDialogActionCreator, match, sendMessageThunkCreator
+                     setCurrentDialogActionCreator, match, sendMessageThunkCreator, deleteMessageThunkCreator
                  }) => {
     const messagesRef = useRef(null);
     useEffect(() => {
@@ -86,6 +86,7 @@ const Dialogs = ({
                                                    blockRef={messagesRef}
                                                    getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
                                                    setCurrentDialogActionCreator={setCurrentDialogActionCreator}
+                                                   deleteMessageThunkCreator={deleteMessageThunkCreator}
                                                    match={match}
                                                    id={id}/> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='Выберите диалог'/>}
                     </div>

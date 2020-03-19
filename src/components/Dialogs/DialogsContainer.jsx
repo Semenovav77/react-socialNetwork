@@ -3,7 +3,8 @@ import {
     getAllMessageDialogsThunkCreator,
     getDialogsThunkCreator,
     setCurrentDialogActionCreator,
-    sendMessageThunkCreator
+    sendMessageThunkCreator,
+    deleteMessageThunkCreator
 } from "../../redux/dialogs-reducer";
 import DialogsFilter from "./DialogsFilter/DialogsFilter";
 import {connect} from "react-redux";
@@ -15,7 +16,7 @@ const DialogsContainer = ({
                               dialogs, messages, currentDialog, id,
                               isFetchingDialogs, isFetchingMessages,
                               getAllMessageDialogsThunkCreator,
-                              getDialogsThunkCreator, setCurrentDialogActionCreator, match, sendMessageThunkCreator
+                              getDialogsThunkCreator, setCurrentDialogActionCreator, match, sendMessageThunkCreator, deleteMessageThunkCreator
                           }) => {
     return (
         <DialogsFilter
@@ -29,6 +30,7 @@ const DialogsContainer = ({
             getDialogsThunkCreator={getDialogsThunkCreator}
             match={match}
             sendMessageThunkCreator={sendMessageThunkCreator}
+            deleteMessageThunkCreator={deleteMessageThunkCreator}
             id={id}
         />
     )
@@ -57,7 +59,7 @@ let mapStateToProps = (state) => {
 
 export default compose(
     connect(mapStateToProps, {getAllMessageDialogsThunkCreator, getDialogsThunkCreator,
-        sendMessageThunkCreator, setCurrentDialogActionCreator,}),
+        sendMessageThunkCreator, setCurrentDialogActionCreator, deleteMessageThunkCreator}),
     withAuthRedirect,
     withRouter,
 )(DialogsContainer);

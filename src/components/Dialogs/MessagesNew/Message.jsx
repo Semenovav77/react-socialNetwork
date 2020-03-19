@@ -2,14 +2,15 @@ import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import checkedImg from '../../../assets/images/clipart2243667.png';
-import waveSvg from '../../../assets/images/wave.svg';
-import playSvg from '../../../assets/images/play.svg';
-import pauseSvg from '../../../assets/images/pause.svg';
 import reactStringReplace from 'react-string-replace';
 import {Emoji} from 'emoji-mart';
+import { Popover, Button, Icon } from 'antd';
 
 import './Message.scss'
 import Time from "../../common/Time/Time";
+import waveSvg from '../../../assets/images/wave.svg';
+import playSvg from '../../../assets/images/play.svg';
+import pauseSvg from '../../../assets/images/pause.svg';
 
 const convertToTime = (number) => {
     const mins = Math.floor(number / 60);
@@ -68,9 +69,20 @@ const MessageAudio = ({audio}) => {
     )
 };
 
-const Message = ({body, date, isMe, audio}) => {
+const Message = ({body, date, isMe, audio, deleteMessageThunkCreator, id, currentDialog}) => {
     return (
         <div className={classNames('message', {'message--isme': isMe, 'message--is-audio': audio})}>
+            <Popover
+                content={
+                    <div>
+                        <Button onClick={()=> {deleteMessageThunkCreator(id, currentDialog)}} type="link" shape="circle" icon="delete" >Удалить сообщение</Button>
+                    </div>
+                }
+                trigger="click">
+                <div className="message__icon-actions">
+                    <Button type="link" shape="circle" icon="ellipsis" />
+                </div>
+            </Popover>
             <div className='message__avatar'>
                 {/*<img src={user.avatar} alt={`Avatar ${user.fullname}`}/>*/}
             </div>

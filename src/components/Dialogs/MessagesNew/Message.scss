@@ -1,5 +1,15 @@
 @import '../../../styles/variables';
 
+.ant-popover {
+  .ant-btn-circle, .ant-btn-circle-outline {
+    color: #ff4d4f;
+  }
+
+  .ant-btn-circle:hover, .ant-btn-circle-outline:hover {
+    color: #ff4d4f96;
+  }
+}
+
 .message {
   $self: &;
   display: flex;
@@ -36,6 +46,10 @@
     font-size: 12px;
     opacity: 0.45;
   }
+  .anticon-ellipsis {
+    color: #808080;
+  }
+
 
   &--is-audio {
     audio {

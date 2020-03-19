@@ -8,7 +8,7 @@ const DialogsFilter = ({
                            dialogs, messages, currentDialog, id,
                            isFetchingDialogs, isFetchingMessages,
                            getAllMessageDialogsThunkCreator, getDialogsThunkCreator,
-                           setCurrentDialogActionCreator, match, sendMessageThunkCreator
+                           setCurrentDialogActionCreator, match, sendMessageThunkCreator, deleteMessageThunkCreator
                        }) => {
     const [inputValue, setValue] = useState('');
     const [filtred, setFiltredItems] = useState(Array.from(dialogs));
@@ -45,6 +45,7 @@ const DialogsFilter = ({
                  getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
                  match={match}
                  sendMessageThunkCreator={sendMessageThunkCreator}
+                 deleteMessageThunkCreator={deleteMessageThunkCreator}
                  id={id}/>
     );
 };

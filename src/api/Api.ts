@@ -5,7 +5,8 @@ import {ContactsOfProfileType} from "../types/types";
 const instance = axios.create( {
     withCredentials: true,
     baseURL:'https://social-network.samuraijs.com/api/1.0/',
-    headers: {'API-KEY': 'd4f26dac-ff2a-40f8-a2bd-335572a1fbe4'}
+  /*  headers: {'API-KEY': 'd4f26dac-ff2a-40f8-a2bd-335572a1fbe4'}*/
+    headers: {'API-KEY': 'f82f2c3e-aad7-41ee-be74-71c28a682bcb'}
 });
 
 export enum ResultCodeEnum {
@@ -125,5 +126,9 @@ export const dialogsAPI = {
     },
     sendMessage(userId: number, message: string) {
         return instance.post(`dialogs/${userId}/messages`, {body: message})
+    },
+    deleteMessage(messageId: string) {
+        return instance.delete(`dialogs/messages/${messageId}`)
+
     }
 };

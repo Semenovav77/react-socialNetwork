@@ -9,7 +9,7 @@ import Preloader from "../../common/preloader/Preloader";
 
 
 const Messages = ({blockRef, messages, isFetchingMessages, currentDialog, id,
-                      getAllMessageDialogsThunkCreator, match, setCurrentDialogActionCreator}) => {
+                      getAllMessageDialogsThunkCreator, match, setCurrentDialogActionCreator, deleteMessageThunkCreator}) => {
 
     useEffect(() => {
         let dialogId = match.params.id;
@@ -30,10 +30,13 @@ const Messages = ({blockRef, messages, isFetchingMessages, currentDialog, id,
                     <>
                         {messages.items.map(mes => {
                             return (<Message key={mes.id}
+                                             id={mes.id}
                                              body={mes.body}
                                              audio={mes.audio}
                                              date={mes.addedAt}
-                                             isMe={(mes.senderId === id)}/>)
+                                             isMe={(mes.senderId === id)}
+                                             currentDialog={currentDialog}
+                                             deleteMessageThunkCreator={deleteMessageThunkCreator}/>)
                         })
                         }
                     </>

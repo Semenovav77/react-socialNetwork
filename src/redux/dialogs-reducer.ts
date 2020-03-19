@@ -191,6 +191,16 @@ export const sendMessageThunkCreator = (userId: number, message: string): ThunkA
     }
 };
 
+export const deleteMessageThunkCreator = (messageId: string, userId: number): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
+    return (dispatch) => {
+        dialogsAPI.deleteMessage(messageId).then((data: any) => {
+            if (data.data.resultCode === 0) {
+                dispatch(getAllMessageDialogsThunkCreator(userId))
+            }
+        });
+    }
+};
+
 
 export const getDialogsThunkCreator = (): ThunkAction<void, AppStateType, unknown, ActionsTypes> => {
     return (dispatch) => {

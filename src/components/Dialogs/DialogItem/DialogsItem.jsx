@@ -22,7 +22,7 @@ const DialogItem = ({id, userName, text='Здесь будет последне�
                         lastDialogActivityDate, photos, currentDialog, setCurrentDialogActionCreator}) => {
     const setCurrentDialog = (dialogId) => {
         setCurrentDialogActionCreator(Number(dialogId));
-    }
+    };
 
     return (
         <Link to={`/dialogs/${id}`}>
