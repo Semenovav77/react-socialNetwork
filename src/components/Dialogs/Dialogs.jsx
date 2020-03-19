@@ -80,14 +80,14 @@ const Dialogs = ({
                         </div>
                     </div>
                     <div className="chat__current-dialog-messages">
-                        <Messages messages={messages}
-                                  currentDialog={currentDialog}
-                                  isFetchingMessages={isFetchingMessages}
-                                  blockRef={messagesRef}
-                                  getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
-                                  setCurrentDialogActionCreator={setCurrentDialogActionCreator}
-                                  match={match}
-                                  id={id}/>
+                        {(currentDialog != null) ? <Messages messages={messages}
+                                                   currentDialog={currentDialog}
+                                                   isFetchingMessages={isFetchingMessages}
+                                                   blockRef={messagesRef}
+                                                   getAllMessageDialogsThunkCreator={getAllMessageDialogsThunkCreator}
+                                                   setCurrentDialogActionCreator={setCurrentDialogActionCreator}
+                                                   match={match}
+                                                   id={id}/> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='Выберите диалог'/>}
                     </div>
                     <InputChat sendMessageThunkCreator={sendMessageThunkCreator} currentDialog={currentDialog}/>
 

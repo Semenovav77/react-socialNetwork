@@ -19,10 +19,15 @@ const getMessageTime = created_at => {
 };
 
 const DialogItem = ({id, userName, text='Здесь будет последнее сообщение от пользователя',
-                        lastDialogActivityDate, photos, currentDialog}) => {
+                        lastDialogActivityDate, photos, currentDialog, setCurrentDialogActionCreator}) => {
+    const setCurrentDialog = (dialogId) => {
+        setCurrentDialogActionCreator(Number(dialogId));
+    }
+
     return (
         <Link to={`/dialogs/${id}`}>
-            <div className={classNames('dialogs__item', currentDialog === id && 'dialogs__item--selected')}>
+            <div className={classNames('dialogs__item', currentDialog === id && 'dialogs__item--selected')}
+              onClick={() => setCurrentDialog(id)}>
                 <div className='dialogs__item-avatar'>
                     <Avatar photos={photos} userName={userName} id={id}/>
                 </div>
